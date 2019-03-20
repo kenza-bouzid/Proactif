@@ -38,4 +38,44 @@ public class Service {
         JpaUtil.fermerEntityManager();
     }
     
+    public static void connexion()
+    {
+        
+    }
+    
+    public static void deconnexion()
+    {
+        
+    }
+    
+    public static void demanderIntervention()
+    {
+        
+    }
+    
+    public static void  affecterEmployer ()
+    {
+        
+    }
+    
+    public static void afficherHistoClient () 
+    {
+        
+    }
+    
+    public static void afficherTableauBord () 
+    {
+        
+    }
+    
+    public static void cloturerIntervention ()
+    {
+        
+    }
+    
+    public static void consulterInterventions()
+    {
+        
+    }
+    
 }
