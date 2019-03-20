@@ -8,7 +8,9 @@ package fr.insalyon.dasi.proactif.metier.modele;
 import com.google.maps.model.LatLng;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -17,6 +19,17 @@ import javax.persistence.Entity;
 @Entity
 
 public class Client extends Personne implements Serializable{
+    
+    @OneToMany
+    private List<Intervention> histoInterventions ; 
+
+    public List<Intervention> getHistoInterventions() {
+        return histoInterventions;
+    }
+
+    public void setHistoInterventions(List<Intervention> histoInterventions) {
+        this.histoInterventions = histoInterventions;
+    }
     
     public Client() {
     }

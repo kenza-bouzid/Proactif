@@ -9,7 +9,9 @@ import com.google.maps.model.LatLng;
 import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +20,17 @@ import javax.persistence.Entity;
 @Entity
 public class Employe extends Personne implements Serializable {
 
+    @OneToMany
+    private List<Intervention> tabBord ;
+
+    public List<Intervention> getTabBord() {
+        return tabBord;
+    }
+
+    public void setTabBord(List<Intervention> tabBord) {
+        this.tabBord = tabBord;
+    }
+    
     private Time debutTravail; 
     private Time finTravail; 
     private boolean estEnIntervention ; 

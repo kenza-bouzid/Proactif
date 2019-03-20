@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
  * @author utilisateur
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Intervention implements Serializable {
 
     private static final long serialVersionUID = 1L;
