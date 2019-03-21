@@ -12,7 +12,6 @@ import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
 import java.text.ParseException;
 
-
 /**
  *
  * @author dhamidovic
@@ -22,45 +21,38 @@ public class Service {
     public Service() {
 
     }
-    
-    public static void inscrireClient(String mail, String mdp, String civilite, 
-                               String nom, String prenom, String dateNaissance, 
-                               String adresse, String numTel ) throws ParseException {
-        
+
+    public static void inscrireClient(String mail, String mdp, String civilite,
+            String nom, String prenom, String dateNaissance,
+            String adresse, String numTel) throws ParseException {
+
         JpaUtil.creerEntityManager();
         JpaUtil.ouvrirTransaction();
-        
         Client c = new Client(civilite, nom, prenom, dateNaissance, GeoTest.getLatLng(adresse), numTel, mail, mdp);
         ClientDao.persist(c);
-        Message.envoyerMail("contact@proact.if", mail, "Bienvenue chez PROACT'IF", "Bonjour"+c.getPrenom()+", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : "+c.getId());
-
+        if (ClientDao.findByEMail(mail, mdp) != null) {
+            Message.envoyerMail("contact@proact.if", mail, "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
+        } else {
+            Message.envoyerMail("contact@proact.if", mail, "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", votre inscription au service PROACT'IF a malheureusement échoué...Merci de recommencer ultérieurement.");
+        }
         JpaUtil.validerTransaction();
         JpaUtil.fermerEntityManager();
     }
-    
-    
-    public static void connexion()
-    {
-        /* */
+
+    public static void connexion(String mail, String mdp) {
+
     }
-    
-    public static void deconnexion()
-    {
+
+    public static void deconnexion() {
+
+    }
+
+    public static void demandeIntervention( ) {
         
     }
-    
-    public static void demanderIntervention()
-    {
-        
+
+    public static void affecterEmployer() {
+
     }
-    
-    public static void  affecterEmployer ()
-    {
-        
-    }
-   
-    
-    
-    
-    
+
 }
