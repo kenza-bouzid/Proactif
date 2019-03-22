@@ -32,5 +32,13 @@ public class ClientDao {
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
         return (List<Client>)query.getResultList();   
     }
-     
+    
+    public static Client findByEmailNum (String mail , String num)
+    {
+        String jpql = "select c from Client c where c.adresseElec = :mail and c.numTel = :num"; 
+        Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
+        query.setParameter("mail", mail);
+        query.setParameter("num", num); 
+        return (Client) query.getSingleResult() ; 
+    }
 }

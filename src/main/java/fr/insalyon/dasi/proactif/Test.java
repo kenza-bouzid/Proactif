@@ -19,7 +19,8 @@ public class Test {
 
         Service s = new Service();
         
-        s.inscrireClient("test@gmail.com", "123", "M", "Dupont", " Grégoire","02/06/1998", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316");
+        Service.inscrireClient("test@gmail.com", "123", "M", "Dupont", " Grégoire","02/06/1998", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316");
+        Service.envoyerCodeConfirmation("test@gmail.com","0658974316" );
         
         JpaUtil.destroy();
         

@@ -11,6 +11,7 @@ import fr.insalyon.dasi.proactif.metier.modele.Client;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
 import java.text.ParseException;
+import java.util.Random;
 
 /**
  *
@@ -39,6 +40,23 @@ public class Service {
         JpaUtil.fermerEntityManager();
     }
 
+    public static int envoyerCodeConfirmation (String mail, String num)
+    {    
+        JpaUtil.creerEntityManager();
+        if (ClientDao.findByEmailNum(mail, num)!= null)
+        {
+           int lower = 1000; int higher = 9999;
+           int code = (int)(Math.random() * (higher-lower)) + lower ; 
+           Message.envoyerNotification(num,"Votre code de confirmation est: "+code ); 
+           JpaUtil.fermerEntityManager();
+           return code; 
+        }
+        else 
+        {
+            JpaUtil.fermerEntityManager();
+            return 0 ;
+        }
+    }
     public static void connexion(String mail, String mdp) {
 
     }
