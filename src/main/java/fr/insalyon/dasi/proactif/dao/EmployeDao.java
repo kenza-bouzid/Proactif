@@ -7,6 +7,7 @@ package fr.insalyon.dasi.proactif.dao;
 
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import java.util.List;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 /**
@@ -14,19 +15,34 @@ import javax.persistence.Query;
  * @author dhamidovic
  */
 public class EmployeDao {
-    
+
     public static void persist(Employe c) {
         JpaUtil.obtenirEntityManager().persist(c);
     }
-    
-    public static Employe find(Long id) {
-        return JpaUtil.obtenirEntityManager().find(Employe.class, id);
+
+    public static Employe findByEMail(String mail, String mdp) {
+        String jpql = "select e from Employe e where e.adresseElec = :mail and e.mdp = :mdp";
+        Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
+        query.setParameter("mail", mail);
+        query.setParameter("mdp", mdp);
+        List<Employe> results = query.getResultList();
+        Employe foundEntity = null;
+        if (!results.isEmpty()) {
+            foundEntity = results.get(0);
+        }
+        if (results.size() > 1) {
+            for (Employe result : results) {
+                if (result != foundEntity) {
+                    throw new NonUniqueResultException();
+                }
+            }
+        }
+        return foundEntity;
     }
-    
-     public static List<Employe> listPersonne ()
-    {
+
+    public static List<Employe> listPersonne() {
         String jpql = "select e from Employe e";
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
-        return (List<Employe>)query.getResultList();   
+        return (List<Employe>) query.getResultList();
     }
 }

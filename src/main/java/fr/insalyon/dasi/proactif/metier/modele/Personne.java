@@ -17,6 +17,7 @@ import com.google.maps.model.LatLng;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.Column;
 
 /**
  *
@@ -36,6 +37,7 @@ public abstract class Personne implements Serializable {
     private Date dateNaissance;
     private LatLng coord;
     private String numTel;
+    @Column(unique=true, nullable=false) 
     private String adresseElec;
     private String mdp;
 

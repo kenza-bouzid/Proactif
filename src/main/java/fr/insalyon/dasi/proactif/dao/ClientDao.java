@@ -7,6 +7,7 @@ package fr.insalyon.dasi.proactif.dao;
 
 import fr.insalyon.dasi.proactif.metier.modele.Client;
 import java.util.List;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 /**
  *
@@ -23,7 +24,19 @@ public class ClientDao {
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
         query.setParameter("mail", mail);
         query.setParameter("mdp", mdp); 
-        return (Client) query.getSingleResult() ; 
+        List<Client> results = query.getResultList();
+        Client foundEntity = null;
+        if (!results.isEmpty()) {
+            foundEntity = results.get(0);
+        }
+        if (results.size() > 1) {
+            for (Client result : results) {
+                if (result != foundEntity) {
+                    throw new NonUniqueResultException();
+                }
+            }
+        }
+        return foundEntity;
     }
     
      public static List<Client> listPersonne ()
@@ -39,6 +52,18 @@ public class ClientDao {
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
         query.setParameter("mail", mail);
         query.setParameter("num", num); 
-        return (Client) query.getSingleResult() ; 
+        List<Client> results = query.getResultList();
+        Client foundEntity = null;
+        if (!results.isEmpty()) {
+            foundEntity = results.get(0);
+        }
+        if (results.size() > 1) {
+            for (Client result : results) {
+                if (result != foundEntity) {
+                    throw new NonUniqueResultException();
+                }
+            }
+        }
+        return foundEntity;
     }
 }

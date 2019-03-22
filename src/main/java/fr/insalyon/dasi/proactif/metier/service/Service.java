@@ -6,13 +6,14 @@
 package fr.insalyon.dasi.proactif.metier.service;
 
 import fr.insalyon.dasi.proactif.dao.ClientDao;
+import fr.insalyon.dasi.proactif.dao.EmployeDao;
 import fr.insalyon.dasi.proactif.dao.JpaUtil;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
+import fr.insalyon.dasi.proactif.metier.modele.Employe;
+import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
 import java.text.ParseException;
-import java.util.Random;
-
 /**
  *
  * @author dhamidovic
@@ -57,8 +58,18 @@ public class Service {
             return 0 ;
         }
     }
-    public static void connexion(String mail, String mdp) {
-
+    
+    public static Personne connexion(String mail, String mdp) {
+        JpaUtil.creerEntityManager();
+        Client c = ClientDao.findByEMail(mail, mdp) ; 
+        Employe e = EmployeDao.findByEMail(mail, mdp) ; 
+        if (c  != null) {
+            return (Personne) c; 
+        }
+        if ( e != null){
+            return (Personne) e; 
+        }
+        return null; 
     }
 
     public static void deconnexion() {
