@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,7 +7,7 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.text.ParseException;
 import javax.persistence.Entity;
 /**
  *
@@ -17,8 +18,8 @@ public class Animal extends Intervention implements Serializable {
 
     private String animal ; 
 
-    public Animal(String animal, String description, Date dateDebut, Date dateFin) {
-        super(description, dateDebut, dateFin);
+    public Animal(String animal, String description) throws ParseException {
+        super(description);
         this.animal = animal;
     }
 

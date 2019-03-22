@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,6 +7,9 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,10 +37,15 @@ public abstract class Intervention implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin ; 
 
-    public Intervention(String description, Date dateDebut, Date dateFin) {
+    public Intervention(String description) throws ParseException {
         this.description = description;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	Date date = new Date();
+        try{
+        this.dateDebut = dateFormat.parse(dateFormat.format(date));
+        }catch(ParseException e ){
+            e.printStackTrace();
+        }
     }
 
     public Intervention() {
