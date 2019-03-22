@@ -103,16 +103,44 @@ public class Service {
         
     }
 
-    public static void deconnexion() {
-
-    }
-
-    public static void demandeIntervention( ) {
+      public static void demandeInterventionIncident(Client c ,String description ) throws ParseException {
+        Incident i = new Incident(description);
+        List<Employe> listeEmploye = EmployeDao.listerEmployesDisponibles();
+        double duree =Double.MAX_VALUE;
+        Employe e=null;
+        if(listeEmploye!=null)
+        {
+            for(Employe e2 : listeEmploye)
+            {
+                double dureeDistanceVelo = GeoTest.getTripDurationByBicycleInMinute(e2.getCoord(),c.getCoord());
+                if(duree<dureeDistanceVelo)
+                {
+                    duree=dureeDistanceVelo;
+                    e=e2;
+                }
+                
+            }
+        c.addHistoInterventions(i);
+        JpaUtil.creerEntityManager();
+        JpaUtil.ouvrirTransaction();
+        IncidentDao.persist(i);
+        JpaUtil.validerTransaction();
+        JpaUtil.fermerEntityManager();
+        }
         
     }
 
     public static void affecterEmployer() {
 
+    }
+    
+    public static void recupererListeIntervention(Client c){
+        JpaUtil.creerEntityManager();
+        List<Intervention> histoInterventions;
+        JpaUtil.fermerEntityManager();
+        
+        
+        
     }
 
 }
