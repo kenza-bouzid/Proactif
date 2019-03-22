@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -36,6 +37,26 @@ public abstract class Intervention implements Serializable {
     private Date dateDebut; 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin ; 
+    @ManyToOne 
+    private Employe monEmploye; 
+    @ManyToOne 
+    private Client monClient; 
+
+    public Employe getMonEmploye() {
+        return monEmploye;
+    }
+
+    public void setMonEmploye(Employe monEmploye) {
+        this.monEmploye = monEmploye;
+    }
+
+    public Client getMonClient() {
+        return monClient;
+    }
+
+    public void setMonClient(Client monClient) {
+        this.monClient = monClient;
+    }
 
     public Intervention(String description) throws ParseException {
         this.description = description;
