@@ -8,10 +8,14 @@ package fr.insalyon.dasi.proactif.metier.modele;
 import com.google.maps.model.LatLng;
 import java.io.Serializable;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -21,7 +25,7 @@ import javax.persistence.OneToMany;
 public class Employe extends Personne implements Serializable {
 
     @OneToMany
-    private List<Intervention> tabBord ;
+    private List<Intervention> tabBord;
 
     public List<Intervention> getTabBord() {
         return tabBord;
@@ -30,24 +34,26 @@ public class Employe extends Personne implements Serializable {
     public void setTabBord(List<Intervention> tabBord) {
         this.tabBord = tabBord;
     }
-    
-    private Time debutTravail; 
-    private Time finTravail; 
-    private boolean estEnIntervention ; 
 
-    public Time getDebutTravail() {
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date debutTravail;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date finTravail;
+    private boolean estEnIntervention;
+
+    public Date getDebutTravail() {
         return debutTravail;
     }
 
-    public void setDebutTravail(Time debutTravail) {
-        this.debutTravail = debutTravail;
-    }
-
-    public Time getFinTravail() {
+    public Date getFinTravail() {
         return finTravail;
     }
 
-    public void setFinTravail(Time finTravail) {
+    public void setDebutTravail(Date debutTravail) {
+        this.debutTravail = debutTravail;
+    }
+
+    public void setFinTravail(Date finTravail) {
         this.finTravail = finTravail;
     }
 
@@ -59,16 +65,24 @@ public class Employe extends Personne implements Serializable {
         this.estEnIntervention = estEnIntervention;
     }
 
-    public Employe(Time debutTravail, Time finTravail, String civilite,
-           String nom, String prenom, String dateNaissance, LatLng coord, 
-           String numTel, String adresseElec, String mdp) throws ParseException {
+    public Employe(String debut, String fin, String civilite,
+            String nom, String prenom, String dateNaissance, LatLng coord,
+            String numTel, String adresseElec, String mdp) throws ParseException {
         super(civilite, nom, prenom, dateNaissance, coord, numTel, adresseElec, mdp);
-        this.debutTravail = debutTravail;
-        this.finTravail = finTravail;
+        DateFormat format = new SimpleDateFormat("HH:mm:ss");
+        try{
+             this.debutTravail = format.parse(debut);
+            this.finTravail = format.parse(fin);  
+        }
+        catch (ParseException e )
+        {
+            e.printStackTrace();
+        }
+       
+        this.estEnIntervention = false; 
     }
 
     public Employe() {
     }
-    
- 
+
 }
