@@ -6,6 +6,7 @@
 package fr.insalyon.dasi.proactif.dao;
 
 import fr.insalyon.dasi.proactif.metier.modele.Animal;
+import fr.insalyon.dasi.proactif.metier.modele.Incident;
 
 /**
  *
@@ -15,6 +16,10 @@ public class IncidentDao {
     
     public static void persist(Animal a) {
         JpaUtil.obtenirEntityManager().persist(a);
+    }
+
+    public static void persist(Incident i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

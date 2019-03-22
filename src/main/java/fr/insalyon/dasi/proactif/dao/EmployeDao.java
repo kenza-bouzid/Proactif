@@ -45,4 +45,8 @@ public class EmployeDao {
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
         return (List<Employe>) query.getResultList();
     }
+
+    public static List<Employe> listerEmployesDisponibles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
