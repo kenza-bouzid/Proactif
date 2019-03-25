@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package fr.insalyon.dasi.proactif;
+import fr.insalyon.dasi.proactif.dao.InterventionDao;
 import fr.insalyon.dasi.proactif.dao.JpaUtil;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
+import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import fr.insalyon.dasi.proactif.metier.modele.Incident;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.metier.service.Service;
@@ -35,10 +37,9 @@ public class Test {
         Service.envoyerNotifEmploye(i);
         Service.cloturerIntervention(i, "Tout bon", true);
         Service.envoyerNotifClient(i);
-        
-        
+        Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp9@gmail.com", "258"));
         JpaUtil.destroy();
-        
+     
        
         
 

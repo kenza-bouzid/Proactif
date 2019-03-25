@@ -195,4 +195,10 @@ public class Service {
         }
     }
 
+    public static void RecupererInterventionsDuJour(Employe e){
+        JpaUtil.creerEntityManager();
+        InterventionDao.RecupererInterventionsDuJour(e);
+        JpaUtil.fermerEntityManager();
+    
+    }
 }
