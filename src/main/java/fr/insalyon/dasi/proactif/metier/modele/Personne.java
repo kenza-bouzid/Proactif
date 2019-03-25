@@ -12,11 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Temporal;
 import com.google.maps.model.LatLng;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 
 /**
@@ -33,29 +30,40 @@ public abstract class Personne implements Serializable {
     private String civilite;
     private String nom;
     private String prenom;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateNaissance;
+    @Basic
+    private java.sql.Date dateNaissance;
+    private String adresse;
     private LatLng coord;
     private String numTel;
-    @Column(unique=true, nullable=false) 
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+    @Column(unique = true, nullable = false)
     private String adresseElec;
     private String mdp;
 
     public Personne() {
     }
 
-    public Personne(String civilite, String nom, String prenom, String 
-                    dateNaissance, LatLng coord, String numTel, String 
-                    adresseElec, String mdp) throws ParseException {
+    public Personne(String civilite, String nom, String prenom, String dateNaissance, String adresse, String numTel, String adresseElec, String mdp) {
         this.civilite = civilite;
         this.nom = nom;
         this.prenom = prenom;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        this.dateNaissance = sdf.parse(dateNaissance);
-        this.coord = coord;
+        this.dateNaissance = java.sql.Date.valueOf(dateNaissance);
+        this.adresse = adresse;
         this.numTel = numTel;
         this.adresseElec = adresseElec;
         this.mdp = mdp;
+    }
+
+    @Override
+    public String toString() {
+        return "Personne{" + "id=" + id + ", civilite=" + civilite + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", adresse=" + adresse + ", coord=" + coord + ", numTel=" + numTel + ", adresseElec=" + adresseElec + ", mdp=" + mdp + '}';
     }
 
     public String getCivilite() {
@@ -82,11 +90,11 @@ public abstract class Personne implements Serializable {
         this.prenom = prenom;
     }
 
-    public Date getDateNaissance() {
+    public java.sql.Date getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(java.sql.Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -133,11 +141,14 @@ public abstract class Personne implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Personne)) {
+        if (!(object instanceof Intervention)) {
             return false;
         }
         Personne other = (Personne) object;
-        return other.adresseElec.equals(this.adresseElec);
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

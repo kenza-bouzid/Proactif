@@ -7,25 +7,25 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.text.DateFormat;
+import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 /**
  *
  * @author utilisateur
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Intervention implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,40 +33,46 @@ public abstract class Intervention implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numIntervention;
     private String description ; 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateDebut; 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateFin ; 
+    private boolean status ; 
+    @Basic
+    private java.sql.Date dateDebut; 
+    @Basic
+    private java.sql.Date dateFin ; 
     @ManyToOne 
-    private Employe monEmploye; 
+    @JoinColumn(name="EMPLOYE_ID", referencedColumnName="id")
+    private Employe employeAffecte; 
     @ManyToOne 
-    private Client monClient; 
+    @JoinColumn(name="CLIENT_ID", referencedColumnName="id")
+    private Client client; 
 
-    public Employe getMonEmploye() {
-        return monEmploye;
+    public Employe getEmployeAffecte() {
+        return employeAffecte;
     }
 
-    public void setMonEmploye(Employe monEmploye) {
-        this.monEmploye = monEmploye;
+    public void setEmployeAffecte(Employe employeAffecte) {
+        this.employeAffecte = employeAffecte;
     }
 
-    public Client getMonClient() {
-        return monClient;
+    public Client getClient() {
+        return client;
     }
 
-    public void setMonClient(Client monClient) {
-        this.monClient = monClient;
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Intervention(String description) throws ParseException {
         this.description = description;
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	Date date = new Date();
-        try{
-        this.dateDebut = dateFormat.parse(dateFormat.format(date));
-        }catch(ParseException e ){
-            e.printStackTrace();
-        }
+        this.dateDebut = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        this.status = false; 
     }
 
     public Intervention() {
@@ -88,22 +94,25 @@ public abstract class Intervention implements Serializable {
         this.description = description;
     }
 
-    public Date getDateDebut() {
+    public java.sql.Date getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(java.sql.Date dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public java.sql.Date getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(java.sql.Date dateFin) {
         this.dateFin = dateFin;
     }
-    
+    public Time getTimeDebut ()
+    {
+        return new Time(this.getDateDebut().getTime()) ; 
+    }
     @Override
     public int hashCode() {
         int hash = 0;

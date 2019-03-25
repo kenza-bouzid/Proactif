@@ -2,12 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="Proactif" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>fr.insalyon.dasi.proactif.metier.modele.Intervention</class>
-    <class>fr.insalyon.dasi.proactif.metier.modele.Livraison</class>
     <class>fr.insalyon.dasi.proactif.metier.modele.Animal</class>
-    <class>fr.insalyon.dasi.proactif.metier.modele.Incident</class>
     <class>fr.insalyon.dasi.proactif.metier.modele.Client</class>
     <class>fr.insalyon.dasi.proactif.metier.modele.Employe</class>
+    <class>fr.insalyon.dasi.proactif.metier.modele.Incident</class>
+    <class>fr.insalyon.dasi.proactif.metier.modele.Intervention</class>
+    <class>fr.insalyon.dasi.proactif.metier.modele.Livraison</class>
     <class>fr.insalyon.dasi.proactif.metier.modele.Personne</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/Proactif"/>

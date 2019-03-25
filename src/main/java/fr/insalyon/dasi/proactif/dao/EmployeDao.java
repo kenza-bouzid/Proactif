@@ -6,6 +6,8 @@
 package fr.insalyon.dasi.proactif.dao;
 
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -16,8 +18,8 @@ import javax.persistence.Query;
  */
 public class EmployeDao {
 
-    public static void persist(Employe c) {
-        JpaUtil.obtenirEntityManager().persist(c);
+    public static void persist(Employe e) {
+        JpaUtil.obtenirEntityManager().persist(e);
     }
 
     public static Employe findByEMail(String mail, String mdp) {
@@ -46,7 +48,19 @@ public class EmployeDao {
         return (List<Employe>) query.getResultList();
     }
 
-    public static List<Employe> listerEmployesDisponibles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static List<Employe> listerEmployesDisponibles(Time date) {
+        String jpql = "select e from Employe e where e.estEnIntervention=0 and e.debutTravail<:date and e.finTravail>:date";
+        Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
+        query  = query.setParameter("date", date);
+        List<Employe> results = query.getResultList();
+        if (results.isEmpty()) {
+            results = null;
+        }
+        return results;
+
+    }
+
+    public static Employe merge(Employe e) {
+        return JpaUtil.obtenirEntityManager().merge(e);
     }
 }

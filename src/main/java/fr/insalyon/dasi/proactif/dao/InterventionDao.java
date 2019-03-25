@@ -5,7 +5,6 @@
  */
 package fr.insalyon.dasi.proactif.dao;
 
-import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 
 /**
@@ -13,6 +12,9 @@ import fr.insalyon.dasi.proactif.metier.modele.Intervention;
  * @author utilisateur
  */
 public class InterventionDao {
-    
-   
+
+    public static void persist(Intervention i) {
+        JpaUtil.obtenirEntityManager().persist(i);
+    }
+
 }

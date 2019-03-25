@@ -5,17 +5,13 @@
  */
 package fr.insalyon.dasi.proactif.metier.modele;
 
-import com.google.maps.model.LatLng;
 import java.io.Serializable;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -24,9 +20,9 @@ import javax.persistence.Temporal;
 @Entity
 public class Employe extends Personne implements Serializable {
 
-    @OneToMany
-    private List<Intervention> tabBord;
+    @OneToMany(mappedBy= "employeAffecte")
     
+    private List<Intervention> tabBord;
 
     public List<Intervention> getTabBord() {
         return tabBord;
@@ -36,25 +32,25 @@ public class Employe extends Personne implements Serializable {
         this.tabBord = tabBord;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date debutTravail;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date finTravail;
+    @Basic
+    private Time debutTravail;
+    @Basic
+    private Time finTravail;
     private boolean estEnIntervention;
 
-    public Date getDebutTravail() {
+    public Time getDebutTravail() {
         return debutTravail;
     }
 
-    public Date getFinTravail() {
-        return finTravail;
-    }
-
-    public void setDebutTravail(Date debutTravail) {
+    public void setDebutTravail(Time debutTravail) {
         this.debutTravail = debutTravail;
     }
 
-    public void setFinTravail(Date finTravail) {
+    public Time getFinTravail() {
+        return finTravail;
+    }
+
+    public void setFinTravail(Time finTravail) {
         this.finTravail = finTravail;
     }
 
@@ -67,23 +63,23 @@ public class Employe extends Personne implements Serializable {
     }
 
     public Employe(String debut, String fin, String civilite,
-            String nom, String prenom, String dateNaissance, LatLng coord,
+            String nom, String prenom, String dateNaissance, String adresse,
             String numTel, String adresseElec, String mdp) throws ParseException {
-        super(civilite, nom, prenom, dateNaissance, coord, numTel, adresseElec, mdp);
-        DateFormat format = new SimpleDateFormat("HH:mm:ss");
-        try{
-             this.debutTravail = format.parse(debut);
-            this.finTravail = format.parse(fin);  
-        }
-        catch (ParseException e )
-        {
-            e.printStackTrace();
-        }
-       
-        this.estEnIntervention = false; 
+        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
+        debutTravail = java.sql.Time.valueOf(debut);
+        
+        
+        this.estEnIntervention = false;
     }
 
     public Employe() {
+        super();
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"Employe{" + "debutTravail=" + debutTravail + ", estEnIntervention=" + estEnIntervention + '}';
+    }
+
 
 }

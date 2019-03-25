@@ -66,4 +66,8 @@ public class ClientDao {
         }
         return foundEntity;
     }
+    
+    public static Client merge(Client c) {
+        return JpaUtil.obtenirEntityManager().merge(c);
+    }
 }

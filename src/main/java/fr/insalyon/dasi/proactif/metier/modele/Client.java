@@ -18,10 +18,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 
-public class Client extends Personne implements Serializable{
-    
-    @OneToMany
-    private List<Intervention> histoInterventions ; 
+public class Client extends Personne implements Serializable {
+
+    @OneToMany(mappedBy = "client")
+    private List<Intervention> histoInterventions;
 
     public List<Intervention> getHistoInterventions() {
         return histoInterventions;
@@ -30,17 +30,18 @@ public class Client extends Personne implements Serializable{
     public void setHistoInterventions(List<Intervention> histoInterventions) {
         this.histoInterventions = histoInterventions;
     }
-    
+
     public Client() {
+        super(); 
     }
 
-    public Client(String civilite, String nom, String prenom, String dateNaissance, 
-            LatLng coord, String numTel, String adresseElec, String mdp) throws ParseException {
-        super(civilite, nom, prenom, dateNaissance, coord, numTel, adresseElec, mdp);
+    public Client(String civilite, String nom, String prenom, String dateNaissance,
+            String adresse, String numTel, String adresseElec, String mdp) throws ParseException {
+        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
     }
 
-    public void addHistoInterventions(Incident i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean addHistoInterventions(Intervention i) {
+        return this.histoInterventions.add(i);
     }
 
 }
