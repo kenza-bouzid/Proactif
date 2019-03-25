@@ -30,8 +30,10 @@ public class Test {
         {
             System.out.println("Vous etes connecté");
         }
-        Incident i = new Incident ("gyomklhjvh"); 
+        Incident i = new Incident ("mon voisin m'a signalé un incident"); 
         System.out.println(Service.demandeIntervention(c, i));
+        
+        Service.cloturerIntervention(i, "Tout bon", true);
         
         
         JpaUtil.destroy();

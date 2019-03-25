@@ -8,6 +8,7 @@ package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
 import javax.persistence.Basic;
@@ -32,18 +33,34 @@ public abstract class Intervention implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numIntervention;
+    
     private String description ; 
+   
     private boolean status ; 
+    
     @Basic
-    private java.sql.Date dateDebut; 
+    private java.sql.Timestamp dateDebut; 
+    
     @Basic
-    private java.sql.Date dateFin ; 
+    private java.sql.Timestamp dateFin ; 
+    
+    private String commentaire ; 
+    
     @ManyToOne 
     @JoinColumn(name="EMPLOYE_ID", referencedColumnName="id")
     private Employe employeAffecte; 
+    
     @ManyToOne 
     @JoinColumn(name="CLIENT_ID", referencedColumnName="id")
     private Client client; 
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
 
     public Employe getEmployeAffecte() {
         return employeAffecte;
@@ -71,7 +88,7 @@ public abstract class Intervention implements Serializable {
 
     public Intervention(String description) throws ParseException {
         this.description = description;
-        this.dateDebut = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         this.status = false; 
     }
 
@@ -94,21 +111,23 @@ public abstract class Intervention implements Serializable {
         this.description = description;
     }
 
-    public java.sql.Date getDateDebut() {
+    public Timestamp getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(java.sql.Date dateDebut) {
+    public void setDateDebut(Timestamp dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public java.sql.Date getDateFin() {
+    public Timestamp getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(java.sql.Date dateFin) {
+    public void setDateFin(Timestamp dateFin) {
         this.dateFin = dateFin;
     }
+
+   
     public Time getTimeDebut ()
     {
         return new Time(this.getDateDebut().getTime()) ; 

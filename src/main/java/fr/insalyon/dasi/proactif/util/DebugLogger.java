@@ -1,5 +1,7 @@
 package fr.insalyon.dasi.proactif.util;
 
+import fr.insalyon.dasi.proactif.metier.modele.Employe;
+
 /**
  *
  * @author DASI Team
@@ -58,5 +60,9 @@ public class DebugLogger {
         }
         
         DebugLogger.log("** Fin du Test **");
+    }
+
+    public static void log(Employe employeAffecte) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

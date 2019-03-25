@@ -17,4 +17,7 @@ public class InterventionDao {
         JpaUtil.obtenirEntityManager().persist(i);
     }
 
+    public static Intervention merge(Intervention i) {
+        return JpaUtil.obtenirEntityManager().merge(i);
+    }
 }

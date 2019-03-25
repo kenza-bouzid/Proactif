@@ -14,10 +14,13 @@ import fr.insalyon.dasi.proactif.metier.modele.Client;
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
+import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
+import javax.persistence.RollbackException;
 
 public class Service {
 
@@ -80,10 +83,11 @@ public class Service {
             for (Employe e : listeEmploye) {
                 System.out.println(e);
                 Double dureeDistanceVelo = GeoTest.getTripDurationByBicycleInMinute(e.getCoord(), c.getCoord());
-                System.out.println("hey");
-                if (duree < dureeDistanceVelo) {
+                System.out.println(dureeDistanceVelo);
+                if (duree > dureeDistanceVelo) {
                     duree = dureeDistanceVelo;
                     employeAffecte = e;
+
                 }
             }
             if (employeAffecte != null) {
@@ -103,64 +107,59 @@ public class Service {
         return i.isStatus();
     }
 
-    public static void affecterEmployer() {
-
-    }
-
-    public static void recupererListeIntervention(Client c) {
-        JpaUtil.creerEntityManager();
-        List<Intervention> histoInterventions;
-        JpaUtil.fermerEntityManager();
-
-    }
-
-    /*public static Intervention recupererInterventionCourante (Employe p)
+    public static void cloturerIntervention (Intervention i, String commentaire , boolean Status)
     {
-        if (!p.isEstEnIntervention())
-        {
-            return null ; 
-        }
-        else 
-        {
-            
-        }
-    }*/
-    public static void Initialisation() throws ParseException {
+        i.setDateFin(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+        i.setCommentaire(commentaire); 
+        i.setStatus(Status);
         JpaUtil.creerEntityManager();
         JpaUtil.ouvrirTransaction();
-        Employe e = new Employe("08:00:00", "18:00:00", "Mr", "Jeanne", "Julien", "1996-09-25", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0689743698", "emp1@gmail.com", "159");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("10:00:00", "14:00:00", "Mr", "Jeanne", "Bob", "1994-10-15", "37 Avenue Jean Capelle Est, Villeurbanne", "0669892316", "emp2@gmail.com", "175");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("08:00:00", "20:00:00", "Mr", "Loic", "Laura", "1992-04-02", "61 Avenue Roger Salengro, Villeurbanne", "0689746315", "emp3@gmail.com", "195");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("06:00:00", "22:00:00", "Mme", "Cavagna", "Lea", "1994-10-14", "15 Avenue Roger Salengro, Villeurbanne", "0634897512", "emp4@gmail.com", "164");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("11:00:00", "16:00:00", "Mme", "Paquet", "Louise", "1998-04-01", "20 Avenue Albert Einstein, Villeurbanne", "03987463158", "emp5@gmail.com", "179");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("16:30:00", "2:00:00", "Mr", "Genest", "Marc", "1998-06-03", "37 Avenue Jean Capelle Est, Villeurbanne", "03698745216", "emp6@gmail.com", "167");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("08:00:00", "02:00:00", "Mr", "Lelouard", "Pierre", "1997-09-03", "20 Avenue Jean Capelle Ouest, Villeurbanne", "07956314289", "emp7@gmail.com", "495");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("10:00:00", "19:00:00", "Mr", "Hamidovic", "Martin", "1994-07-01", "7 Avenue Jean Capelle Est, Villeurbanne", "06479515697", "emp8@gmail.com", "369");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("16:00:00", "23:45:00", "Mr", "Scotto", "David", "1970-04-27", "21 Avenue Albert Einstein, Villeurbanne", "02698756325", "emp9@gmail.com", "258");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
-        e = new Employe("12:00:00", "23:00:00", "Mr", "Tandereau", "Nathan", "1964-05-07", "69 Avenue Roger Salengro, Villeurbanne", "06479951463", "emp10@gmail.com", "147");
-        e.setCoord(GeoTest.getLatLng(e.getAdresse()));
-        EmployeDao.persist(e);
+        InterventionDao.merge(i); 
         JpaUtil.validerTransaction();
         JpaUtil.fermerEntityManager();
-
     }
+    public static void Initialisation() throws ParseException {
+
+        try {
+            JpaUtil.creerEntityManager();
+            JpaUtil.ouvrirTransaction();
+            Employe e = new Employe("08:00:00", "18:00:00", "Mr", "Jeanne", "Julien", "1996-09-25", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0689743698", "emp1@gmail.com", "159");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("10:00:00", "14:00:00", "Mr", "Jeanne", "Bob", "1994-10-15", "37 Avenue Jean Capelle Est, Villeurbanne", "0669892316", "emp2@gmail.com", "175");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("08:00:00", "20:00:00", "Mr", "Loic", "Laura", "1992-04-02", "61 Avenue Roger Salengro, Villeurbanne", "0689746315", "emp3@gmail.com", "195");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("06:00:00", "22:00:00", "Mme", "Cavagna", "Lea", "1994-10-14", "15 Avenue Roger Salengro, Villeurbanne", "0634897512", "emp4@gmail.com", "164");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("11:00:00", "16:00:00", "Mme", "Paquet", "Louise", "1998-04-01", "20 Avenue Albert Einstein, Villeurbanne", "03987463158", "emp5@gmail.com", "179");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("16:30:00", "2:00:00", "Mr", "Genest", "Marc", "1998-06-03", "37 Avenue Jean Capelle Est, Villeurbanne", "03698745216", "emp6@gmail.com", "167");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("08:00:00", "02:00:00", "Mr", "Lelouard", "Pierre", "1997-09-03", "20 Avenue Jean Capelle Ouest, Villeurbanne", "07956314289", "emp7@gmail.com", "495");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("10:00:00", "19:00:00", "Mr", "Hamidovic", "Martin", "1994-07-01", "7 Avenue Jean Capelle Est, Villeurbanne", "06479515697", "emp8@gmail.com", "369");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("16:00:00", "23:45:00", "Mr", "Scotto", "David", "1970-04-27", "21 Avenue Albert Einstein, Villeurbanne", "02698756325", "emp9@gmail.com", "258");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            e = new Employe("12:00:00", "23:00:00", "Mr", "Tandereau", "Nathan", "1964-05-07", "69 Avenue Roger Salengro, Villeurbanne", "06479951463", "emp10@gmail.com", "147");
+            e.setCoord(GeoTest.getLatLng(e.getAdresse()));
+            EmployeDao.persist(e);
+            JpaUtil.validerTransaction();
+            JpaUtil.fermerEntityManager();
+        } catch (ParseException | RollbackException e) {
+            JpaUtil.annulerTransaction();
+        }
+    }
+    
+    
 
 }

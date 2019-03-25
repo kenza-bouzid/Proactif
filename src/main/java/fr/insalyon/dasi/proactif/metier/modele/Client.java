@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 
 public class Client extends Personne implements Serializable {
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany
     private List<Intervention> histoInterventions;
 
     public List<Intervention> getHistoInterventions() {
