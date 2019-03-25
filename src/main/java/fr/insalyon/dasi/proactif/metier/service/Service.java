@@ -60,6 +60,15 @@ public class Service {
             return 0;
         }
     }
+    public static void updateMdp (Client c , String mdp)
+    {
+        c.setMdp(mdp); 
+        JpaUtil.creerEntityManager();
+        JpaUtil.ouvrirTransaction();
+        ClientDao.merge(c); 
+        JpaUtil.validerTransaction();
+        JpaUtil.fermerEntityManager();    
+    }
 
     public static Personne connexion(String mail, String mdp) {
         JpaUtil.creerEntityManager();
