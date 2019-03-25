@@ -10,14 +10,17 @@ import fr.insalyon.dasi.proactif.dao.EmployeDao;
 import fr.insalyon.dasi.proactif.dao.InterventionDao;
 import fr.insalyon.dasi.proactif.dao.JpaUtil;
 import fr.insalyon.dasi.proactif.dao.PersonneDao;
+import fr.insalyon.dasi.proactif.metier.modele.Animal;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
+import fr.insalyon.dasi.proactif.metier.modele.Incident;
 import fr.insalyon.dasi.proactif.metier.modele.Intervention;
+import fr.insalyon.dasi.proactif.metier.modele.Livraison;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
-import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.RollbackException;
@@ -107,17 +110,40 @@ public class Service {
         return i.isStatus();
     }
 
-    public static void cloturerIntervention (Intervention i, String commentaire , boolean Status)
-    {
+    public static void envoyerNotifEmploye(Intervention i) {
+        String type="";
+        if (i instanceof Animal) {
+            Animal a = (Animal) i;
+            type = "Animal pour "+a.getAnimal() ; 
+        } else if (i instanceof Incident) {
+            type = "Incident";
+        } else if (i instanceof Livraison) {
+            Livraison l = (Livraison)i; 
+            type = "Livraison de la part de l'entreprise: "+ ((Livraison) i).getEntreprise()+" pour l'objet: "+((Livraison) i).getObjet();
+        }
+        String date = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(i.getTimeDebut());
+        Message.envoyerNotification(i.getEmployeAffecte().getNumTel(), "Intervention "+type+" le " + date+ " pour " + i.getClient().getPrenom() + " " + i.getClient().getNom() + " (#" + i.getClient().getId() + "), "+ i.getClient().getAdresse() + ". <<" + i.getDescription() + ">>. " + "Trajet:" + GeoTest.getFlightDistanceInKm(i.getEmployeAffecte().getCoord(), i.getClient().getCoord())+" Km.");
+    }
+    
+    public static void envoyerNotifClient(Intervention i) {
+        String dateDebut = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(i.getTimeDebut());
+        String dateFin = new SimpleDateFormat("HH:mm").format(i.getTimeDebut());
+        Message.envoyerNotification(i.getClient().getNumTel(), "Votre demande du "+dateDebut+" a été clôturée à "+dateFin+ ". "+i.getCommentaire());
+    }
+    
+    
+
+    public static void cloturerIntervention(Intervention i, String commentaire, boolean Status) {
         i.setDateFin(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-        i.setCommentaire(commentaire); 
+        i.setCommentaire(commentaire);
         i.setStatus(Status);
         JpaUtil.creerEntityManager();
         JpaUtil.ouvrirTransaction();
-        InterventionDao.merge(i); 
+        InterventionDao.merge(i);
         JpaUtil.validerTransaction();
         JpaUtil.fermerEntityManager();
     }
+
     public static void Initialisation() throws ParseException {
 
         try {
@@ -159,7 +185,5 @@ public class Service {
             JpaUtil.annulerTransaction();
         }
     }
-    
-    
 
 }

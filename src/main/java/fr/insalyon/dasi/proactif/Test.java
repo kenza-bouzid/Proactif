@@ -32,8 +32,9 @@ public class Test {
         }
         Incident i = new Incident ("mon voisin m'a signalé un incident"); 
         System.out.println(Service.demandeIntervention(c, i));
-        
+        Service.envoyerNotifEmploye(i);
         Service.cloturerIntervention(i, "Tout bon", true);
+        Service.envoyerNotifClient(i);
         
         
         JpaUtil.destroy();
