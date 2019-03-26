@@ -132,6 +132,13 @@ public abstract class Intervention implements Serializable {
     {
         return new Time(this.getDateDebut().getTime()) ; 
     }
+
+    @Override
+    public String toString() {
+        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + status + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + client + '}';
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;

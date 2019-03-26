@@ -39,7 +39,7 @@ public class Test {
         Client e = (Client) Service.connexion("test@gmail.com", "123");
         
         System.out.println(e);
-        Service.HistoriqueClient("animal",e);
+        Service.HistoriqueClientParDate("26/03/2012",e);
         Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp9@gmail.com", "258"));
         JpaUtil.destroy();
      

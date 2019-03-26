@@ -203,14 +203,17 @@ public class Service {
         return InterventionDuJour;
     }
     
-    public static List<Intervention> HistoriqueClient(String type, Client c){
+    public static List<Intervention> HistoriqueClientParType(String type, Client c){
         JpaUtil.creerEntityManager();
-        List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClient(type, c);
+        List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClientParType(type, c);
         JpaUtil.fermerEntityManager();
         return HistoriqueClient;
     }
     
-    public static void HistoriqueClient(){
-        
+    public static List<Intervention> HistoriqueClientParDate(String date, Client c) throws ParseException{
+        JpaUtil.creerEntityManager();
+        List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClientParDate(date, c);
+        JpaUtil.fermerEntityManager();
+        return HistoriqueClient;
     }    
 }
