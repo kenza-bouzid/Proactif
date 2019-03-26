@@ -147,8 +147,11 @@ public class Service {
         i.setDateFin(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
         i.setCommentaire(commentaire);
         i.setStatus(Status);
+        Employe e = i.getEmployeAffecte();
+        e.setEstEnIntervention(false);
         JpaUtil.creerEntityManager();
         JpaUtil.ouvrirTransaction();
+        EmployeDao.merge(e);
         InterventionDao.merge(i);
         JpaUtil.validerTransaction();
         JpaUtil.fermerEntityManager();
@@ -213,6 +216,13 @@ public class Service {
     public static List<Intervention> HistoriqueClientParDate(String date, Client c) throws ParseException{
         JpaUtil.creerEntityManager();
         List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClientParDate(date, c);
+        JpaUtil.fermerEntityManager();
+        return HistoriqueClient;
+    }    
+    
+    public static List<Intervention> HistoriqueClientParTypeEtDate(String type,String date, Client c) throws ParseException{
+        JpaUtil.creerEntityManager();
+        List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClientParTypeEtDate(type,date, c);
         JpaUtil.fermerEntityManager();
         return HistoriqueClient;
     }    

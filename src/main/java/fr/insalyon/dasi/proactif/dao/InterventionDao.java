@@ -116,4 +116,8 @@ public class InterventionDao {
         return HistoriqueClient;
     }
     
+    public static List<Intervention> HistoriqueClientParTypeEtDate(String type, String date, Client c ) throws ParseException{
+        return null;
+    }
+    
 }
