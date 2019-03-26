@@ -36,9 +36,10 @@ public class Test {
         Service.envoyerNotifEmploye(i);
         Service.cloturerIntervention(i, "Tout bon", true);
         Service.envoyerNotifClient(i);
-        Employe e = (Employe) Service.connexion("emp9@gmail.com", "258");
+        Client e = (Client) Service.connexion("test@gmail.com", "123");
         
         System.out.println(e);
+        Service.HistoriqueClient("animal",e);
         Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp9@gmail.com", "258"));
         JpaUtil.destroy();
      

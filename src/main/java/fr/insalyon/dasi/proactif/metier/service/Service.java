@@ -203,5 +203,14 @@ public class Service {
         return InterventionDuJour;
     }
     
+    public static List<Intervention> HistoriqueClient(String type, Client c){
+        JpaUtil.creerEntityManager();
+        List<Intervention> HistoriqueClient=InterventionDao.HistoriqueClient(type, c);
+        JpaUtil.fermerEntityManager();
+        return HistoriqueClient;
+    }
     
+    public static void HistoriqueClient(){
+        
+    }    
 }
