@@ -23,6 +23,11 @@ public class Client extends Personne implements Serializable {
     @OneToMany
     private List<Intervention> histoInterventions;
 
+    @Override
+    public String toString() {
+        return super.toString()+"Client{" + '}';
+    }
+
     public List<Intervention> getHistoInterventions() {
         return histoInterventions;
     }

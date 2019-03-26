@@ -21,7 +21,7 @@ public class PersonneDao {
     }
     
     public static Personne findByEMail(String mail , String mdp) {
-        String jpql = "select p from Client p where p.adresseElec = :mail and p.mdp = :mdp"; 
+        String jpql = "select p from Personne p where p.adresseElec = :mail and p.mdp = :mdp"; 
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
         query.setParameter("mail", mail);
         query.setParameter("mdp", mdp); 

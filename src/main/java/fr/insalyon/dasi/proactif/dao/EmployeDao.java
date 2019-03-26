@@ -57,7 +57,6 @@ public class EmployeDao {
             results = null;
         }
         return results;
-
     }
 
     public static Employe merge(Employe e) {

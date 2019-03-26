@@ -21,7 +21,6 @@ import javax.persistence.OneToMany;
 public class Employe extends Personne implements Serializable {
 
     @OneToMany
-    
     private List<Intervention> tabBord;
 
     public List<Intervention> getTabBord() {
