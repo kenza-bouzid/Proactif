@@ -196,10 +196,12 @@ public class Service {
         }
     }
 
-    public static void RecupererInterventionsDuJour(Employe e) {
+    public static List<Intervention> RecupererInterventionsDuJour(Employe e) {
         JpaUtil.creerEntityManager();
-        InterventionDao.RecupererInterventionsDuJour(e);
+        List<Intervention> InterventionDuJour = InterventionDao.RecupererInterventionsDuJour(e);
         JpaUtil.fermerEntityManager();
-
+        return InterventionDuJour;
     }
+    
+    
 }
