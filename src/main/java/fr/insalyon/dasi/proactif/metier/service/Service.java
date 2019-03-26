@@ -134,6 +134,7 @@ public class Service {
             type = "Livraison de la part de l'entreprise: " + ((Livraison) i).getEntreprise() + " pour l'objet: " + ((Livraison) i).getObjet();
         }
         String date = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(i.getTimeDebut());
+        
         Message.envoyerNotification(i.getEmployeAffecte().getNumTel(), "Intervention " + type + " le " + date + " pour " + i.getClient().getPrenom() + " " + i.getClient().getNom() + " (#" + i.getClient().getId() + "), " + i.getClient().getAdresse() + ". <<" + i.getDescription() + ">>. " + "Trajet:" + GeoTest.getFlightDistanceInKm(i.getEmployeAffecte().getCoord(), i.getClient().getCoord()) + " Km.");
     }
 

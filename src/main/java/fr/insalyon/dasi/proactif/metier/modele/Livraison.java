@@ -29,6 +29,11 @@ public class Livraison extends Intervention implements Serializable {
     public Livraison() {
     }
 
+    @Override
+    public String toString() {
+        return "Livraison{" + "objet=" + objet + ", entreprise=" + entreprise + '}';
+    }
+
     public String getObjet() {
         return objet;
     }

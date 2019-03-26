@@ -26,6 +26,7 @@ public class Animal extends Intervention implements Serializable {
     public Animal() {
     }
 
+    
     public String getAnimal() {
         return animal;
     }

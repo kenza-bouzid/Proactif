@@ -102,7 +102,6 @@ public class InterventionDao {
         cal2.set(Calendar.HOUR_OF_DAY,23);
         cal2.set(Calendar.MINUTE, 59);
         cal2.set(Calendar.SECOND,59);
-        System.out.println(cal2);
         Timestamp date1 = new Timestamp(cal1.getTime().getTime());
         Timestamp date2 = new Timestamp(cal2.getTime().getTime());
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
@@ -116,8 +115,65 @@ public class InterventionDao {
         return HistoriqueClient;
     }
     
-    public static List<Intervention> HistoriqueClientParTypeEtDate(String type, String date, Client c ) throws ParseException{
-        return null;
+    public static List<Intervention> HistoriqueClientParTypeEtDate(String typeIntervention, String date, Client c ) throws ParseException{
+        String jpql;
+        List<Intervention> HistoriqueClient=null;
+                
+        switch(typeIntervention)
+        {
+            case "incident":
+                jpql="select i from Incident i where i.client=:c and i.dateDebut>:date1 and i.dateFin<:date2";
+                break;
+            case "animal":
+                jpql="select a from Animal a where a.client=:c and a.dateDebut>:date1 and a.dateFin<:date2";
+                break;
+            case "livraison":
+                jpql="select l from Livraison l where l.client=:c and l.dateDebut>:date1 and l.dateFin<:date2";
+                break;
+            default:
+                jpql="";
+                
+        }
+        
+        
+        if(!jpql.equals(""))
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            try{
+                cal1.setTime(sdf.parse(date));
+                cal2.setTime(sdf.parse(date));
+
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
+            cal2.set(Calendar.HOUR_OF_DAY,23);
+            cal2.set(Calendar.MINUTE, 59);
+            cal2.set(Calendar.SECOND,59);
+            Timestamp date1 = new Timestamp(cal1.getTime().getTime());
+            Timestamp date2 = new Timestamp(cal2.getTime().getTime());
+            Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
+            query = query.setParameter("date1", date1,TemporalType.TIMESTAMP);
+            query = query.setParameter("date2", date2,TemporalType.TIMESTAMP);
+            query = query.setParameter("c", c);
+            HistoriqueClient = query.getResultList();
+            if (HistoriqueClient.isEmpty()) {
+                HistoriqueClient=null;
+            }
+        }
+        
+        if(HistoriqueClient!=null)
+        {
+            for(Intervention i : HistoriqueClient)
+            {
+                System.out.println(i);
+            }
+        }else{
+            System.out.println("aaaaaaaaaaaaaaaa");
+        }
+        
+        return HistoriqueClient;
     }
     
 }

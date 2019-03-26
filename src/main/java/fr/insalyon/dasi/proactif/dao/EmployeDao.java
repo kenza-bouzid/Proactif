@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -51,7 +52,7 @@ public class EmployeDao {
     public static List<Employe> listerEmployesDisponibles(Time date) {
         String jpql = "select e from Employe e where e.estEnIntervention=0 and e.debutTravail<:date and e.finTravail>:date";
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
-        query  = query.setParameter("date", date);
+        query  = query.setParameter("date", date,TemporalType.TIME);
         List<Employe> results = query.getResultList();
         if (results.isEmpty()) {
             results = null;
