@@ -13,7 +13,7 @@
 <body <p>Fichier à modifier/compélter</p>
     <p>
         
-        <input name="button1" type="button" id="myButton1" onClick="setBG();" value="1. Change background color to blue " />
+        <input name="button1" type="button" id="myButton1" onClick="Bouton1_setBG();" value="1. Change background color to blue " />
         <br />
 		
         <input name="button2" type="button" id="myButton2" onClick="document.body.style.backgroundColor = 'white';" value="2. Reset background color to white   " />
@@ -27,7 +27,7 @@
 		<input name="button4" type="button" id="myButton4" onClick="Bouton4_svg('exemple.svg','lesFormes');" value="4. Load and display an SVG image example" />
 		</br>
 		
-		<input name="button5" type="button" id="myButton5" onClick="clickable('#lesFormes g','titleP','title')" value="5. Make the example clickable" />
+		<input name="button5" type="button" id="myButton5" onClick="clickable('#lesFormes svg g','titleP','title')" value="5. Make the example clickable" />
 		<span > You've just clicked on </span>
 		<span id = "titleP" > </span>
 		</br>
@@ -35,28 +35,27 @@
 		<input name="button6" type="button" id="myButton6" onClick="Bouton4_svg('worldHigh.svg','world')" value="6. Load and display an SVG world image" />
 		</br>
 		
-		<input name="button7" type="button" id="myButton7" onClick="clickable('#world g', 'titleL' , 'countryname')" value="7. Make the world clickable" />
+		<input name="button7" type="button" id="myButton7" onClick="clickable('#world svg g', 'titleL' , 'countryname')" value="7. Make the world clickable" />
 		<span > You've just clicked on </span>
 		<span id = "titleL" > </span>
 		</br>
 		
-		<input name="button8" type="button" id="myButton8" onClick="" value="8. Make it stylish" />
+		<input name="button8" type="button" id="myButton8" onmouseover="Bouton8_stylish()" value="8. Make it stylish" />
 		</br>
 		
 		<input name="button9" type="button" id="myButton9" onClick="" value="9. Autocompletion" />
 		</br>
 		
-		<div >
-		<svg id="lesFormes" xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 100px; height: 100px">
-		</svg>
+		<div id="lesFormes">
 		</div>
 		</br>
 		
-		<div >
-		<svg id = "world" xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="width: 1106px; height: 800px">
-		</svg>
+		<div id="world" >
 		</div>
 		
+		<div id = "tab">
+			
+		</div>
 		
 		
 </body>

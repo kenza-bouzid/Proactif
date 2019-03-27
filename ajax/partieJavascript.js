@@ -16,7 +16,7 @@ function setNom(nom) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //change la couleur du background en bleu et la couleur du texte du boutton en blanc 
-function setBG() {
+function Bouton1_setBG() {
     window.document.body.style.backgroundColor = 'blue';
 	window.document.getElementById('myButton1').style.color = 'white' ;
 }
@@ -125,8 +125,9 @@ function Bouton4_svg(xmlDocumentUrl , param) {
 	
     var xmlDocument = chargerHttpXML(xmlDocumentUrl);
 	var elementHtml = document.getElementById(param);
-	var elementAInserer= xmlDocument.getElementsByTagName('svg'); 
-	elementHtml.innerHTML = elementAInserer[0].innerHTML; 
+	var elementAInserer= xmlDocument.querySelector('svg'); 
+	var oSerializer = new XMLSerializer();
+	elementHtml.innerHTML = oSerializer.serializeToString(elementAInserer);
 
 }
 
@@ -143,14 +144,35 @@ function clickable (param1 , param2 , param3){
 	}
 	}
 
-	
-
-	
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function Bouton4_ajaxEmployeesTableau(xmlDocumentUrl, xslDocumentUrl) {
-    //commenter la ligne suivante qui affiche la boîte de dialogue!
-    alert("Fonction à compléter...");
+function Bouton8_stylish() {
+	var carte = document.querySelector('#world svg g'); 
+	for (var i = 0 ; i < carte.children.length ; i++) {
+		var country = carte.children[i]; 
+		country.addEventListener('mouseover' , colorier); 
+		country.addEventListener('mouseleave' , function(event){
+			event.target.style.fill = ""; 	
+			document.getElementById('tab').innerHTML = "";
+		});
+	}
 }
+
+function colorier(event){
+	event.target.style.fill = "lightblue"; 
+	var xsltProcessor = new XSLTProcessor();
+	// Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone 
+	var xslDocument = chargerHttpXML('cherchePays2.xsl');
+	var param = event.target.getAttribute('countryname');
+	xsltProcessor.setParameter(null,"pays",param); 
+	xsltProcessor.importStylesheet(xslDocument);
+	 // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone 
+    var xmlDocument = chargerHttpXML('countriesTP.xml');
+    // Création du document XML transformé par le XSL
+    var newXmlDocument = xsltProcessor.transformToDocument(xmlDocument);
+	var eltHtml = document.getElementById('tab'); 
+	var eltXml = newXmlDocument.getElementsByTagName('table')[0]; 
+	console.log(eltXml);
+	eltHtml.innerHTML =eltXml; 
+}
+

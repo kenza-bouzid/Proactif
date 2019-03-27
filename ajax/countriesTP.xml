@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<?xml-stylesheet type="text/xsl" href="TPSol.xsl"?>
 <?xml-stylesheet type="text/xsl" href="cherchePays.xsl"?> 
+<?xml-stylesheet type="text/xsl" href="cherchePays2.xsl"?> 
 <!DOCTYPE countries SYSTEM "..\..\B3140_TPXML\TP_DW_2019\fichiers\countries.dtd">
 
 
