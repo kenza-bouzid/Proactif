@@ -1,4 +1,4 @@
-.<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -10,17 +10,19 @@
 
 </head>
 
-<body <p>Fichier à modifier/compélter</p>
-    <p>
+<body><h2>Partie 2 : DOM Ajax </h2>
+
         
         <input name="button1" type="button" id="myButton1" onClick="Bouton1_setBG();" value="1. Change background color to blue " />
         <br />
 		
-        <input name="button2" type="button" id="myButton2" onClick="document.body.style.backgroundColor = 'white';" value="2. Reset background color to white   " />
+        <input name="button2" type="button" id="myButton2" onClick="Bouton2_resetBG();" value="2. Reset background color to white   " />
         <br />
 		
+		<input name="text" type="text" id="myText1" value="" list="countries" onkeyup="autoComp()"/>
+		<datalist id="countries"></datalist>
         <input name="button3" type="button" id="myButton3" onClick="Bouton3_nomOffCap('countriesTP.xml','cherchePays.xsl');" value="4. Display country's official name and capital " />
-		<input name="text" type="text" id="myText1" value=""/>
+		
 		<span id = "cap"> </span>
 		<br/>
 		
@@ -40,10 +42,7 @@
 		<span id = "titleL" > </span>
 		</br>
 		
-		<input name="button8" type="button" id="myButton8" onmouseover="Bouton8_stylish()" value="8. Make it stylish" />
-		</br>
-		
-		<input name="button9" type="button" id="myButton9" onClick="" value="9. Autocompletion" />
+		<input name="button8" type="button" id="myButton8" onclick="Bouton8_stylish()" value="8. Make it stylish" />
 		</br>
 		
 		<div id="lesFormes">
@@ -54,10 +53,10 @@
 		</div>
 		
 		<div id = "tab">
-			
+			<table/>
 		</div>
 		
-		
+	
 </body>
 
 </html>

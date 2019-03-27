@@ -2,7 +2,7 @@
 
 <!-- New XSLT document created with EditiX XML Editor (http://www.editix.com) at Tue Mar 26 20:51:05 CET 2019 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html"/>
 	<xsl:param name="pays"/>
 	<xsl:template match="/">
@@ -14,7 +14,7 @@
 						<th>Capitale</th>
 						<th>Drapeau</th>
 					</tr>
-					<xsl:apply-templates select="//country[name/common='$pays']"/>
+					<xsl:apply-templates select="//country[name/common=$pays]"/>
 				</table>
 			</body>
 		</html>

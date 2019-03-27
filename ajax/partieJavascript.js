@@ -22,6 +22,14 @@ function Bouton1_setBG() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//change la couleur du background en bleu et la couleur du texte du boutton en blanc 
+function Bouton2_resetBG() {
+	window.document.body.style.backgroundColor = 'white';
+	window.document.getElementById('myButton1').style.color = 'black' ;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //charge le fichier XML se trouvant à l'URL relative donné dans le paramètreet le retourne
 function chargerHttpXML(xmlDocumentUrl) {
 
@@ -65,34 +73,7 @@ function chargerHttpJSON(jsonDocumentUrl) {
     return responseData;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function Bouton2_ajaxBibliographie(xmlDocumentUrl, xslDocumentUrl, newElementName) {
 
-    var xsltProcessor = new XSLTProcessor();
-
-    // Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone 
-    var xslDocument = chargerHttpXML(xslDocumentUrl);
-
-    // Importation du .xsl
-    xsltProcessor.importStylesheet(xslDocument);
-
-    // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone 
-    var xmlDocument = chargerHttpXML(xmlDocumentUrl);
-
-    // Création du document XML transformé par le XSL
-    var newXmlDocument = xsltProcessor.transformToDocument(xmlDocument);
-
-    // Recherche du parent (dont l'id est "here") de l'élément à remplacer dans le document HTML courant
-    var elementHtmlParent = window.document.getElementById("id_element_a_remplacer");
-    // Premier élément fils du parent
-    var elementHtmlARemplacer = recupererPremierEnfantDeTypeNode(elementHtmlParent);
-    // Premier élément "elementName" du nouveau document (par exemple, "ul", "table"...)
-    var elementAInserer = newXmlDocument.getElementsByTagName(newElementName)[0];
-
-    // Remplacement de l'élément
-    elementHtmlParent.replaceChild(elementAInserer, elementHtmlARemplacer);
-
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Bouton3_nomOffCap(xmlDocumentUrl, xslDocumentUrl) {
@@ -153,7 +134,7 @@ function Bouton8_stylish() {
 		country.addEventListener('mouseover' , colorier); 
 		country.addEventListener('mouseleave' , function(event){
 			event.target.style.fill = ""; 	
-			document.getElementById('tab').innerHTML = "";
+			
 		});
 	}
 }
@@ -164,6 +145,7 @@ function colorier(event){
 	// Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone 
 	var xslDocument = chargerHttpXML('cherchePays2.xsl');
 	var param = event.target.getAttribute('countryname');
+	console.log(param);
 	xsltProcessor.setParameter(null,"pays",param); 
 	xsltProcessor.importStylesheet(xslDocument);
 	 // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone 
@@ -172,7 +154,35 @@ function colorier(event){
     var newXmlDocument = xsltProcessor.transformToDocument(xmlDocument);
 	var eltHtml = document.getElementById('tab'); 
 	var eltXml = newXmlDocument.getElementsByTagName('table')[0]; 
-	console.log(eltXml);
-	eltHtml.innerHTML =eltXml; 
+	var oSerializer = new XMLSerializer();
+	eltHtml.innerHTML = oSerializer.serializeToString(eltXml);
+
 }
+
+
+function autoComp(){
+	var xmlDoc = chargerHttpXML('countriesTP.xml');
+	var nsResolver = xmlDoc.createNSResolver( xmlDoc.ownerDocument == null ? xmlDoc.documentElement : xmlDoc.ownerDocument.documentElement);
+	var param = document.getElementById('myText1').value; 
+	var countryIterator = xmlDoc.evaluate("//country[starts-with(name/common,param)]/name/common", xmlDoc, nsResolver, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+	var options = '';
+	try {
+	var thisNode = countryIterator.iterateNext();
+		while (thisNode) {
+			console.log( thisNode.textContent );
+			options += '<option value="'+thisNode.textContent+'" />';
+			thisNode = countryIterator.iterateNext();
+		}	
+	}
+	catch (e) {
+	console.log( 'Erreur : '+ e );
+	}
+	document.getElementById('countries').innerHTML = options; 
+
+}
+	
+	
+	
+	
+
 
