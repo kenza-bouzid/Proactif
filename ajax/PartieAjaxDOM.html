@@ -19,7 +19,7 @@
         <input name="button2" type="button" id="myButton2" onClick="Bouton2_resetBG();" value="2. Reset background color to white   " />
         <br />
 		
-		<input name="text" type="text" id="myText1" value="" list="countries" onkeyup="autoComp()"/>
+		<input name="text" type="text" id="myText1" value="" list="countries" onkeypress="autoComp()" autocomplete='off' />
 		<datalist id="countries"></datalist>
         <input name="button3" type="button" id="myButton3" onClick="Bouton3_nomOffCap('countriesTP.xml','cherchePays.xsl');" value="4. Display country's official name and capital " />
 		

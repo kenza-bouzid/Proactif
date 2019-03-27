@@ -98,7 +98,7 @@ function Bouton3_nomOffCap(xmlDocumentUrl, xslDocumentUrl) {
     var elementHtmlParent = document.getElementById("cap");
     var elementAInserer = newXmlDocument.getElementsByTagName('p');
 	elementHtmlParent.innerText = elementAInserer[0].innerText; 
-   
+	document.getElementById("myText1").value = ''
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,12 +164,11 @@ function autoComp(){
 	var xmlDoc = chargerHttpXML('countriesTP.xml');
 	var nsResolver = xmlDoc.createNSResolver( xmlDoc.ownerDocument == null ? xmlDoc.documentElement : xmlDoc.ownerDocument.documentElement);
 	var param = document.getElementById('myText1').value; 
-	var countryIterator = xmlDoc.evaluate("//country[starts-with(name/common,param)]/name/common", xmlDoc, nsResolver, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+	var countryIterator = xmlDoc.evaluate("//country[starts-with(name/common,translate(param , 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' , 'abcdefghijklmnopqrstuvwxyz' ))]/name/common", xmlDoc, nsResolver, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
 	var options = '';
 	try {
 	var thisNode = countryIterator.iterateNext();
 		while (thisNode) {
-			console.log( thisNode.textContent );
 			options += '<option value="'+thisNode.textContent+'" />';
 			thisNode = countryIterator.iterateNext();
 		}	
