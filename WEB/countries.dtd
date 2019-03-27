@@ -1,0 +1,240 @@
+<!-- DTD created at Mon Mar 06 12:37:28 CET 2017 with EditiX. Please insert an encoding attribute header for converting any DTD  -->
+
+
+<!ELEMENT countries (metadonnees,country+)>
+
+<!ELEMENT metadonnees (description,cree_le,objectif)>
+
+<!ELEMENT country (name,tld*,codes,currency*,callingCode*,
+                   capital,altSpellings+, infosContinent,languages,
+                   coordinates*,demonym,landlocked,borders*)>
+                 
+<!ATTLIST country area CDATA #REQUIRED>
+
+
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT cree_le (#PCDATA)>
+<!ELEMENT objectif (#PCDATA)>
+
+
+<!ELEMENT name (common,official,native_name*)>
+
+
+<!ELEMENT tld (#PCDATA)>
+
+<!ELEMENT codes (cca2, ccn3,cca3,cioc)>
+
+<!ELEMENT cca2 (#PCDATA)>
+<!ELEMENT ccn3 (#PCDATA)>
+<!ELEMENT cca3 (#PCDATA)>
+<!ELEMENT cioc (#PCDATA)>
+
+<!ELEMENT currency (#PCDATA)>
+<!ELEMENT callingCode (#PCDATA)>
+<!ELEMENT capital (#PCDATA)>
+<!ELEMENT altSpellings (#PCDATA)>
+
+<!ELEMENT infosContinent (continent*,subregion*) >
+<!ELEMENT continent (#PCDATA)>
+<!ELEMENT region (#PCDATA)>
+<!ELEMENT subregion (#PCDATA)>
+
+<!ELEMENT languages ((bul|mya)?,(aze|bel|kir)?,(lit|vie)?,(bjz|crs)?,
+                     cat?,(eus,glg,oci)?,(div|ind|kal|nor)?,aym?,grn?,
+                     (dan|que)?,fao?,(afr|cal)?,(hun|jpn|khm|lao)?,ces?,
+                     ara?,(heb|som|(arc,ckb))?,ber?,mey?,(ben|fas|kor)?,
+                     deu?,mkd?,(ell|sqi)?,dzo?,cha?,(amh|kat)?,bis?,
+                     (pol|tha|tur)?,sin?,bar?,bwg?,bos?,est?,
+                     (eng|fra|por|zho)*,(mah|pau|zdj)?,nld?,(niu|pap)?,
+                     gsw?,(gil|glv|nfr|rar|sag|(fij,hif))?,
+                     (kck,khi,ndc,nde)?,nya?,sna?,
+                     (fil|gle|mfe|mlg|nau|(hmo,tpi))?,smo?,
+                     (jam|kin|ltz|mlt|run|tkl|ton|tvl)?,hin?,(kon,lin)?,
+                     lua?,(swa|tir)?,(nbl,nso)?,sot?,(ssw|toi)?,
+                     (hat|nrf|pih|spa|tet|urd|(mri,nzs))?,
+                     (her,hgm,kwn,loz,ndo)?,tsn?,(tso,ven,xho)?,
+                     (zib|zul)?,msa?,tam?,hrv?,srp?,(fin|(prs,pus))?,
+                     (isl|mon|ron|slk|(nno,nob,smi))?,kaz?,
+                     (lav|nep|slv|swe)?,ita?,(lat|roh|srd)?,hye?,rus?,
+                     (tgk|tuk|ukr|uzb)?)>
+
+<!ELEMENT latlng (#PCDATA)>
+
+<!ELEMENT  coordinates EMPTY>
+<!ATTLIST coordinates
+  lat CDATA #REQUIRED
+  long CDATA #REQUIRED>
+  
+  
+<!ELEMENT demonym (#PCDATA)>
+<!ELEMENT landlocked (#PCDATA)>
+<!ELEMENT borders (neighbour*)>
+<!ELEMENT neighbour (#PCDATA)>
+<!ELEMENT area (#PCDATA)>
+
+
+<!ELEMENT native_name (official,common)>
+<!ATTLIST native_name
+  lang NMTOKEN #REQUIRED>
+
+<!ELEMENT bul (#PCDATA)>
+<!ELEMENT mya (#PCDATA)>
+<!ELEMENT aze (#PCDATA)>
+<!ELEMENT bel (#PCDATA)>
+<!ELEMENT kir (#PCDATA)>
+<!ELEMENT lit (#PCDATA)>
+<!ELEMENT vie (#PCDATA)>
+<!ELEMENT bjz (#PCDATA)>
+<!ELEMENT crs (#PCDATA)>
+<!ELEMENT cat (#PCDATA)>
+<!ELEMENT eus (#PCDATA)>
+<!ELEMENT glg (#PCDATA)>
+<!ELEMENT oci (#PCDATA)>
+<!ELEMENT div (#PCDATA)>
+<!ELEMENT ind (#PCDATA)>
+<!ELEMENT kal (#PCDATA)>
+<!ELEMENT nor (#PCDATA)>
+<!ELEMENT aym (#PCDATA)>
+<!ELEMENT grn (#PCDATA)>
+<!ELEMENT dan (#PCDATA)>
+<!ELEMENT que (#PCDATA)>
+<!ELEMENT fao (#PCDATA)>
+<!ELEMENT afr (#PCDATA)>
+<!ELEMENT cal (#PCDATA)>
+<!ELEMENT hun (#PCDATA)>
+<!ELEMENT jpn (#PCDATA)>
+<!ELEMENT khm (#PCDATA)>
+<!ELEMENT lao (#PCDATA)>
+<!ELEMENT ces (#PCDATA)>
+<!ELEMENT ara (#PCDATA)>
+<!ELEMENT heb (#PCDATA)>
+<!ELEMENT som (#PCDATA)>
+<!ELEMENT arc (#PCDATA)>
+<!ELEMENT ckb (#PCDATA)>
+<!ELEMENT ber (#PCDATA)>
+<!ELEMENT mey (#PCDATA)>
+<!ELEMENT ben (#PCDATA)>
+<!ELEMENT fas (#PCDATA)>
+<!ELEMENT kor (#PCDATA)>
+<!ELEMENT deu (#PCDATA)>
+<!ELEMENT mkd (#PCDATA)>
+<!ELEMENT ell (#PCDATA)>
+<!ELEMENT sqi (#PCDATA)>
+<!ELEMENT dzo (#PCDATA)>
+<!ELEMENT cha (#PCDATA)>
+<!ELEMENT amh (#PCDATA)>
+<!ELEMENT kat (#PCDATA)>
+<!ELEMENT bis (#PCDATA)>
+<!ELEMENT pol (#PCDATA)>
+<!ELEMENT tha (#PCDATA)>
+<!ELEMENT tur (#PCDATA)>
+<!ELEMENT sin (#PCDATA)>
+<!ELEMENT bar (#PCDATA)>
+<!ELEMENT bwg (#PCDATA)>
+<!ELEMENT bos (#PCDATA)>
+<!ELEMENT est (#PCDATA)>
+<!ELEMENT eng (#PCDATA)>
+<!ELEMENT fra (#PCDATA)>
+<!ELEMENT por (#PCDATA)>
+<!ELEMENT zho (#PCDATA)>
+<!ELEMENT mah (#PCDATA)>
+<!ELEMENT pau (#PCDATA)>
+<!ELEMENT zdj (#PCDATA)>
+<!ELEMENT nld (#PCDATA)>
+<!ELEMENT niu (#PCDATA)>
+<!ELEMENT pap (#PCDATA)>
+<!ELEMENT gsw (#PCDATA)>
+<!ELEMENT gil (#PCDATA)>
+<!ELEMENT glv (#PCDATA)>
+<!ELEMENT nfr (#PCDATA)>
+<!ELEMENT rar (#PCDATA)>
+<!ELEMENT sag (#PCDATA)>
+<!ELEMENT fij (#PCDATA)>
+<!ELEMENT hif (#PCDATA)>
+<!ELEMENT kck (#PCDATA)>
+<!ELEMENT khi (#PCDATA)>
+<!ELEMENT ndc (#PCDATA)>
+<!ELEMENT nde (#PCDATA)>
+<!ELEMENT nya (#PCDATA)>
+<!ELEMENT sna (#PCDATA)>
+<!ELEMENT fil (#PCDATA)>
+<!ELEMENT gle (#PCDATA)>
+<!ELEMENT mfe (#PCDATA)>
+<!ELEMENT mlg (#PCDATA)>
+<!ELEMENT nau (#PCDATA)>
+<!ELEMENT hmo (#PCDATA)>
+<!ELEMENT tpi (#PCDATA)>
+<!ELEMENT smo (#PCDATA)>
+<!ELEMENT jam (#PCDATA)>
+<!ELEMENT kin (#PCDATA)>
+<!ELEMENT ltz (#PCDATA)>
+<!ELEMENT mlt (#PCDATA)>
+<!ELEMENT run (#PCDATA)>
+<!ELEMENT tkl (#PCDATA)>
+<!ELEMENT ton (#PCDATA)>
+<!ELEMENT tvl (#PCDATA)>
+<!ELEMENT hin (#PCDATA)>
+<!ELEMENT kon (#PCDATA)>
+<!ELEMENT lin (#PCDATA)>
+<!ELEMENT lua (#PCDATA)>
+<!ELEMENT swa (#PCDATA)>
+<!ELEMENT tir (#PCDATA)>
+<!ELEMENT nbl (#PCDATA)>
+<!ELEMENT nso (#PCDATA)>
+<!ELEMENT sot (#PCDATA)>
+<!ELEMENT ssw (#PCDATA)>
+<!ELEMENT toi (#PCDATA)>
+<!ELEMENT hat (#PCDATA)>
+<!ELEMENT nrf (#PCDATA)>
+<!ELEMENT pih (#PCDATA)>
+<!ELEMENT spa (#PCDATA)>
+<!ELEMENT tet (#PCDATA)>
+<!ELEMENT urd (#PCDATA)>
+<!ELEMENT mri (#PCDATA)>
+<!ELEMENT nzs (#PCDATA)>
+<!ELEMENT her (#PCDATA)>
+<!ELEMENT hgm (#PCDATA)>
+<!ELEMENT kwn (#PCDATA)>
+<!ELEMENT loz (#PCDATA)>
+<!ELEMENT ndo (#PCDATA)>
+<!ELEMENT tsn (#PCDATA)>
+<!ELEMENT tso (#PCDATA)>
+<!ELEMENT ven (#PCDATA)>
+<!ELEMENT xho (#PCDATA)>
+<!ELEMENT zib (#PCDATA)>
+<!ELEMENT zul (#PCDATA)>
+<!ELEMENT msa (#PCDATA)>
+<!ELEMENT tam (#PCDATA)>
+<!ELEMENT hrv (#PCDATA)>
+<!ELEMENT srp (#PCDATA)>
+<!ELEMENT fin (#PCDATA)>
+<!ELEMENT prs (#PCDATA)>
+<!ELEMENT pus (#PCDATA)>
+<!ELEMENT isl (#PCDATA)>
+<!ELEMENT mon (#PCDATA)>
+<!ELEMENT ron (#PCDATA)>
+<!ELEMENT slk (#PCDATA)>
+<!ELEMENT nno (#PCDATA)>
+<!ELEMENT nob (#PCDATA)>
+<!ELEMENT smi (#PCDATA)>
+<!ELEMENT kaz (#PCDATA)>
+<!ELEMENT lav (#PCDATA)>
+<!ELEMENT nep (#PCDATA)>
+<!ELEMENT slv (#PCDATA)>
+<!ELEMENT swe (#PCDATA)>
+<!ELEMENT ita (#PCDATA)>
+<!ELEMENT lat (#PCDATA)>
+<!ELEMENT roh (#PCDATA)>
+<!ELEMENT srd (#PCDATA)>
+<!ELEMENT hye (#PCDATA)>
+<!ELEMENT rus (#PCDATA)>
+<!ELEMENT tgk (#PCDATA)>
+<!ELEMENT tuk (#PCDATA)>
+<!ELEMENT ukr (#PCDATA)>
+<!ELEMENT uzb (#PCDATA)>
+
+
+<!ELEMENT common (#PCDATA)>
+
+<!ELEMENT official (#PCDATA)>
+
