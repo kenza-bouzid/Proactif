@@ -19,6 +19,7 @@ public class ClientDao {
         JpaUtil.obtenirEntityManager().persist(c);
     }
     
+    
     public static Client findByEMail(String mail , String mdp) {
         String jpql = "select c from Client c where c.adresseElec = :mail and c.mdp = :mdp"; 
         Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);

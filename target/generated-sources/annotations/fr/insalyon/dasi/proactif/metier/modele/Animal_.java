@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-03-27T14:18:29")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-03-27T23:52:53")
 @StaticMetamodel(Animal.class)
 public class Animal_ extends Intervention_ {
 

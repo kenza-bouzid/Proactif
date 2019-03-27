@@ -33,26 +33,28 @@ public abstract class Intervention implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numIntervention;
-    
-    private String description ; 
-   
-    private boolean status ; 
-    
+
+    private String description;
+
+    private boolean reussie;
+
+    private boolean enCours;
+
     @Basic
-    private java.sql.Timestamp dateDebut; 
-    
+    private java.sql.Timestamp dateDebut;
+
     @Basic
-    private java.sql.Timestamp dateFin ; 
-    
-    private String commentaire ; 
-    
-    @ManyToOne 
-    @JoinColumn(name="EMPLOYE_ID", referencedColumnName="id")
-    private Employe employeAffecte; 
-    
-    @ManyToOne 
-    @JoinColumn(name="CLIENT_ID", referencedColumnName="id")
-    private Client client; 
+    private java.sql.Timestamp dateFin;
+
+    private String commentaire;
+
+    @ManyToOne
+    @JoinColumn(name = "EMPLOYE_ID", referencedColumnName = "id")
+    private Employe employeAffecte;
+
+    @ManyToOne
+    @JoinColumn(name = "CLIENT_ID", referencedColumnName = "id")
+    private Client client;
 
     public String getCommentaire() {
         return commentaire;
@@ -78,21 +80,29 @@ public abstract class Intervention implements Serializable {
         this.client = client;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public Intervention(String description) throws ParseException {
         this.description = description;
         this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        this.status = false; 
+        this.enCours = false;
     }
 
     public Intervention() {
+    }
+
+    public boolean isReussie() {
+        return reussie;
+    }
+
+    public void setReussie(boolean reussie) {
+        this.reussie = reussie;
+    }
+
+    public boolean isEnCours() {
+        return enCours;
+    }
+
+    public void setEnCours(boolean enCours) {
+        this.enCours = enCours;
     }
 
     public Long getNumIntervention() {
@@ -127,22 +137,19 @@ public abstract class Intervention implements Serializable {
         this.dateFin = dateFin;
     }
 
-   
-    public Time getTimeDebut ()
-    {
-        return new Time(this.getDateDebut().getTime()) ; 
+    public Time getTimeDebut() {
+        return new Time(this.getDateDebut().getTime());
     }
 
     @Override
     public String toString() {
-        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + status + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + client + '}';
+        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + enCours + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + client + '}';
     }
-    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (numIntervention  != null ? numIntervention.hashCode() : 0);
+        hash += (numIntervention != null ? numIntervention.hashCode() : 0);
         return hash;
     }
 

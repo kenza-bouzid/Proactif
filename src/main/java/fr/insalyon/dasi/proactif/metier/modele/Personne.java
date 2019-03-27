@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import com.google.maps.model.LatLng;
+import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
@@ -78,6 +79,18 @@ public abstract class Personne implements Serializable {
         return nom;
     }
 
+    public Personne(String civilite, String nom, String prenom, Date dateNaissance, String adresse, LatLng coord, String numTel, String adresseElec, String mdp) {
+        this.civilite = civilite;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.adresse = adresse;
+        this.coord = coord;
+        this.numTel = numTel;
+        this.adresseElec = adresseElec;
+        this.mdp = mdp;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -125,6 +138,7 @@ public abstract class Personne implements Serializable {
     public String getMdp() {
         return mdp;
     }
+
 
     public void setMdp(String mdp) {
         this.mdp = mdp;

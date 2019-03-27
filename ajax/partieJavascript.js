@@ -1,34 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function recupererPremierEnfantDeTypeNode(n) {
-    var x = n.firstChild;
-    while (x.nodeType != 1) { // Test if x is an element node (and not a text node or other)
-        x = x.nextSibling;
-    }
-    return x;
-}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//change le contenu de l'élement avec l'id "nom" avec la chaine de caractéres en paramètre	  
-function setNom(nom) {
-    var elementHtmlARemplir = window.document.getElementById("id_nom_a_remplacer");
-    elementHtmlARemplir.innerHTML = nom;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//change la couleur du background en bleu et la couleur du texte du boutton en blanc 
-function Bouton1_setBG() {
-    window.document.body.style.backgroundColor = 'blue';
-	window.document.getElementById('myButton1').style.color = 'white' ;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//change la couleur du background en bleu et la couleur du texte du boutton en blanc 
-function Bouton2_resetBG() {
-	window.document.body.style.backgroundColor = 'white';
-	window.document.getElementById('myButton1').style.color = 'black' ;
-}
-
-
+//-------------------------------------------------------Fonctions Utiles----------------------------------------------------//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //charge le fichier XML se trouvant à l'URL relative donné dans le paramètreet le retourne
 function chargerHttpXML(xmlDocumentUrl) {
@@ -72,10 +43,24 @@ function chargerHttpJSON(jsonDocumentUrl) {
 
     return responseData;
 }
+//-------------------------------Fonctions relatives aux actions des  boutons -----------------------------------------------//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//changes the background's color to lightblue and the text button one to black 
+function Bouton1_setBG() {
+    window.document.body.style.backgroundColor = 'lightblue';
+	window.document.getElementById('myButton1').style.color = 'black' ;
+}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//resets the background's color to white and the the text button one to white 
+function Bouton2_resetBG() {
+	window.document.body.style.backgroundColor = 'white';
+	window.document.getElementById('myButton1').style.color = 'white' ;
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Displays the official name and the capital of a given country
 function Bouton3_nomOffCap(xmlDocumentUrl, xslDocumentUrl) {
 
     var xsltProcessor = new XSLTProcessor();
@@ -102,6 +87,7 @@ function Bouton3_nomOffCap(xmlDocumentUrl, xslDocumentUrl) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Displays an example of an svg image 
 function Bouton4_svg(xmlDocumentUrl , param) {
 	
     var xmlDocument = chargerHttpXML(xmlDocumentUrl);
@@ -112,6 +98,8 @@ function Bouton4_svg(xmlDocumentUrl , param) {
 
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//returns an image parts clickable 
 function clickable (param1 , param2 , param3){
 
 	var exemple = document.querySelector(param1); 
@@ -127,6 +115,7 @@ function clickable (param1 , param2 , param3){
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// fills a country's area with lightblue and displays a table recapitulatif of its capital its flag and also its name 
 function Bouton8_stylish() {
 	var carte = document.querySelector('#world svg g'); 
 	var tableau = document.getElementById('tab'); 
@@ -146,13 +135,13 @@ function Bouton8_stylish() {
 
 		country.addEventListener('mouseleave' , function(event){
 			event.target.style.fill = ""; 	
-			
 		});
 	}
 	
             
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// fills a country's area with lightblue and displays a table recapitulatif of its capital its flag and also its name 
 function colorier(event){
 	event.target.style.fill = "lightblue"; 
 	var xsltProcessor = new XSLTProcessor();
@@ -173,7 +162,8 @@ function colorier(event){
 
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// implements the autocompletation function using only xpath 
 function autoComp(){
 	var xmlDoc = chargerHttpXML('countriesTP.xml');
 	var nsResolver = xmlDoc.createNSResolver( xmlDoc.ownerDocument == null ? xmlDoc.documentElement : xmlDoc.ownerDocument.documentElement);
@@ -193,7 +183,9 @@ function autoComp(){
 	document.getElementById('countries').innerHTML = options; 
 
 }
-	
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// implements the autocompletation function using only xpath
 	
 	
 	
