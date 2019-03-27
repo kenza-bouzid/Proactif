@@ -120,7 +120,7 @@ function clickable (param1 , param2 , param3){
 		var child = exemple.children[i]; 
 		child.addEventListener('click', function(evt){	
 			var elementARemplacer = document.getElementById(param2);
-			elementARemplacer.innerText = evt.target.getAttribute(param3);
+				elementARemplacer.innerText = evt.target.getAttribute(param3);
 			});
 	}
 	}
@@ -129,14 +129,28 @@ function clickable (param1 , param2 , param3){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Bouton8_stylish() {
 	var carte = document.querySelector('#world svg g'); 
+	var tableau = document.getElementById('tab'); 
+	var bsDiv = document.getElementById("tab");
+                var x, y;
 	for (var i = 0 ; i < carte.children.length ; i++) {
 		var country = carte.children[i]; 
 		country.addEventListener('mouseover' , colorier); 
+		country.addEventListener('mousemove',   function(event){
+                    x = event.pageX;
+                    y = event.pageY;                    
+                    if ( typeof x !== 'undefined' ){
+                        bsDiv.style.left = x + "px";
+                        bsDiv.style.top = y + "px";
+                    }
+                }, false);
+
 		country.addEventListener('mouseleave' , function(event){
 			event.target.style.fill = ""; 	
 			
 		});
 	}
+	
+            
 }
 
 function colorier(event){
