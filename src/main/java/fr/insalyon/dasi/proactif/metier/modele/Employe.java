@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Employe extends Personne implements Serializable {
 
-    @OneToMany
+    @OneToMany(mappedBy="employeAffecte")
     private List<Intervention> tabBord;
 
     public List<Intervention> getTabBord() {
