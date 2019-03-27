@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="lesFormes" xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 100px; height: 100px">
+ <g> 
+     <circle id="leCercle" title="un cercle" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+     <rect id="leRect" title="un rectangle" width="80" height="30" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+     <path id="laCourbe" title="une courbe" d="M 10,10 A 50 20 0 0 0 80,50 L 10,10" style="stroke-width:5; stroke:red"/>
+ </g>
+</svg>

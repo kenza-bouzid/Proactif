@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Company>
+	<Employee>
+		<FirstName>Tim</FirstName>
+		<LastName>Browne</LastName>
+		<Position>CEO</Position>
+		<Email>TBrowne@Infoteria.com</Email>
+		<Category>Officer</Category>
+		<Age>25</Age>
+	</Employee>
+	<Employee>
+		<FirstName>David</FirstName>
+		<LastName>Silverlight</LastName>
+		<Position>Chief XML Evangelist</Position>
+		<Email>HeadGeek@XMLPitstop.com</Email>
+		<Category>Evangelist</Category>
+		<Age>30 </Age>
+	</Employee>
+	<Employee>
+		<FirstName>Mike </FirstName>
+		<LastName>Damphouse</LastName>
+		<Position>Chief Marketing Officer </Position>
+		<Email>MDamphouse@Infoteria.com</Email>
+		<Category>Officer</Category>
+		<Age>31</Age>
+	</Employee>
+	<Employee>
+		<FirstName>Todd</FirstName>
+		<LastName>Headrick</LastName>
+		<Position>Chief Technology Officer</Position>
+		<Email>Theadrick@Infoteria.com</Email>
+		<Category>Officer</Category>
+		<Age>33</Age>
+	</Employee>
+	<Employee>
+		<FirstName>Constance</FirstName>
+		<LastName>Culp</LastName>
+		<Position>Vice President of Operations</Position>
+		<Email>CCulp@Infoteria.com</Email>
+		<Category>Vice President</Category>
+		<Age>35</Age>
+	</Employee>
+</Company>
+

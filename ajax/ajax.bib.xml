@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Rolf Ingold (DIUF) -->
+ 
+<Bibliography>
+	<BibRef RefId="R1" Language="FR">
+		<Book BookId="B1">
+			<Price>79</Price>
+			<Title>XML - le langage et ses applications</Title>
+			<Authors>
+				<Author>
+					<FirstName>Alain</FirstName>
+					<LastName>Michard</LastName>
+				</Author>
+			</Authors>
+			<Publisher>Eyrolles</Publisher>
+			<Year>1999</Year>
+		</Book>
+	</BibRef>
+	<BibRef RefId="R2" Language="EN">
+		<Book BookId="B2">
+			<Price>140</Price>
+			<Title>The XML bible</Title>
+			<Authors>
+				<Author>
+					<FirstName>Elliot</FirstName>
+					<MiddleName>Rusty</MiddleName>
+					<LastName>Harold</LastName>
+				</Author>
+			</Authors>
+			<Publisher>IDG Books</Publisher>
+			<Year>1999</Year>
+		</Book>
+	</BibRef>
+	<BibRef RefId="R3" Language="EN">
+		<Book BookId="B3">
+			<Price>119</Price>
+			<Title>Hytime - Making Hypermedia Work</Title>
+			<Authors>
+				<Author>
+					<FirstName>Steven</FirstName>
+					<MiddleName>J.</MiddleName>
+					<LastName>DeRose</LastName>
+				</Author>
+				<Author>
+					<FirstName>David</FirstName>
+					<MiddleName>G.</MiddleName>
+					<LastName>Durand</LastName>
+				</Author>
+			</Authors>
+			<Publisher>Kluwer Academic Publishers</Publisher>
+			<Year>1994</Year>
+		</Book>
+	</BibRef>
+	<BibRef RefId="R4" Language="EN">
+		<Book BookId="B4">
+			<Price>65</Price>
+			<Title>Practical SGML</Title>
+			<Authors>
+				<Author>
+					<FirstName>Eric</FirstName>
+					<LastName>Van Herwijnen</LastName>
+				</Author>
+			</Authors>
+			<Publisher>Kluwer Academic Publishers</Publisher>
+			<Year>1990</Year>
+		</Book>
+	</BibRef>
+	<BibRef RefId="R5" Language="EN">
+		<Book BookId="B5">
+			<Price>155</Price>
+			<Title>Object-Oriented Modeling and Design for Databases Applications</Title>
+			<Authors>
+				<Author>
+					<FirstName>Michel</FirstName>
+					<LastName>Blaha</LastName>
+				</Author>
+				<Author>
+					<FirstName>William</FirstName>
+					<LastName>Premerlani</LastName>
+				</Author>
+			</Authors>
+			<Publisher>Prentice Hall</Publisher>
+			<Year>1998</Year>
+		</Book>
+	</BibRef>
+	<BibRef RefId="R7" Language="FR">
+		<Journal>
+			<JournalName>Computer Network and ISDN Systems</JournalName>
+		</Journal>
+	</BibRef>
+	<BibRef RefId="R6" Language="EN">
+		<ArticleInJournal JournalRef="R7">
+			<Price>20</Price>
+			<Title>Interactively Restructuring HTML documents</Title>
+			<Authors>
+				<Author>
+					<FirstName>Stephane</FirstName>
+					<LastName>Bonhomme</LastName>
+				</Author>
+				<Author>
+					<FirstName>Cecile</FirstName>
+					<LastName>Roisin</LastName>
+				</Author>
+			</Authors>
+			<Vol>28</Vol>
+			<VolNo>7</VolNo>
+			<VolNoDate>May 1996</VolNoDate>
+			<Pages>
+				<FirstPage>1075</FirstPage>
+				<LastPage>1084</LastPage>
+			</Pages>
+		</ArticleInJournal>
+	</BibRef>
+	<BibRef RefId="R8" Language="EN">
+		<Proceedings ProceedingsId="P1">
+			<Price>84</Price>
+			<Title>Electronic Publishing</Title>
+			<Location>Lausanne</Location>
+			<Dates>Avril 1992</Dates>
+			<Publisher>Cambridge University Press</Publisher>
+			<Year>1992</Year>
+		</Proceedings>
+	</BibRef>
+	<BibRef RefId="R9" Language="EN">
+		<Proceedings ProceedingsId="P2">
+			<Price>120</Price>
+			<Title>WWW Conference</Title>
+			<Location>Amsterdam</Location>
+			<Dates>Mai 2000</Dates>
+			<Publisher>Cambridge University Press</Publisher>
+			<Year>1999</Year>
+		</Proceedings>
+	</BibRef>
+	<BibRef RefId="R10" Language="FR">
+		<Proceedings ProceedingsId="P3">
+			<Price>130</Price>
+			<Title>Forum XML</Title>
+			<Location>Paris</Location>
+			<Dates>Novembre 2000</Dates>
+			<Publisher>Cambridge University Press</Publisher>
+			<Year>2000</Year>
+		</Proceedings>
+	</BibRef>
+	<BibRef RefId="R12" Language="EN">
+		<Book BookId="B7">
+			<Price>90</Price>
+			<Title>Professional XML Databases</Title>
+			<Authors>
+				<Author>
+					<FirstName>Kevin</FirstName>
+					<LastName>Williams</LastName>
+				</Author>
+			</Authors>
+			<Publisher>Wrox Press Ltd</Publisher>
+			<Year>2000</Year>
+			<ISBN>1-861003-58-7</ISBN>
+		</Book>
+	</BibRef>
+</Bibliography>
