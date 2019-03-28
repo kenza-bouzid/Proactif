@@ -7,7 +7,6 @@ package fr.insalyon.dasi.proactif.dao;
 
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;

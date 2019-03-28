@@ -7,7 +7,6 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import javax.persistence.Entity;
 /**
  *
@@ -18,7 +17,7 @@ public class Animal extends Intervention implements Serializable {
 
     private String animal ; 
 
-    public Animal(String animal, String description) throws ParseException {
+    public Animal(String animal, String description) {
         super(description);
         this.animal = animal;
     }

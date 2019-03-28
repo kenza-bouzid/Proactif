@@ -9,7 +9,6 @@ package fr.insalyon.dasi.proactif.metier.modele;
 import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.Calendar;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -54,7 +53,7 @@ public abstract class Intervention implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "id")
-    private Client client;
+    private Client monClient;
 
     public String getCommentaire() {
         return commentaire;
@@ -72,15 +71,15 @@ public abstract class Intervention implements Serializable {
         this.employeAffecte = employeAffecte;
     }
 
-    public Client getClient() {
-        return client;
+    public Client getMonClient() {
+        return monClient;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setMonClient(Client monClient) {
+        this.monClient = monClient;
     }
 
-    public Intervention(String description) throws ParseException {
+    public Intervention(String description) {
         this.description = description;
         this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         this.enCours = false;
@@ -143,7 +142,7 @@ public abstract class Intervention implements Serializable {
 
     @Override
     public String toString() {
-        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + enCours + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + client + '}';
+        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + enCours + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + monClient + '}';
     }
 
     @Override

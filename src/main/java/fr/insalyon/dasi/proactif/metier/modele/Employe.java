@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Employe extends Personne implements Serializable {
 
-    @OneToMany
+    @OneToMany//(mappedBy="employeAffecte")
     private List<Intervention> tabBord;
 
     public List<Intervention> getTabBord() {
@@ -66,8 +66,8 @@ public class Employe extends Personne implements Serializable {
             String numTel, String adresseElec, String mdp) throws ParseException {
         super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
         debutTravail = java.sql.Time.valueOf(debut);
-        finTravail =  java.sql.Time.valueOf(fin);
-        
+        finTravail = java.sql.Time.valueOf(fin);
+
         this.estEnIntervention = false;
     }
 
@@ -77,10 +77,16 @@ public class Employe extends Personne implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString()+"Employe{" + "tabBord=" + tabBord + ", debutTravail=" + debutTravail + ", finTravail=" + finTravail + ", estEnIntervention=" + estEnIntervention + '}';
+        return super.toString() + "Employe{" + "tabBord=" + tabBord + ", debutTravail=" + debutTravail + ", finTravail=" + finTravail + ", estEnIntervention=" + estEnIntervention + '}';
     }
 
-
-
+    public Intervention getInterventionCourante() {
+        for (Intervention i : tabBord) {
+            if (i.isEnCours()) {
+                return i;
+            }
+        }
+        return null;
+    }
 
 }

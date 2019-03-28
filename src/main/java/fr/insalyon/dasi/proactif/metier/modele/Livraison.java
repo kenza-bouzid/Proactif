@@ -7,8 +7,6 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.util.Date;
 import javax.persistence.Entity;
 /**
  *
@@ -20,7 +18,7 @@ public class Livraison extends Intervention implements Serializable {
     private String objet ; 
     private String entreprise; 
 
-    public Livraison(String objet, String entreprise, String description) throws ParseException {
+    public Livraison(String objet, String entreprise, String description) {
         super(description);
         this.objet = objet;
         this.entreprise = entreprise;
@@ -31,7 +29,7 @@ public class Livraison extends Intervention implements Serializable {
 
     @Override
     public String toString() {
-        return "Livraison{" + "objet=" + objet + ", entreprise=" + entreprise + '}';
+        return super.toString()+"Livraison{" + "objet=" + objet + ", entreprise=" + entreprise + '}';
     }
 
     public String getObjet() {

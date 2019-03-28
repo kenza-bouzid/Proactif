@@ -5,7 +5,6 @@
  */
 package fr.insalyon.dasi.proactif.metier.modele;
 
-import com.google.maps.model.LatLng;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
@@ -20,7 +19,7 @@ import javax.persistence.OneToMany;
 
 public class Client extends Personne implements Serializable {
 
-    @OneToMany
+    @OneToMany//(mappedBy="monClient")
     private List<Intervention> histoInterventions;
 
     @Override

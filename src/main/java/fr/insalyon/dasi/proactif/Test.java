@@ -10,11 +10,13 @@ import fr.insalyon.dasi.proactif.metier.modele.Animal;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
 import fr.insalyon.dasi.proactif.metier.modele.Employe;
 import fr.insalyon.dasi.proactif.metier.modele.Incident;
+import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Livraison;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.metier.service.Service;
 import fr.insalyon.dasi.proactif.util.Saisie;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  *
@@ -32,19 +34,20 @@ public class Test {
 
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Service.inscrireClient(c);
-        //Service.envoyerCodeConfirmation("test@gmail.com","0658974316" );
+        Service.envoyerCodeConfirmation("test@gmail.com","0658974316" );
+        Service.updateMdp(c, "469");
         //
-        Personne p = Service.connexion("test@gmail.com", "123");
+        Personne p = Service.connexion("test@gmail.com", "469");
         if (p instanceof Client) {
             System.out.println((Client) p);
         }
-        Incident i = new Incident("mon voisin m'a signalé un incident");
-        Animal a = new Animal("pug", "Il faudrait sortir Bruno au park en face de chez moi");
-        Livraison l = new Livraison("colis", "DPD", "blablabla");
-        Incident i2 = new Incident("blabla2");
-        System.out.println(Service.demandeIntervention(c, i));
-        System.out.println(Service.demandeIntervention(c, a));
-        System.out.println(Service.demandeIntervention(c, l));
+        Incident i = new Incident("mon voisin m'a signalé un incident" );
+        Animal a = new Animal("pug", "Il faudrait sortir Bruno au park en face de chez moi"  );
+        Livraison l = new Livraison("colis", "DPD", "blablabla" );
+        Incident i2 = new Incident("blabla2" );
+        System.out.println(Service.demandeIntervention(i , c));
+        System.out.println(Service.demandeIntervention(a ,c));
+        System.out.println(Service.demandeIntervention(l ,c ));
 
         Service.cloturerIntervention(i, "Tout bon", true);
 
@@ -52,14 +55,24 @@ public class Test {
 
         Service.cloturerIntervention(l, "Tout bon", false);
 
-        System.out.println(Service.demandeIntervention(c, i2));
+        System.out.println(Service.demandeIntervention(i2, c));
         Service.cloturerIntervention(i2, "Tout bon", true);
 
-        Client e = (Client) Service.connexion("test@gmail.com", "123");
+        Client e = (Client) Service.connexion("test@gmail.com", "469");
 
         System.out.println(e);
-        Service.HistoriqueClientParTypeEtDate("livraison", "26/03/2019", e);
-        Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp9@gmail.com", "258"));
+        //List<Intervention> ll = Service.HistoriqueClientParTypeEtDate("livraison", "28/03/2019", e);
+        List<Intervention> ll = Service.HistoriqueClientParDate( "28/03/2019", e);
+        ll.forEach((m) -> {
+            System.out.println (m);
+        });
+        
+        System.out.println("fini histo");
+        
+        List<Intervention> lll = Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp1@gmail.com", "159"));
+        lll.forEach((m) -> {
+            System.out.println (m);
+        });
         JpaUtil.destroy();
 
     }

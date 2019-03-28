@@ -7,8 +7,6 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.util.Date;
 import javax.persistence.Entity;
 
 
@@ -19,7 +17,7 @@ import javax.persistence.Entity;
 @Entity
 public class Incident extends Intervention implements Serializable {
 
-    public Incident(String description) throws ParseException {
+    public Incident(String description ) {
         super(description);
     }
 
