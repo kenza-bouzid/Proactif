@@ -20,6 +20,10 @@ import javax.persistence.Entity;
 @Entity
 public class Incident extends Intervention implements Serializable {
 
+ /**
+ * Constructeur de la classe Incident.
+ * @param description Description du client de l'intervention demandé.
+ */
     public Incident(String description ) {
         super(description);
     }

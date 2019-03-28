@@ -19,7 +19,11 @@ import javax.persistence.Entity;
 public class Animal extends Intervention implements Serializable {
 
     private String animal ; 
-
+/**
+ * Constructeur de la classe Animal.
+ * @param animal
+ * @param description 
+ */
     public Animal(String animal, String description) {
         super(description);
         this.animal = animal;

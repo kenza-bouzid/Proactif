@@ -48,7 +48,10 @@ public abstract class Intervention implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "id")
     private Client monClient;
-
+/**
+ * Constructeur de la classe Intervention.
+ * @param description Description du client de l'intervention demandé.
+ */
     public Intervention(String description) {
         this.description = description;
         this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
@@ -140,7 +143,11 @@ public abstract class Intervention implements Serializable {
         hash += (numIntervention != null ? numIntervention.hashCode() : 0);
         return hash;
     }
-
+/**
+ * 
+ * @param object l'object sur lequel on veut tester l'égualité.
+ * @return true ou false si les objets sont égaux ou non.
+ */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
