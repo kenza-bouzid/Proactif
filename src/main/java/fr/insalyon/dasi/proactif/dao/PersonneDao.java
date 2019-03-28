@@ -28,15 +28,20 @@ public class PersonneDao {
  /**
  * Obtient un entity manager et merge la Personne.
  * @param p la Personne qu'on merge.
+ * @return On retourne la nouvelle instance de la Personne
+ * qui vient d'être merge.
  */
     public static Personne merge(Personne p) {
         return JpaUtil.obtenirEntityManager().merge(p);
     }
 /**
- * 
- * @param mail le mail qu'on utilise pour chercher une personne
+ * La méthode cherche si une Personne ayant le String mail comme
+ * valeur dans la base de données. On effectue une requête jpql.
+ * Si le resultat de la requête est vide on retourne null,
+ * sinon on renvoie la Personne trouvé.
+ * @param mail le mail qu'on utilise pour chercher une Personne
  * dans la base de données.
- * @return 
+ * @return La Personne ou null si on n'a pas de correspondance.
  */
     public static Personne findByEmail(String mail) {
         Personne foundEntity = null;
@@ -61,6 +66,8 @@ public class PersonneDao {
         }
         return foundEntity;
     }
+    
+    
     public static Personne findByEmailMdp(String mail, String mdp) {
         Personne foundEntity = null;
         try {
