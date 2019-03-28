@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import com.google.maps.model.LatLng;
-import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
@@ -170,4 +169,5 @@ public abstract class Personne implements Serializable {
         hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
+    
 }
