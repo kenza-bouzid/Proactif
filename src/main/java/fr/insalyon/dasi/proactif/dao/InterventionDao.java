@@ -25,17 +25,19 @@ import javax.persistence.TemporalType;
  */
 public class InterventionDao {
 
-     /**
+ /**
  * Obtient un entity manager et persist l'Intervention.
- * @param i l'Intervention à persister
+ * @param i l'Intervention à persister.
  */
     public static void persist(Intervention i) {
         JpaUtil.obtenirEntityManager().persist(i);
     }
 
-     /**
+ /**
  * Obtient un entity manager et merge l'Intervention.
- * @param i l'Intervention qu'on merge
+ * @param i l'Intervention qu'on merge.
+ * @return On retourne la nouvelle instance d'Intervention
+ * qui vient d'être merge.
  */
     public static Intervention merge(Intervention i) {
         return JpaUtil.obtenirEntityManager().merge(i);

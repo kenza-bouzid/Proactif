@@ -10,21 +10,34 @@ import fr.insalyon.dasi.proactif.util.DebugLogger;
 import java.util.List;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
-
 /**
- *
- * @author utilisateur
+ * Classe intéragissant avec la base de donnés pour 
+ * les objets de type Personne.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 public class PersonneDao {
 
+ /**
+ * Obtient un entity manager et persist la Personne.
+ * @param p l'Intervention à persister.
+ */
     public static void persist(Personne p) {
         JpaUtil.obtenirEntityManager().persist(p);
     }
-    
+ /**
+ * Obtient un entity manager et merge la Personne.
+ * @param p la Personne qu'on merge.
+ */
     public static Personne merge(Personne p) {
         return JpaUtil.obtenirEntityManager().merge(p);
     }
-
+/**
+ * 
+ * @param mail le mail qu'on utilise pour chercher une personne
+ * dans la base de données.
+ * @return 
+ */
     public static Personne findByEmail(String mail) {
         Personne foundEntity = null;
         try {

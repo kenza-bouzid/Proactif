@@ -16,7 +16,7 @@ import fr.insalyon.dasi.proactif.metier.modele.Client;
 public class ClientDao {
 /**
  * Obtient un entity manager et persist le Client.
- * @param c le Client à persister
+ * @param c le Client à persister.
  */
     public static void persist(Client c) {
         JpaUtil.obtenirEntityManager().persist(c);
@@ -24,7 +24,9 @@ public class ClientDao {
     
  /**
  * Obtient un entity manager et merge le Client.
- * @param c le client qu'on merge
+ * @param c le Client qu'on merge.
+ * @return On retourne la nouvelle instance du client
+ * qui vient d'être merge.
  */
     public static Client merge(Client c) {
         return JpaUtil.obtenirEntityManager().merge(c);

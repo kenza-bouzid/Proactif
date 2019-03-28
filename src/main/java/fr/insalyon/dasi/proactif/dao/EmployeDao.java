@@ -22,7 +22,7 @@ public class EmployeDao {
 
  /**
  * Obtient un entity manager et persist l'Employe.
- * @param e l'Employe à persister
+ * @param e l'Employe à persister.
  */
     public static void persist(Employe e) {
         JpaUtil.obtenirEntityManager().persist(e);
@@ -53,7 +53,9 @@ public class EmployeDao {
     }
  /**
  * Obtient un entity manager et merge l'Employe.
- * @param e l'Employe qu'on merge
+ * @param e l'Employe qu'on merge.
+ * @return On retourne la nouvelle instance de l'Employe
+ * qui vient d'être merge.
  */
     public static Employe merge(Employe e) {
         return JpaUtil.obtenirEntityManager().merge(e);
