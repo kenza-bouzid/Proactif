@@ -5,6 +5,7 @@
  */
 package fr.insalyon.dasi.proactif;
 
+import fr.insalyon.dasi.proactif.dao.InterventionDao;
 import fr.insalyon.dasi.proactif.dao.JpaUtil;
 import fr.insalyon.dasi.proactif.metier.modele.Animal;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
@@ -14,9 +15,13 @@ import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Livraison;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.metier.service.Service;
+import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.Saisie;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -91,49 +96,255 @@ public class Test {
         }
     }
     public static void testGlobal() throws ParseException{
-
+        
+        Saisie.lireChaine("Inscription de Dupont");
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "Dupont@gmail.com", "123");
         Service.inscrireClient(c);
+        Saisie.lireChaine("Inscription d'Asimov");
         Client c1 = new Client("M", "Asimov", "Isaac", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0699123422", "Asimov@gmail.com", "123");
         boolean inscription1 = Service.inscrireClient(c1);
+        Saisie.lireChaine("Inscription de Dick");
         Client c2 = new Client("M", "Dick", "Philip", "1982-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0611223344", "Dick@gmail.com", "123");
         Service.inscrireClient(c2);
+        Saisie.lireChaine("Inscription de Kubrick");
         Client c3 = new Client("M", "Kubrick", "Stanley", "1954-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0611223345", "Kubrick@gmail.com", "123");
         Service.inscrireClient(c3);
+        Saisie.lireChaine("Inscription de Zemeckis");
         Client c4 = new Client("M", "Zemeckis", "Robert", "1932-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0612223345", "Zemeckis@gmail.com", "123");
         Service.inscrireClient(c4);
+        Saisie.lireChaine("Inscription de Baranger");
         Client c5 = new Client("M", "Baranger", "François", "1978-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613223345", "Baranger@gmail.com", "123");
         Service.inscrireClient(c5);
+        Saisie.lireChaine("Inscription d'Astier");
         Client c6 = new Client("M", "Astier", "Alexandre", "1969-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613223945", "Astier@gmail.com", "123");
         Service.inscrireClient(c6);
+        Saisie.lireChaine("Inscription de LeRobot");
         Client c7 = new Client("M", "LeRobot", "Wall-E", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613423945", "LeRobot@gmail.com", "123");
         Service.inscrireClient(c7);
+        Saisie.lireChaine("Inscription de Vert");
         Client c8 = new Client("M", "Vert", "Thé", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613424945", "Vert@gmail.com", "123");
         Service.inscrireClient(c8);
+        Saisie.lireChaine("Inscription de Vert (son frere qui a la meme adresse mail)");
         Client c9 = new Client("M", "Vert", "Soleil", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613424945", "Vert@gmail.com", "123");
         Service.inscrireClient(c9);
+        Saisie.lireChaine("Tentative de connexion avec mauvais mdp");
         
    
-        
-        Service.inscrireClient(c1);
         Service.connexion("Dupont@gmail.com", "122");
+        Saisie.lireChaine("Tentative de connexion avec le bon mdp");
         Personne p = Service.connexion("Dupont@gmail.com", "123");
+        
         c=(Client)p;
         Incident i1 = new Incident("Problèmes de fantôme");
+        Saisie.lireChaine("demande intervention");
         Service.demandeIntervention(i1, c);
+        Saisie.lireChaine("clotûrer intervention");
         Service.cloturerIntervention(i1,"c'est tout bon", true);
+        Saisie.lireChaine("demande intervention");
         Animal i2 = new Animal("pug", "Problèmes de santé");
         Service.demandeIntervention(i2,c);
+        Saisie.lireChaine("clotûrer intervention");
         Service.cloturerIntervention(i2, "Votre chien est mort", false);
+        Saisie.lireChaine("demande intervention 1");
         Animal i3 = new Animal("pug", "Promenez mon chien svp");
         Service.demandeIntervention(i3,c1);
+        Saisie.lireChaine("demande intervention 2");
         Livraison i4= new Livraison("colis","amazon","Récuperer mon colis svp");
         Service.demandeIntervention(i4, c);
-        Service.cloturerIntervention(i3, "Votre chien n'est pas mort", true);
+        Saisie.lireChaine("clotûrer intervention 2");
         Service.cloturerIntervention(i4,"Tout est bon",true);
+        Saisie.lireChaine("clotûrer intervention 1");
+        Service.cloturerIntervention(i3, "Votre chien n'est pas mort", true);
+        Saisie.lireChaine("demande intervention");
         Livraison i5 = new Livraison("colis","DPD","Livraison");
         Service.demandeIntervention(i5, c);
+        Saisie.lireChaine("clotûrer intervention");
         Service.cloturerIntervention(i5,"Tout est ni-ckel",true);
+        
+        Incident i10 = new Incident("Problèmes de fantôme");
+        Incident i11 = new Incident("Problèmes de fantôme");
+        Incident i12 = new Incident("Problèmes de fantôme");
+        Incident i13 = new Incident("Problèmes de fantôme");
+        Incident i14 = new Incident("Problèmes de fantôme");
+        Incident i15 = new Incident("Problèmes de fantôme");
+        Incident i16 = new Incident("Problèmes de fantôme");
+        Incident i17 = new Incident("Problèmes de fantôme");
+        Incident i18 = new Incident("Problèmes de fantôme");
+        Incident i19 = new Incident("Problèmes de fantôme");
+        Incident i20 = new Incident("Problèmes de fantôme");
+        
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i10, c);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i11, c1);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i12, c2);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i13, c3);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i14, c4);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i15, c5);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i16, c6);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i17, c7);
+        Saisie.lireChaine("demande intervention");
+        Service.demandeIntervention(i18, c8);
+        Employe e10 = i1.getEmployeAffecte();
+        //Personne p10 = Service.connexion("emp6@gmail.com", "167");
+        //Employe e10 = (Employe)p10;
+        List<Intervention> intervention = Service.RecupererInterventionsDuJour(e10);
+        Saisie.lireChaine("récuperer intervention du jour de Employe 6");
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+            
+        }else{
+            System.out.println("dadada2");
+        }
+        Saisie.lireChaine("récuperer intervention incident de Dupont");
+        intervention =Service.HistoriqueClientParType("incident",c);
+        
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+            
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        Saisie.lireChaine("récuperer intervention livraison de Dupont");
+        intervention =Service.HistoriqueClientParType("livraison",c);
+        
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+            
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        Saisie.lireChaine("récuperer intervention animal de Dupont");
+        intervention =Service.HistoriqueClientParType("animal",c);
+        
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+            
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        Saisie.lireChaine("récuperer interventions d'aujourd'hui de Dupont");
+        intervention =Service.HistoriqueClientParDate("28/03/2019",c);
+        
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+            
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        try {
+            cal1.setTime(sdf.parse("22/03/2019"));
+            cal2.setTime(sdf.parse("22/03/2019"));
+
+        } catch (ParseException e) {
+            DebugLogger.log("Attention ParseException", e);
+        }
+        cal2.set(Calendar.HOUR_OF_DAY, 15);
+        cal2.set(Calendar.MINUTE, 33);
+        cal2.set(Calendar.SECOND, 23);
+        cal1.set(Calendar.HOUR_OF_DAY, 13);
+        cal1.set(Calendar.MINUTE, 23);
+        cal1.set(Calendar.SECOND, 00);
+        Timestamp date1 = new Timestamp(cal1.getTime().getTime());
+        Timestamp date2 = new Timestamp(cal2.getTime().getTime());
+        i1.setDateDebut(date1);
+        i1.setDateFin(date2);
+        Intervention itmp;
+        JpaUtil.creerEntityManager();
+        JpaUtil.ouvrirTransaction();
+        itmp = InterventionDao.merge(i1);
+        i1=(Incident)itmp;
+        JpaUtil.validerTransaction();
+        JpaUtil.fermerEntityManager();
+        
+        Saisie.lireChaine("récuperer interventions d'aujourd'hui de Dupont (Intervention i1 placé le 22/03/2019)");
+        intervention =Service.HistoriqueClientParDate("28/03/2019",c);
+
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+
+        }else{
+            System.out.println("Requête vide");
+        }
+
+        Saisie.lireChaine("récuperer interventions de Dupont 22/03/2019");
+        intervention =Service.HistoriqueClientParDate("22/03/2019",c);
+
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        Saisie.lireChaine("récuperer interventions animal du  22/03/2019");
+        intervention =Service.HistoriqueClientParTypeEtDate("animal","22/03/2019",c);
+
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+
+        }else{
+            System.out.println("Requête vide");
+        }
+        
+        Saisie.lireChaine("récuperer interventions de Dupont incident du  22/03/2019");
+        intervention =Service.HistoriqueClientParTypeEtDate("incident","22/03/2019",c);
+
+        if(intervention!=null)
+        {
+            for(Intervention iii : intervention)
+            {
+              System.out.println("Intervention :  "+iii);  
+            }
+
+        }else{
+            System.out.println("Requête vide");
+        }
         /*
             
         /*
