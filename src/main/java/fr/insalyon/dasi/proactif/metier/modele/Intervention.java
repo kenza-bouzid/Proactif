@@ -21,8 +21,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
- *
- * @author utilisateur
+ * Classe représentant les interventions de notre application.
+ * Elle est abstract.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

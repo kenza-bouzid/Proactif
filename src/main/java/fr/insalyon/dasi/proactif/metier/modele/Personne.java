@@ -18,8 +18,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 
 /**
- *
- * @author dhamidovic
+ * Classe représentant les personnes de notre application.
+ * Elle représente les employés et les clients.
+ * Elle est abstract.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

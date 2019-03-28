@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 /**
- *
- * @author dhamidovic
+ * Classe représentant les clients de notre application.
+ * La classe hérite de Personne.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 

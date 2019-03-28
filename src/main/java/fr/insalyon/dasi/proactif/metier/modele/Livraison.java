@@ -8,10 +8,15 @@ package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+
 /**
- *
- * @author utilisateur
+ * Classe représentant les interventions de type
+ * livraison de notre application.
+ * La classe hérite de Intervention.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
+
 @Entity
 public class Livraison extends Intervention implements Serializable {
     

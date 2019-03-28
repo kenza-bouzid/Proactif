@@ -14,8 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 /**
- *
- * @author dhamidovic
+ * Classe représentant les employés de notre application.
+ * La classe hérite de Personne.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 public class Employe extends Personne implements Serializable {
