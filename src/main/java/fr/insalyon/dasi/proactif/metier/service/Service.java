@@ -272,7 +272,12 @@ public class Service {
             DebugLogger.log("Cette intervention ne peut pas être clôturée, celle ci a déjà été clôturé ou pas du tout entammé!");
         }
     }
-
+/**
+ * Méthode permettant d'initialiser 10 employés dans la base
+ * de données. Initialise et persiste un à un dans la base 
+ * de données les employés.
+ * @throws ParseException 
+ */
     public static void initialisationEmploye() throws ParseException {
 
         try {
@@ -317,6 +322,12 @@ public class Service {
         }
     }
 
+/**
+ * Méthode permettant d'initialiser 4 client dans la base
+ * de données. Initialise et persiste un à un dans la base 
+ * de données les clients.
+ * @throws ParseException 
+ */    
     public static void initialisationClient() throws ParseException {
         try {
             JpaUtil.creerEntityManager();
@@ -342,7 +353,15 @@ public class Service {
             JpaUtil.fermerEntityManager();
         }
     }
-
+/**
+ * Méthode permettant d'avoir toutes les interventions d'aujourd'hui
+ * d'un employé. Fait une requête jpql pour récupérer les
+ * interventions du jour d’un employé donné. Renvoie null 
+ * si la requête n’a rien récupéré et renvoie la liste sinon.
+ * @param e l'Employé
+ * @return la liste d'interventions ou null si la liste est
+ * vide
+ */
     public static List<Intervention> RecupererInterventionsDuJour(Employe e) {
         List<Intervention> interventionDuJour = null;
         try {
@@ -356,6 +375,20 @@ public class Service {
         return interventionDuJour;
     }
 
+/**
+ * Méthode permettant de récuperer les interventions
+ * d'un client en fonction du type d'intervention.
+ * Récupère le String en paramètre pour déterminer quelle
+ * requête jpql effectuer. Effectue la requête
+ * correspondante au String. Renvoie null si la
+ * requête est vide ou si le String ne correspond à 
+ * aucun type d’intervention, renvoie la liste
+ * d’intervention sinon. 
+ * @param type le type d'Intervention
+ * @param c le Client
+ * @return la liste d'interventions ou null si la liste
+ * est vide
+ */
     public static List<Intervention> HistoriqueClientParType(String type, Client c) {
         List<Intervention> historiqueClient = null;
         try {
@@ -370,6 +403,20 @@ public class Service {
         return historiqueClient;
     }
 
+/**
+ * Méthode permettant de récuperer les interventions
+ * d'un client en fonction de la date passé en 
+ * paramètre. Effectue une requête jpql sélectionnant
+ * les interventions le jour correspondant au String
+ * en paramètre. Renvoie null si la requête est vide
+ * ou si le String ne correspond à aucun type
+ * d’intervention, sinon renvoie la liste d’intervention.
+ * @param date le jour au format dd/MM/yyyy
+ * @param c le Client
+ * @return la liste d'intervention ou null si la 
+ * liste est vide
+ * @throws ParseException 
+ */    
     public static List<Intervention> HistoriqueClientParDate(String date, Client c) throws ParseException {
         List<Intervention> historiqueClient = null;
         try {
@@ -381,7 +428,23 @@ public class Service {
         }
         return historiqueClient;
     }
-
+/**
+ * Méthode permettant de récuperer les interventions
+ * d'un client en fonction de la date passé en 
+ * paramètre et du type passé en paramètre.
+ * Récupère les Strings en paramètre correspondants
+ * à la date et au type d’intervention pour déterminer
+ * quelle requête jpql effectuer Effectue la requête
+ * Renvoie null si la requête est vide ou si le String
+ * ne correspond à aucun type d’intervention,
+ * sinon renvoie la liste d’intervention.
+ * @param type le type de l'intervention
+ * @param date le jour au format dd/MM/yyyy
+ * @param c le Client
+ * @return la liste d'intervention ou null si la 
+ * liste est vide
+ * @throws ParseException 
+ */
     public static List<Intervention> HistoriqueClientParTypeEtDate(String type, String date, Client c) throws ParseException {
         List<Intervention> historiqueClient = null;
         try {
@@ -393,7 +456,21 @@ public class Service {
         }
         return historiqueClient;
     }
-
+/**
+ * Méthode permettant de mettre à jour les 
+ * infos d'une Personne.Récupère les paramètres
+ * en entrée et modifie la personne. Change la
+ * personne correspondante dans la base de données
+ * @param civilite la civilité de la Personne
+ * @param nom le nom de la Personne
+ * @param prenom le prénom de la Personne
+ * @param dateNaissance la date de naissance 
+ * de la Personne
+ * @param adresse l'adresse postale de la Personne
+ * @param numTel le numéro de téléphone de la Personne
+ * @param adresseElec l'adresse mail de la Personne
+ * @param p la Personne
+ */
     public static void updateProfil(String civilite, String nom, String prenom, String dateNaissance, String adresse, String numTel, String adresseElec, Personne p) {
 
         try {
@@ -414,7 +491,16 @@ public class Service {
             DebugLogger.log("RollBack Exception lors de la mise a jour du profil", e);
         }
     }
-    
+
+/**
+ * Méthode permettant de changer les horaires de travail
+ * d'un Employé. Récupère les paramètres en entrée et
+ * modifie l’employé. Change l’employé correspondante
+ * dans la base de données
+ * @param dateDebut l'heure de début au format hh:mm:ss
+ * @param dateFin l'heure de fin au format hh:mm:ss
+ * @param e l'employé
+ */    
     public static void updateHoraire(String dateDebut, String dateFin, Employe e) {
         try{
             e.setDebutTravail(java.sql.Time.valueOf(dateDebut));
