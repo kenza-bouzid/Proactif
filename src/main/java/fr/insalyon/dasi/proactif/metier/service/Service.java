@@ -22,13 +22,30 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.RollbackException;
-
+/**
+ * Classe représentant les services fournis par
+ * l'application.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
+ */
 public class Service {
 
     
     public Service() {
     }
 
+    /**
+     * Méthode qui permet d'inscrire le client.
+     * Récupère un client passé en paramètre et recherche si son adresse mail 
+     * est déjà dans la base de données Si l’email n’est pas utilisé la méthode
+     * créé le client dans la base de données et envoie un mail pour confirmer
+     * l’inscription.Si l’inscription échoue, la méthode envoie un mail pour
+     * mettre signaler l'échec de l’inscription.
+     * @param c le Client à inscrire
+     * @return true si l'inscription est réussie, false
+     * sinon
+     * @throws ParseException 
+     */
     public static boolean inscrireClient(Client c) throws ParseException {
         boolean reussie = false;
         try {
@@ -57,6 +74,17 @@ public class Service {
         return reussie;
     }
 
+/**
+ * Méthode qui permet d'envoyer un code pour une réinitialisation
+ * de mot de passe. Vérifie dans la base de données si un client
+ * ou un employé correspond au mail et au numéro de téléphone en
+ * paramètre et envoie un code si c’est le cas. Renvoie le code
+ * généré ou renvoie un code égal à zéro s'il n'y a pas de 
+ * correspondance dans la base de données.
+ * @param mail le mail associé au compte du client
+ * @param num le numéro du client
+ * @return le code ou 0 si cela a echoué
+ */
     public static int envoyerCodeConfirmation(String mail, String num) {
         int code = 0;
         try {
@@ -74,6 +102,16 @@ public class Service {
         return code;
     }
 
+/**
+ * Méthode qui permet de trouver une personne grâce
+ * à son mail et son numéro. Cherche le client dans la 
+ * base de données grâce à l’e-mail et le numéro 
+ * de portable passés en paramètre. 
+ * @param mail le mail associé au compte du client
+ * @param num le numéro du client
+ * @return La personne trouvée ou null si la requête ne
+ * renvoie rien
+ */
     public static Personne findPersonneByMailNum(String mail, String num) {
         Personne c = null;
         try {
@@ -86,6 +124,15 @@ public class Service {
         return c;
     }
 
+/**
+ * Méthode qui permet de changer le mot de passe d'une Personne
+ * passé en paramètre. Récupère une personne et un String, 
+ * puis change le mot de passe du string pour enfin 
+ * le mettre à jour dans la base de données.
+ * @param c la Personne qui veut une mise à jour de mot de
+ * passe 
+ * @param mdp le nouveau mot de passe de la personne    
+ */    
     public static void updateMdp(Personne c, String mdp) {
         try {
             c.setMdp(mdp);
@@ -99,6 +146,16 @@ public class Service {
         }
     }
 
+/**
+ * Méthode permettant de récupérer une Personne à partir
+ * de son mail et son mot de passe. Récupère les String e-mail
+ * et mot de passe passés en paramètres. Si une personne
+ * renvoie la personne, sinon renvoie null.
+ * @param mail le mail de la Personne à connecter
+ * @param mdp le mot de passe de la Personne à connecter
+ * @return la Personne connecté ou null si personne ne correspond
+ * dans la base de données
+ */    
     public static Personne connexion(String mail, String mdp) {
         Personne p = null;
         try {
@@ -116,6 +173,22 @@ public class Service {
         return p;
     }
 
+/**
+ * Méthode permettant de faire une demande d'intervention. 
+ * Associe le Client à l’Intervention et ajoute l’Intervention
+ * au Client.Récupère la liste des employés disponibles, 
+ * c’est à dire, pas en intervention et actuellement au travail. 
+ * A partir de cette liste, recherche l’Employé le plus proche de 
+ * chez le Client. Si l’Employé n’est pas vide, alors l’Employé
+ * est mis en intervention,et on affecte l’Employé à l’Intervention.
+ * Même si aucun Employé n’est trouvé on met à jour la base de
+ * données, on garde ainsi les Interventions acceptées et 
+ * refusées. On envoie une notification au client pour 
+ * indiquer l’échec ou la réussite de la demande.
+ * @param i l'Intervention
+ * @param c le Client qui demande l'intervention
+ * @return true si la demande a réussie, false sinon
+ */
     public static boolean demandeIntervention(Intervention i, Client c) {
 
         try {
@@ -166,6 +239,16 @@ public class Service {
         return i.isEnCours();
     }
 
+/**
+ * Méthode permettant de clôturer une intervention en cours.
+ * Ajoute un commentaire à l’intervention, indique grâce au
+ * boolean si elle est réussie ou ratée et change l’état
+ * "enCours" à faux. Change l’état de l’Employé pour indiquer
+ * qu’il n’est plus en intervention. Met à jour la base de données.
+ * @param i l'Intervention
+ * @param commentaire le commentaire de l'employé sur l'intervention
+ * @param Status le statut de l'intervention, réussi ou échoué
+ */
     public static void cloturerIntervention(Intervention i, String commentaire, boolean Status) {
         if (i.isEnCours()) {
             try {
