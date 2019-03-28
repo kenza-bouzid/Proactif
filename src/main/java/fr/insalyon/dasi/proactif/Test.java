@@ -349,8 +349,13 @@ public class Test {
         Saisie.lireChaine("Données de Dupont");
         System.out.println("id=" + c.getId() + ", civilite=" + c.getCivilite() + ", nom=" + c.getNom() + ", prenom=" + c.getPrenom() + ", dateNaissance=" + c.getDateNaissance() + ", adresse=" + c.getAdresse() + ", coord=" + c.getCoord() + ", numTel=" + c.getNumTel() + ", adresseElec=" + c.getAdresseElec() + ", mdp=" + c.getMdp());
     
-        Service.updateProfil("Mme", "Dupont", "Patrick", "22-03-1992", "3 rue des pommiers, Joue-Les-Tours", "0799234213", "Dupontpont@gmail.com", c);
+        Service.updateProfil("Mme", "Dupont", "Patrick", "1993-03-02", "3 rue des pommiers, Joue-Les-Tours", "0799234213", "Dupontpont@gmail.com", c);
         
+        Personne pp = Service.connexion("Dupontpont@gmail.com","123");
+        c=(Client)pp;
+        
+        Saisie.lireChaine("Données de Dupont après modif2");
+        System.out.println("id=" + c.getId() + ", civilite=" + c.getCivilite() + ", nom=" + c.getNom() + ", prenom=" + c.getPrenom() + ", dateNaissance=" + c.getDateNaissance() + ", adresse=" + c.getAdresse() + ", coord=" + c.getCoord() + ", numTel=" + c.getNumTel() + ", adresseElec=" + c.getAdresseElec() + ", mdp=" + c.getMdp());
         /*
             
         /*
