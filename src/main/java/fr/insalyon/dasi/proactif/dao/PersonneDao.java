@@ -25,7 +25,30 @@ public class PersonneDao {
         return JpaUtil.obtenirEntityManager().merge(p);
     }
 
-    public static Personne findByEMail(String mail, String mdp) {
+    public static Personne findByEmail(String mail) {
+        Personne foundEntity = null;
+        try {
+            String jpql = "select p from Personne p where p.adresseElec = :mail";
+            Query query = JpaUtil.obtenirEntityManager().createQuery(jpql);
+            query.setParameter("mail", mail);
+            List<Personne> results = query.getResultList();
+
+            if (!results.isEmpty()) {
+                foundEntity = results.get(0);
+            }
+            if (results.size() > 1) {
+                for (Personne result : results) {
+                    if (result != foundEntity) {
+                        throw new NonUniqueResultException();
+                    }
+                }
+            }
+        } catch (NonUniqueResultException e) {
+            DebugLogger.log("Attention exception", e);
+        }
+        return foundEntity;
+    }
+    public static Personne findByEmailMdp(String mail, String mdp) {
         Personne foundEntity = null;
         try {
             String jpql = "select p from Personne p where p.adresseElec = :mail and p.mdp = :mdp";

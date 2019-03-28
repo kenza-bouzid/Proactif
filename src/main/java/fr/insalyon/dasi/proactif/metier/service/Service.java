@@ -33,11 +33,11 @@ public class Service {
         boolean reussie = false;
         try {
             JpaUtil.creerEntityManager();
-            if ((Client) PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) == null) {
+            if ((Client) PersonneDao.findByEmail(c.getAdresseElec()) == null) {
                 JpaUtil.ouvrirTransaction();
                 c.setCoord(GeoTest.getLatLng(c.getAdresse()));
                 ClientDao.persist(c);
-                if ((Client) PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) != null) {
+                if ((Client) PersonneDao.findByEmailMdp(c.getAdresseElec(), c.getMdp()) != null) {
                     JpaUtil.validerTransaction();
                     DebugLogger.log("Inscription réussie!");
                     Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
@@ -103,7 +103,7 @@ public class Service {
         Personne p = null;
         try {
             JpaUtil.creerEntityManager();
-            p = PersonneDao.findByEMail(mail, mdp);
+            p = PersonneDao.findByEmailMdp(mail, mdp);
             JpaUtil.fermerEntityManager();
         } catch (Exception e) {
             DebugLogger.log("Attention exception lors de la connexion ", e);
