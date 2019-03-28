@@ -36,14 +36,6 @@ public abstract class Personne implements Serializable {
     private String adresse;
     private LatLng coord;
     private String numTel;
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
     @Column(unique = true, nullable = false)
     private String adresseElec;
     private String mdp;
@@ -62,9 +54,12 @@ public abstract class Personne implements Serializable {
         this.mdp = mdp;
     }
 
-    @Override
-    public String toString() {
-        return "Personne{" + "id=" + id + ", civilite=" + civilite + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + ", adresse=" + adresse + ", coord=" + coord + ", numTel=" + numTel + ", adresseElec=" + adresseElec + ", mdp=" + mdp + '}';
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
     public String getCivilite() {
@@ -77,18 +72,6 @@ public abstract class Personne implements Serializable {
 
     public String getNom() {
         return nom;
-    }
-
-    public Personne(String civilite, String nom, String prenom, Date dateNaissance, String adresse, LatLng coord, String numTel, String adresseElec, String mdp) {
-        this.civilite = civilite;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.adresse = adresse;
-        this.coord = coord;
-        this.numTel = numTel;
-        this.adresseElec = adresseElec;
-        this.mdp = mdp;
     }
 
     public void setNom(String nom) {
@@ -138,7 +121,6 @@ public abstract class Personne implements Serializable {
     public String getMdp() {
         return mdp;
     }
-
 
     public void setMdp(String mdp) {
         this.mdp = mdp;

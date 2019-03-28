@@ -5,6 +5,7 @@
  */
 package fr.insalyon.dasi.proactif.metier.service;
 
+import fr.insalyon.dasi.proactif.util.Notif;
 import fr.insalyon.dasi.proactif.dao.ClientDao;
 import fr.insalyon.dasi.proactif.dao.EmployeDao;
 import fr.insalyon.dasi.proactif.dao.InterventionDao;
@@ -35,7 +36,7 @@ public class Service {
             JpaUtil.ouvrirTransaction();
             c.setCoord(GeoTest.getLatLng(c.getAdresse()));
             ClientDao.persist(c);
-            if (ClientDao.findByEMail(c.getAdresseElec(), c.getMdp()) != null) {
+            if ((Client)PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) != null) {
                 JpaUtil.validerTransaction();
                 DebugLogger.log("Inscription réussie!");
                 Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
@@ -55,7 +56,7 @@ public class Service {
         int code = 0;
         try {
             JpaUtil.creerEntityManager();
-            if (ClientDao.findByEmailNum(mail, num) != null) {
+            if (PersonneDao.findByEmailNum(mail, num) != null) {
                 int lower = 1000;
                 int higher = 9999;
                 code = (int) (Math.random() * (higher - lower)) + lower;
@@ -72,7 +73,7 @@ public class Service {
         Client c = null;
         try {
             JpaUtil.creerEntityManager();
-            c = ClientDao.findByEmailNum(mail, num);
+            c = (Client)PersonneDao.findByEmailNum(mail, num);
             JpaUtil.fermerEntityManager();
         } catch (Exception e) {
             DebugLogger.log("Attention exception pour trouver le client (mail,num): ", e);
@@ -146,7 +147,7 @@ public class Service {
             if (employeAffecte != null) {
                 employeAffecte.getTabBord().add(i);
                 EmployeDao.merge(employeAffecte);
-                SousService.envoyerNotifEmploye(i);
+                Notif.envoyerNotifEmploye(i);
                 Message.envoyerNotification(c.getNumTel(), "Votre demande d'intervention numéro (#" + i.getNumIntervention() + ") a été prise en compte, vous receverez une notification vous informant de son déroulement une fois achevée. \n Nous vous remercions pour votre confiance! ");
             } else {
                 Message.envoyerNotification(c.getNumTel(), "Votre demande d'intervention numéro (#" + i.getNumIntervention() + ") n'a malheureusement pas été approuvée, aucun emploi n'est disponible à l'instant, merci de réessayer ultérieurement! ");
@@ -175,7 +176,7 @@ public class Service {
                 InterventionDao.merge(i);
                 JpaUtil.validerTransaction();
                 JpaUtil.fermerEntityManager();
-                SousService.envoyerNotifClient(i);
+                Notif.envoyerNotifClient(i);
             } catch (RollbackException e) {
                 DebugLogger.log("Rollback Exception clôturer intervention", e);
             }

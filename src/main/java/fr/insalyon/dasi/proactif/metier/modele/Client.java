@@ -6,7 +6,6 @@
 package fr.insalyon.dasi.proactif.metier.modele;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -22,11 +21,14 @@ public class Client extends Personne implements Serializable {
     @OneToMany//(mappedBy="monClient")
     private List<Intervention> histoInterventions;
 
-    @Override
-    public String toString() {
-        return super.toString()+"Client{" + '}';
+    public Client() {
+        super(); 
     }
-
+    
+    public Client(String civilite, String nom, String prenom, String dateNaissance,
+            String adresse, String numTel, String adresseElec, String mdp){
+        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
+    }
     public List<Intervention> getHistoInterventions() {
         return histoInterventions;
     }
@@ -34,16 +36,6 @@ public class Client extends Personne implements Serializable {
     public void setHistoInterventions(List<Intervention> histoInterventions) {
         this.histoInterventions = histoInterventions;
     }
-
-    public Client() {
-        super(); 
-    }
-
-    public Client(String civilite, String nom, String prenom, String dateNaissance,
-            String adresse, String numTel, String adresseElec, String mdp) throws ParseException {
-        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
-    }
-
     public boolean addHistoInterventions(Intervention i) {
         return this.histoInterventions.add(i);
     }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insalyon.dasi.proactif.metier.service;
+package fr.insalyon.dasi.proactif.util;
 
 import fr.insalyon.dasi.proactif.metier.modele.Animal;
 import fr.insalyon.dasi.proactif.metier.modele.Client;
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
  *
  * @author utilisateur
  */
-public class SousService {
+public class Notif {
     
     public static void envoyerNotifEmploye(Intervention i) {
         String type = "";

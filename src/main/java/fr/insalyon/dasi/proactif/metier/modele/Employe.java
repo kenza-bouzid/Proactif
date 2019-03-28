@@ -22,21 +22,26 @@ public class Employe extends Personne implements Serializable {
 
     @OneToMany//(mappedBy="employeAffecte")
     private List<Intervention> tabBord;
-
-    public List<Intervention> getTabBord() {
-        return tabBord;
-    }
-
-    public void setTabBord(List<Intervention> tabBord) {
-        this.tabBord = tabBord;
-    }
-
     @Basic
     private Time debutTravail;
     @Basic
     private Time finTravail;
     private boolean estEnIntervention;
+    
+    public Employe(String debut, String fin, String civilite,
+            String nom, String prenom, String dateNaissance, String adresse,
+            String numTel, String adresseElec, String mdp) throws ParseException {
+        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
+        debutTravail = java.sql.Time.valueOf(debut);
+        finTravail = java.sql.Time.valueOf(fin);
 
+        this.estEnIntervention = false;
+    }
+
+    public Employe() {
+        super();
+    }
+    
     public Time getDebutTravail() {
         return debutTravail;
     }
@@ -60,24 +65,12 @@ public class Employe extends Personne implements Serializable {
     public void setEstEnIntervention(boolean estEnIntervention) {
         this.estEnIntervention = estEnIntervention;
     }
-
-    public Employe(String debut, String fin, String civilite,
-            String nom, String prenom, String dateNaissance, String adresse,
-            String numTel, String adresseElec, String mdp) throws ParseException {
-        super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
-        debutTravail = java.sql.Time.valueOf(debut);
-        finTravail = java.sql.Time.valueOf(fin);
-
-        this.estEnIntervention = false;
+    public List<Intervention> getTabBord() {
+        return tabBord;
     }
 
-    public Employe() {
-        super();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + "Employe{" + "tabBord=" + tabBord + ", debutTravail=" + debutTravail + ", finTravail=" + finTravail + ", estEnIntervention=" + estEnIntervention + '}';
+    public void setTabBord(List<Intervention> tabBord) {
+        this.tabBord = tabBord;
     }
 
     public Intervention getInterventionCourante() {
@@ -88,5 +81,4 @@ public class Employe extends Personne implements Serializable {
         }
         return null;
     }
-
 }

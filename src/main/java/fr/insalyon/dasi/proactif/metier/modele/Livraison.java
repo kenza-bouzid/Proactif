@@ -27,11 +27,6 @@ public class Livraison extends Intervention implements Serializable {
     public Livraison() {
     }
 
-    @Override
-    public String toString() {
-        return super.toString()+"Livraison{" + "objet=" + objet + ", entreprise=" + entreprise + '}';
-    }
-
     public String getObjet() {
         return objet;
     }
@@ -47,6 +42,5 @@ public class Livraison extends Intervention implements Serializable {
     public void setEntreprise(String entreprise) {
         this.entreprise = entreprise;
     }
-    
-    
+      
 }

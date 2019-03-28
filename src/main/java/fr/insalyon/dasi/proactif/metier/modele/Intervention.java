@@ -32,28 +32,29 @@ public abstract class Intervention implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long numIntervention;
-
     private String description;
-
     private boolean reussie;
-
     private boolean enCours;
-
     @Basic
     private java.sql.Timestamp dateDebut;
-
     @Basic
     private java.sql.Timestamp dateFin;
-
     private String commentaire;
-
     @ManyToOne
     @JoinColumn(name = "EMPLOYE_ID", referencedColumnName = "id")
     private Employe employeAffecte;
-
     @ManyToOne
     @JoinColumn(name = "CLIENT_ID", referencedColumnName = "id")
     private Client monClient;
+
+    public Intervention(String description) {
+        this.description = description;
+        this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        this.enCours = false;
+    }
+
+    public Intervention() {
+    }
 
     public String getCommentaire() {
         return commentaire;
@@ -77,15 +78,6 @@ public abstract class Intervention implements Serializable {
 
     public void setMonClient(Client monClient) {
         this.monClient = monClient;
-    }
-
-    public Intervention(String description) {
-        this.description = description;
-        this.dateDebut = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        this.enCours = false;
-    }
-
-    public Intervention() {
     }
 
     public boolean isReussie() {
@@ -141,11 +133,6 @@ public abstract class Intervention implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Intervention{" + "numIntervention=" + numIntervention + ", description=" + description + ", status=" + enCours + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", commentaire=" + commentaire + ", employeAffecte=" + employeAffecte + ", client=" + monClient + '}';
-    }
-
-    @Override
     public int hashCode() {
         int hash = 0;
         hash += (numIntervention != null ? numIntervention.hashCode() : 0);
@@ -164,5 +151,4 @@ public abstract class Intervention implements Serializable {
         }
         return true;
     }
-
 }

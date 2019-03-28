@@ -20,8 +20,7 @@ public class Incident extends Intervention implements Serializable {
     public Incident(String description ) {
         super(description);
     }
-
+    
     public Incident() {
     }
-
 }
