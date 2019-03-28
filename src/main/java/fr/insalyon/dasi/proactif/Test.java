@@ -47,7 +47,7 @@ public class Test {
         Service.initialisationClient();
         
         int choix = 0;
-        System.out.println("--Bienvenur sur la demo Proact'If version Beta--");
+        System.out.println("--Bienvenue sur la demo Proact'If version Beta--");
         System.out.println("Nous vous invitons à tester nos différents services !");
         System.out.println("Pour une version de tests interactive: tapez 1 ");
         System.out.println("Pour un test global de tous les services à la fois : tapez 2");
@@ -71,7 +71,7 @@ public class Test {
     public static void testInteractif() throws ParseException {
         int choix = 0;
         System.out.println("--Bien jouer, vous avez choisi la version interactive--");
-        System.out.println("Veuillez choir le service que vous vuolez tester!");
+        System.out.println("Veuillez choir le service que vous voulez tester!");
         System.out.println("Pour tester le service d'inscription: tapez 1 ");
         System.out.println("Pour tester le service de connexion : tapez 2");
         System.out.println("Pour quitter le programme : tapez 3 ");
@@ -90,14 +90,53 @@ public class Test {
                 break;
         }
     }
-    public static void testGlobal(){
-        /*Service.initialisationEmploye();
+    public static void testGlobal() throws ParseException{
 
-        Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
+        Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "Dupont@gmail.com", "123");
         Service.inscrireClient(c);
-        Service.envoyerCodeConfirmation("test@gmail.com", "0658974316");
-        Service.updateMdp(c, "469");
-        //
+        Client c1 = new Client("M", "Asimov", "Isaac", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0699123422", "Asimov@gmail.com", "123");
+        boolean inscription1 = Service.inscrireClient(c1);
+        Client c2 = new Client("M", "Dick", "Philip", "1982-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0611223344", "Dick@gmail.com", "123");
+        Service.inscrireClient(c2);
+        Client c3 = new Client("M", "Kubrick", "Stanley", "1954-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0611223345", "Kubrick@gmail.com", "123");
+        Service.inscrireClient(c3);
+        Client c4 = new Client("M", "Zemeckis", "Robert", "1932-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0612223345", "Zemeckis@gmail.com", "123");
+        Service.inscrireClient(c4);
+        Client c5 = new Client("M", "Baranger", "François", "1978-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613223345", "Baranger@gmail.com", "123");
+        Service.inscrireClient(c5);
+        Client c6 = new Client("M", "Astier", "Alexandre", "1969-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613223945", "Astier@gmail.com", "123");
+        Service.inscrireClient(c6);
+        Client c7 = new Client("M", "LeRobot", "Wall-E", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613423945", "LeRobot@gmail.com", "123");
+        Service.inscrireClient(c7);
+        Client c8 = new Client("M", "Vert", "Thé", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613424945", "Vert@gmail.com", "123");
+        Service.inscrireClient(c8);
+        Client c9 = new Client("M", "Vert", "Soleil", "2011-03-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0613424945", "Vert@gmail.com", "123");
+        Service.inscrireClient(c9);
+        
+   
+        
+        Service.inscrireClient(c1);
+        Service.connexion("Dupont@gmail.com", "122");
+        Personne p = Service.connexion("Dupont@gmail.com", "123");
+        c=(Client)p;
+        Incident i1 = new Incident("Problèmes de fantôme");
+        Service.demandeIntervention(i1, c);
+        Service.cloturerIntervention(i1,"c'est tout bon", true);
+        Animal i2 = new Animal("pug", "Problèmes de santé");
+        Service.demandeIntervention(i2,c);
+        Service.cloturerIntervention(i2, "Votre chien est mort", false);
+        Animal i3 = new Animal("pug", "Promenez mon chien svp");
+        Service.demandeIntervention(i3,c1);
+        Livraison i4= new Livraison("colis","amazon","Récuperer mon colis svp");
+        Service.demandeIntervention(i4, c);
+        Service.cloturerIntervention(i3, "Votre chien n'est pas mort", true);
+        Service.cloturerIntervention(i4,"Tout est bon",true);
+        Livraison i5 = new Livraison("colis","DPD","Livraison");
+        Service.demandeIntervention(i5, c);
+        Service.cloturerIntervention(i5,"Tout est ni-ckel",true);
+        /*
+            
+        /*
         Personne p = Service.connexion("test@gmail.com", "469");
         if (p instanceof Client) {
             System.out.println((Client) p);
@@ -330,7 +369,7 @@ public class Test {
             System.out.println("Pour cloturer votre intervention courante: tapez 2");
             System.out.println("Pour consulter votre tableau de bord: tapez 3");
             System.out.println("Pour vous déconnecter: tapez 4");
-            sousmenu = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3, 4));
+            sousmenu = Saisie.lireInteger("Indiquer votre choix: ", Arrays.asList(1, 2, 3, 4));
             switch (sousmenu) {
                 case 1:
                     Intervention current = e.getInterventionCourante();
