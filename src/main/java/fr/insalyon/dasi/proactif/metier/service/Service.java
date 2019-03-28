@@ -112,7 +112,6 @@ public class Service {
             if (employeAffecte != null) {
                 employeAffecte.setEstEnIntervention(true);
                 i.setEnCours(true); 
-                SousService.envoyerNotifEmploye(i);
             }
         }
         i.setEmployeAffecte(employeAffecte);
@@ -121,6 +120,7 @@ public class Service {
         if (employeAffecte != null) {
             employeAffecte.getTabBord().add(i);
             EmployeDao.merge(employeAffecte);
+            SousService.envoyerNotifEmploye(i);
         }
         JpaUtil.validerTransaction();
         JpaUtil.fermerEntityManager();
