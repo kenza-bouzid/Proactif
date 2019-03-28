@@ -5,14 +5,16 @@
 	<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html"/>
 	<xsl:param name="pays"/>
+	<xsl:param name="id"/>
 	<xsl:template match="/">
 		<html>
 			<body>
 				<table border="3" width="100%" align="center">
 					<tr>
-						<th>Nom</th>
-						<th>Capitale</th>
-						<th>Drapeau</th>
+						<th>Name</th>
+						<th>Capital</th>
+						<th>Flag</th>
+						<th>More information</th>
 					</tr>
 					<xsl:apply-templates select="//country[name/common=$pays]"/>
 				</table>
@@ -42,6 +44,9 @@
 			<td>
 				<xsl:variable name="url" select="concat('http://www.geonames.org/flags/x/',translate(codes/cca2 , 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' , 'abcdefghijklmnopqrstuvwxyz' ), '.gif')"/>
 				<img src="{$url}" alt="" height="40" width="60"/>
+			</td>
+			<td>
+				<a href="https://www.geonames.org/search.html?q=&amp;country={$id}" target="_blank">Learn more on geonames</a> 
 			</td>
 		</tr>
 	</xsl:template>

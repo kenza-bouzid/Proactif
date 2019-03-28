@@ -147,11 +147,9 @@ function colorier(event){
 	var xsltProcessor = new XSLTProcessor();
 	// Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone 
 	var xslDocument = chargerHttpXML('cherchePays2.xsl');
-	var pays = event.target.getAttribute('countryname');
-	var id = event.target.id; 
-	console.log(pays);
-	xsltProcessor.setParameter(null,"pays",pays); 
-	xsltProcessor.setParameter(null,"id",id);
+	var param = event.target.getAttribute('countryname');
+	console.log(param);
+	xsltProcessor.setParameter(null,"pays",param); 
 	xsltProcessor.importStylesheet(xslDocument);
 	 // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone 
     var xmlDocument = chargerHttpXML('countriesTP.xml');
