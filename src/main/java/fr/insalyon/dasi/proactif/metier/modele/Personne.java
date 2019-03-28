@@ -17,8 +17,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 
 /**
- *
- * @author dhamidovic
+ * Classe représentant les personnes de notre application.
+ * Elle représente les employés et les clients.
+ * Elle est abstract.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -41,7 +44,17 @@ public abstract class Personne implements Serializable {
 
     public Personne() {
     }
-
+/**
+ * Constructeur de Personne.
+ * @param civilite civilite de la Personne.
+ * @param nom nom de la Personne.
+ * @param prenom prénom de la Personne.
+ * @param dateNaissance date de naissance de la Personne.
+ * @param adresse adresse de la Personne.
+ * @param numTel numéro de téléphone de la Personne.
+ * @param adresseElec adresse mail de la Personne.
+ * @param mdp mot de passe de la Personne.
+ */
     public Personne(String civilite, String nom, String prenom, String dateNaissance, String adresse, String numTel, String adresseElec, String mdp) {
         this.civilite = civilite;
         this.nom = nom;
@@ -132,7 +145,11 @@ public abstract class Personne implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
+/**
+ * Override de la méthode equals. 
+ * @param object l'object sur lequel on veut tester l'égualité.
+ * @return true ou false si les objets sont égaux ou non.
+ */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -9,14 +9,21 @@ package fr.insalyon.dasi.proactif.metier.modele;
 import java.io.Serializable;
 import javax.persistence.Entity;
 /**
- *
- * @author utilisateur
+ * Classe représentant les interventions de type
+ * animal de notre application.
+ * La classe hérite de Intervention.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 public class Animal extends Intervention implements Serializable {
 
     private String animal ; 
-
+/**
+ * Constructeur de la classe Animal.
+ * @param animal
+ * @param description 
+ */
     public Animal(String animal, String description) {
         super(description);
         this.animal = animal;

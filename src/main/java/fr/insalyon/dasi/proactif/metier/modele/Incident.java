@@ -11,12 +11,19 @@ import javax.persistence.Entity;
 
 
 /**
- *
- * @author utilisateur
+ * Classe représentant les interventions de type
+ * incident de notre application.
+ * La classe hérite de Intervention.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 @Entity
 public class Incident extends Intervention implements Serializable {
 
+ /**
+ * Constructeur de la classe Incident.
+ * @param description Description du client de l'intervention demandé.
+ */
     public Incident(String description ) {
         super(description);
     }
