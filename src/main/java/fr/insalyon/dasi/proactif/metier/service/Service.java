@@ -86,12 +86,12 @@ public class Service {
         return c;
     }
 
-    public static void updateMdp(Client c, String mdp) {
+    public static void updateMdp(Personne c, String mdp) {
         try {
             c.setMdp(mdp);
             JpaUtil.creerEntityManager();
             JpaUtil.ouvrirTransaction();
-            ClientDao.merge(c);
+            PersonneDao.merge(c);
             JpaUtil.validerTransaction();
             JpaUtil.fermerEntityManager();
         } catch (RollbackException e) {
@@ -311,13 +311,13 @@ public class Service {
         return historiqueClient;
     }
 
-    public static void updateProfil(String civilite, String nom, String prenom, Date dateNaissance, String adresse, String numTel, String adresseElec, Personne p) {
+    public static void updateProfil(String civilite, String nom, String prenom, String dateNaissance, String adresse, String numTel, String adresseElec, Personne p) {
 
         try {
             p.setCivilite(civilite);
             p.setNom(nom);
             p.setPrenom(prenom);
-            p.setDateNaissance(dateNaissance);
+            p.setDateNaissance(java.sql.Date.valueOf(dateNaissance));
             p.setAdresse(adresse);
             p.setCoord(GeoTest.getLatLng(adresse));
             p.setNumTel(numTel);

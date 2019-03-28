@@ -14,7 +14,6 @@ import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Livraison;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.metier.service.Service;
-import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.Saisie;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -33,8 +32,66 @@ public class Test {
 
         JpaUtil.init();
 
-        testServiceInscription();
-        /* Service.initialisationEmploye();
+        menuPrincipal(); 
+
+        
+        JpaUtil.destroy();
+
+    }
+
+    public static void menuPrincipal() throws ParseException {
+        /*------------Initialisation-------------*/
+        System.out.println("--Bienvenue sur Proactif--");
+        System.out.println("Initialisation de l'application");
+        Service.initialisationEmploye();
+        Service.initialisationClient();
+        
+        int choix = 0;
+        System.out.println("--Bienvenur sur la demo Proact'If version Beta--");
+        System.out.println("Nous vous invitons à tester nos différents services !");
+        System.out.println("Pour une version de tests interactive: tapez 1 ");
+        System.out.println("Pour un test global de tous les services à la fois : tapez 2");
+        System.out.println("Pour quitter le programme : tapez 3");
+        choix = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3));
+        switch (choix) {
+            case 1:
+                testInteractif();
+                break;
+            case 2:
+                testGlobal(); 
+                break;
+            case 3:
+                System.exit(0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void testInteractif() throws ParseException {
+        int choix = 0;
+        System.out.println("--Bien jouer, vous avez choisi la version interactive--");
+        System.out.println("Veuillez choir le service que vous vuolez tester!");
+        System.out.println("Pour tester le service d'inscription: tapez 1 ");
+        System.out.println("Pour tester le service de connexion : tapez 2");
+        System.out.println("Pour quitter le programme : tapez 3 ");
+        choix = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3));
+        switch (choix) {
+            case 1:
+                testInscription(); 
+                break;
+            case 2:
+                testConnexion();
+                break;
+            case 3:
+                System.exit(0);
+                break;
+            default:
+                break;
+        }
+    }
+    public static void testGlobal(){
+        /*Service.initialisationEmploye();
 
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Service.inscrireClient(c);
@@ -77,17 +134,9 @@ public class Test {
         lll.forEach((m) -> {
             System.out.println(m);
         });*/
-        JpaUtil.destroy();
-
     }
 
-    public static void testServiceInscription() throws ParseException {
-
-        /*------------Initialisation-------------*/
-        System.out.println("--Bienvenue sur Proactif--");
-        System.out.println("Initialisation de l'application");
-        Service.initialisationEmploye();
-        Service.initialisationClient();
+    public static void testInscription() throws ParseException {
 
         /*------------Test Inscription-------------*/
         System.out.println("----Inscrivez vous----");
@@ -113,12 +162,12 @@ public class Test {
 
     }
 
-    public static void testServiceConnexion() {
+    public static void testConnexion() {
 
         /*------------Test Connexion -------------*/
-        String email = "";
-        String mdp = "";
-        String num = "";
+        String email;
+        String mdp;
+        String num;
         System.out.println("----Connectez vous----");
         email = Saisie.lireChaine("Adresse email : ");
         int oublie = Saisie.lireInteger("Tapez 1 si vous avez oublie votre mdp 0 sinon : ", Arrays.asList(0, 1));
@@ -147,21 +196,15 @@ public class Test {
         if (p instanceof Client) {
             Client c = (Client) p;
             System.out.println("Bienvenue sur votre profil Proactif");
+            acceuilClient(c);
         }
         if (p instanceof Employe) {
             Employe e = (Employe) p;
-            System.out.println("Bienvenue sur Proactif");
-            Intervention current = e.getInterventionCourante();
-            if (current == null) {
-                System.out.println("Vous n'avez pas d'intervention courante");
-            } else {
-                System.out.println("Vous avez une intervention courante: " + current.getMonClient().getPrenom() + "souhaite : " + current.getDescription());
-            }
+            acceuilEmploye(e);
         }
-
     }
 
-    public static void acceuilClient(Client c ) {
+    public static void acceuilClient(Client c) {
         int sousmenu = 0;
         boolean arret = false;
         while (!arret) {
@@ -173,36 +216,146 @@ public class Test {
             sousmenu = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3, 4));
             switch (sousmenu) {
                 case 1:
-                    menuIntervention(c); 
-                break;
-                case 2 :
-                    afficherProfil(c); 
-                break; 
-                case 3 : 
-                    afficherHisto(c); 
-                    
-                    break; 
-                case 4 : 
+                    menuIntervention(c);
                     break;
-                default : 
-                    break; 
+                case 2:
+                    afficherProfil(c);
+                    break;
+                case 3:
+                    afficherHisto(c);
+                    break;
+                case 4:
+                    
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    public static void menuIntervention(Client c) 
-    {
-        
+    public static void menuIntervention(Client c) {
+        int choix = 0;
+        System.out.println("---Portail demande d'intervention---");
+        System.out.println("Veuillez choisir le type d'interevntion");
+        System.out.println("Pour une intervention de type Animal, tapez 1");
+        System.out.println("Pour une intervention de type Livraison, tapez 2");
+        System.out.println("Pour une intervention de type Incident, tapez 3");
+        choix = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3));
+        String description;
+        switch (choix) {
+            case 1:
+                description = Saisie.lireChaine("Description : ");
+                String animal = Saisie.lireChaine("Animal: ");
+                Animal a = new Animal(animal, description);
+                Service.demandeIntervention(a, c);
+                break;
+            case 2:
+                description = Saisie.lireChaine("Description : ");
+                String objet = Saisie.lireChaine("Objet: ");
+                String entreprise = Saisie.lireChaine("Entreprise: ");
+                Livraison l = new Livraison(objet, entreprise, description);
+                Service.demandeIntervention(l, c);
+                break;
+            case 3:
+                description = Saisie.lireChaine("Description : ");
+                Incident i = new Incident(description);
+                Service.demandeIntervention(i, c);
+                break;
+            default:
+                break;
+        }
     }
-    
-    public static void afficherProfil (Client c){
+
+    public static void afficherProfil(Personne c) {
+        System.out.print("Client{civilite=" + c.getCivilite() + "\n nom=" + c.getNom() + "\n prenom=" + c.getPrenom()
+                + "\n dateNaissance=" + c.getDateNaissance() + "\n adresse=" + c.getAdresse() + "\n numTel=" + c.getNumTel() + "\n adresseElec=" + c.getAdresseElec() + '}');
+        System.out.println("Pour modifier vos informations personnelles, tapez 1");
+        System.out.println("Pour modifier votre mot de passe, tapez 2");
+        int choix = Saisie.lireInteger("Indiquer votre choix: ", Arrays.asList(1, 2));
+
+        switch (choix) {
+            case 1:
+                System.out.println("----- Veuillez saisir vos informations personnelles de nouveau -----");
+                String civilite = Saisie.lireChaine("Civilité : ");
+                String prenom = Saisie.lireChaine("Prenom : ");
+                String nom = Saisie.lireChaine("Nom : ");
+                String dateNaiss = Saisie.lireChaine("Date de naissance : (yyyy-mm-dd) : ");
+                String adresse = Saisie.lireChaine("Adresse : ");
+                String numTel = Saisie.lireChaine("Numéro de téléphone : ");
+                String email = Saisie.lireChaine("Adresse email : ");
+                Service.updateProfil(civilite, nom, prenom, dateNaiss, adresse, numTel, email, c);
+
+                break;
+            case 2:
+                String mdp = Saisie.lireChaine("Saisir nouveau mdp: ");
+                Service.updateMdp(c, mdp);
+                break;
+            default:
+                break;
+        }
     }
-    
-    public static void afficherHisto(Client c)
-    {
-        
+
+    public static void afficherHisto(Client c) {
+        for (Intervention i : c.getHistoInterventions()) {
+            afficherIntervention(i);
+        }
+
     }
-    
+
+    public static void afficherIntervention(Intervention i) {
+        if (i instanceof Animal) {
+            Animal a = (Animal) i;
+            System.out.println("Animal{" + "numIntervention=" + a.getNumIntervention() + " /n animal=" + a.getAnimal() + "/n description=" + a.getDescription() + "/n reussie=" + a.isReussie() + "\n commentaire=" + a.getCommentaire() + '}');
+        } else if (i instanceof Livraison) {
+            Livraison l = (Livraison) i;
+            System.out.println("Livarison{" + "numIntervention=" + l.getNumIntervention() + " /n objet=" + l.getObjet() + "\n Entreprise" + l.getEntreprise() + "/n description=" + l.getDescription() + "/n reussie=" + l.isReussie() + "\n commentaire=" + l.getCommentaire() + '}');
+        } else if (i instanceof Incident) {
+            Incident inc = (Incident) i;
+            System.out.println("Incident{" + "numIntervention=" + inc.getNumIntervention() + "/n description=" + inc.getDescription() + "/n reussie=" + inc.isReussie() + "\n commentaire=" + inc.getCommentaire() + '}');
+        }
+    }
+
+    public static void afficherTableauBord(Employe e) {
+        for (Intervention i : Service.RecupererInterventionsDuJour(e)) {
+            afficherIntervention(i);
+        }
+    }
+
+    public static void acceuilEmploye(Employe e) {
+        int sousmenu;
+        boolean arret = false;
+        while (!arret) {
+            System.out.println("--Bienvenue sur votre portail employe Proact'If--");
+            System.out.println("Pour afficher votre intervention courante: tapez 1");
+            System.out.println("Pour cloturer votre intervention courante: tapez 2");
+            System.out.println("Pour consulter votre tableau de bord: tapez 3");
+            System.out.println("Pour vous déconnecter: tapez 4");
+            sousmenu = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3, 4));
+            switch (sousmenu) {
+                case 1:
+                    Intervention current = e.getInterventionCourante();
+                    if (current == null) {
+                        System.out.println("Vous n'avez pas d'intervention courante");
+                    } else {
+                        afficherIntervention(e.getInterventionCourante());
+                    }
+                    break;
+                case 2:
+                    System.out.println("--Alors cette intervention?--");
+                    String commentaire = Saisie.lireChaine("Votre commentaire: ");
+                    int status = Saisie.lireInteger("tapez 1 si vous avez réussi l'intervetion, 0 sinon", Arrays.asList(0, 1));
+                    Service.cloturerIntervention(e.getInterventionCourante(), commentaire, status == 1);
+                    break;
+                case 3:
+                    afficherTableauBord(e);
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
 }
 
@@ -309,4 +462,3 @@ public class Test {
 
 
  */
-}
