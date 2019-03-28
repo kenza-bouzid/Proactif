@@ -82,7 +82,7 @@ public class InterventionDao {
     }
 /**
  * La méthode récupère la liste des Interventions d'un client d'un type 
- * donné. La méthode récupère le String typeIntervention et séléctione
+ * donné. La méthode récupère le String typeIntervention et séléctionne
  * une requête jpql suivant sa valeur. Elle effectue cette requête et 
  * fait un return.
  * @param typeIntervention String correspondant au type d'Intervention voulu
@@ -120,7 +120,20 @@ public class InterventionDao {
         }
         return HistoriqueClient;
     }
-
+/**
+ La méthode récupère la liste des Interventions d'un client d'un type 
+ * donné et d'une date donné. La méthode récupère le String typeIntervention et
+ * séléctionne une requête jpql suivant sa valeur. On crée ensuite deux
+ * Timestamp un pour indiquer le commencement du jour et l'autre pour 
+ * indiquer la fin de celui-ci  à partir du String date et on utilise ces
+ * objets pour effectuer la requête dans la base de données. 
+ * @param typeIntervention String correspondant au type d'Intervention voulu
+ * @param date String correspondant a la date voulu pour la recherche des Interventions
+ * @param c Le Client dont on veut les interventions
+ * @return La liste d'intervention d'un type donné et d'une date donné, null si la liste est vide
+ * ou le String typeIntervention n'est pas pertinant
+ * @throws ParseException 
+ */
     public static List<Intervention> HistoriqueClientParTypeEtDate(String typeIntervention, String date, Client c) throws ParseException {
 
         List<Intervention> HistoriqueClient = null;
