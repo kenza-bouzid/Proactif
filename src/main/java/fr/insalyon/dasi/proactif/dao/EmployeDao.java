@@ -13,15 +13,29 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author dhamidovic
+ * Classe intéragissant avec la base de donnés pour 
+ * les objets de type Employe.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 public class EmployeDao {
 
+ /**
+ * Obtient un entity manager et persist l'Employe.
+ * @param e l'Employe à persister
+ */
     public static void persist(Employe e) {
         JpaUtil.obtenirEntityManager().persist(e);
     }
-
+/**
+ * La méthode vise à obtenir tout les employés disponibles
+ * à l'heure indiquer par le paramètre date. On fait une requête jpql en 
+ * cherchant les employés qui ne sont pas en intervention et étant au travail 
+ * lors de l'heure de la demande. Si personne n'est trouvé la liste vaut null.
+ * @param date l'heure à laquelle les employés doivent être disponible
+ * @return La liste des employés s'il y a au moins un employé
+ * disponible, null sinon.
+ */
     public static List<Employe> listerEmployesDisponibles(Time date) {
         List<Employe> results = null;
         try {
@@ -37,7 +51,10 @@ public class EmployeDao {
         }
         return results;
     }
-
+ /**
+ * Obtient un entity manager et merge l'Employe.
+ * @param e l'Employe qu'on merge
+ */
     public static Employe merge(Employe e) {
         return JpaUtil.obtenirEntityManager().merge(e);
     }
