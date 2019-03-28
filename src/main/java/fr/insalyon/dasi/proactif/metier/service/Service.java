@@ -18,7 +18,6 @@ import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
@@ -26,6 +25,7 @@ import javax.persistence.RollbackException;
 
 public class Service {
 
+    
     public Service() {
     }
 
@@ -40,12 +40,12 @@ public class Service {
                 if ((Client) PersonneDao.findByEmailMdp(c.getAdresseElec(), c.getMdp()) != null) {
                     JpaUtil.validerTransaction();
                     DebugLogger.log("Inscription réussie!");
-                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
+                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour " + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
                     reussie = true;
                 } else {
                     JpaUtil.annulerTransaction();
                     DebugLogger.log("Echec de l'inscription!");
-                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", votre inscription au service PROACT'IF a malencontreusement échoué...Merci de recommencer ultérieurement.");
+                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour " + c.getPrenom() + ", votre inscription au service PROACT'IF a malencontreusement échoué...Merci de recommencer ultérieurement.");
                 }
             } else {
                 DebugLogger.log("Echec de l'inscription, cette adresse email correspond déjà à un autre utilisateur");
@@ -74,11 +74,11 @@ public class Service {
         return code;
     }
 
-    public static Client findClient(String mail, String num) {
-        Client c = null;
+    public static Personne findPersonneByMailNum(String mail, String num) {
+        Personne c = null;
         try {
             JpaUtil.creerEntityManager();
-            c = (Client) PersonneDao.findByEmailNum(mail, num);
+            c =  PersonneDao.findByEmailNum(mail, num);
             JpaUtil.fermerEntityManager();
         } catch (Exception e) {
             DebugLogger.log("Attention exception pour trouver le client (mail,num): ", e);
@@ -331,4 +331,22 @@ public class Service {
             DebugLogger.log("RollBack Exception lors de la mise a jour du profil", e);
         }
     }
+    
+    public static void updateHoraire(String dateDebut, String dateFin, Employe e) {
+        try{
+            e.setDebutTravail(java.sql.Time.valueOf(dateDebut));
+            e.setDebutTravail(java.sql.Time.valueOf(dateFin));
+            JpaUtil.creerEntityManager();
+            JpaUtil.ouvrirTransaction();
+            EmployeDao.merge(e);
+            
+            JpaUtil.validerTransaction();
+            JpaUtil.fermerEntityManager();
+        }
+        catch (RollbackException ex)
+        {
+            DebugLogger.log("RollBack Exception lors des horaires de travail", ex);
+        }
+    }
+
 }

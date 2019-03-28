@@ -10,8 +10,6 @@ import fr.insalyon.dasi.proactif.metier.modele.Client;
 import fr.insalyon.dasi.proactif.metier.modele.Incident;
 import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Livraison;
-import fr.insalyon.dasi.proactif.util.GeoTest;
-import fr.insalyon.dasi.proactif.util.Message;
 import java.text.SimpleDateFormat;
 
 /**
@@ -38,7 +36,7 @@ public class Notif {
 
     public static void envoyerNotifClient(Intervention i) {
         String dateDebut = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(i.getTimeDebut());
-        String dateFin = new SimpleDateFormat("HH:mm").format(i.getTimeDebut());
+        String dateFin = new SimpleDateFormat("HH:mm").format(i.getTimeFin());
         String status = "Echec"; 
         if (i.isReussie())
         {

@@ -136,6 +136,9 @@ public abstract class Intervention implements Serializable {
     public Time getTimeDebut() {
         return new Time(this.getDateDebut().getTime());
     }
+    public Time getTimeFin() {
+        return new Time(this.getDateFin().getTime());
+    }
 
     @Override
     public int hashCode() {
