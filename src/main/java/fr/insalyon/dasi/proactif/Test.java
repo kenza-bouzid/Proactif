@@ -17,6 +17,7 @@ import fr.insalyon.dasi.proactif.metier.service.Service;
 import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.Saisie;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,9 +32,9 @@ public class Test {
     public static void main(String args[]) throws ParseException {
 
         JpaUtil.init();
-        
-        testService(); 
-       /* Service.initialisationEmploye();
+
+        testServiceInscription();
+        /* Service.initialisationEmploye();
 
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Service.inscrireClient(c);
@@ -80,13 +81,11 @@ public class Test {
 
     }
 
-    public static void testService() throws ParseException {
+    public static void testServiceInscription() throws ParseException {
 
-       
-        
         /*------------Initialisation-------------*/
         System.out.println("--Bienvenue sur Proactif--");
-        DebugLogger.log("Initialisation de l'application");
+        System.out.println("Initialisation de l'application");
         Service.initialisationEmploye();
         Service.initialisationClient();
 
@@ -96,33 +95,118 @@ public class Test {
         String civilite = Saisie.lireChaine("Civilité : ");
         String prenom = Saisie.lireChaine("Prenom : ");
         String nom = Saisie.lireChaine("Nom : ");
-        String dateNaiss= Saisie.lireChaine("Date de naissance : (yyyy-mm-dd)");
+        String dateNaiss = Saisie.lireChaine("Date de naissance : (yyyy-mm-dd) : ");
         String adresse = Saisie.lireChaine("Adresse : ");
-        String numTel = Saisie.lireChaine("Numéro de téléphone :");
-        String email = Saisie.lireChaine("Adresse email :");
+        String numTel = Saisie.lireChaine("Numéro de téléphone : ");
+        String email = Saisie.lireChaine("Adresse email : ");
         String mdp = Saisie.lireChaine("Mot de passe : ");
-        
-        Client courant = new Client (civilite, nom, prenom, dateNaiss, adresse, numTel,email, mdp); 
+
+        Client courant = new Client(civilite, nom, prenom, dateNaiss, adresse, numTel, email, mdp);
         Service.inscrireClient(courant);
-        
+
         /*------------Test Echec Inscription mail déja utilisé -------------*/
         System.out.println("Test echec inscription: mail déja utilisé par un autre client ");
         Client c1 = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Client c2 = new Client("Mm", "Dupont", "Grégoire", "1998-06-02", "8 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Service.inscrireClient(c1);
-        Service.inscrireClient(c2); 
-        
-        
-        /*------------Test Connexion-------------*/
-        System.out.println("----Connectez vous----");
-        
-        
-        
-        
-        
+        Service.inscrireClient(c2);
 
     }
-    /*    public void menu() {
+
+    public static void testServiceConnexion() {
+
+        /*------------Test Connexion -------------*/
+        String email = "";
+        String mdp = "";
+        String num = "";
+        System.out.println("----Connectez vous----");
+        email = Saisie.lireChaine("Adresse email : ");
+        int oublie = Saisie.lireInteger("Tapez 1 si vous avez oublie votre mdp 0 sinon : ", Arrays.asList(0, 1));
+        if (oublie == 0) {
+            mdp = Saisie.lireChaine("Mot de passe : ");
+        } else {
+            num = Saisie.lireChaine("Veuillez saisir votre numero de telephone \n vous receverez un message pour confirmer votre identite: ");
+            Client c = Service.findClient(email, num);
+            if (c != null) {
+                System.out.println("Vous ne faites pas partie de nos clients, vous ne pouvez pas modifier votre mot de passe");
+                return;
+            } else {
+                int code = Service.envoyerCodeConfirmation(email, num);
+                int code2 = Saisie.lireInteger("Veuillez saisr le code que vous avez recu: ");
+                if (code == code2) {
+                    mdp = Saisie.lireChaine("Veuillez saisir votre nouveau mot de passe: ");
+                    Service.updateMdp(c, mdp);
+                }
+                System.out.println("----Connectez vous----");
+                email = Saisie.lireChaine("Adresse email : ");
+                mdp = Saisie.lireChaine("Mot de passe : ");
+            }
+        }
+
+        Personne p = Service.connexion(email, mdp);
+        if (p instanceof Client) {
+            Client c = (Client) p;
+            System.out.println("Bienvenue sur votre profil Proactif");
+        }
+        if (p instanceof Employe) {
+            Employe e = (Employe) p;
+            System.out.println("Bienvenue sur Proactif");
+            Intervention current = e.getInterventionCourante();
+            if (current == null) {
+                System.out.println("Vous n'avez pas d'intervention courante");
+            } else {
+                System.out.println("Vous avez une intervention courante: " + current.getMonClient().getPrenom() + "souhaite : " + current.getDescription());
+            }
+        }
+
+    }
+
+    public static void acceuilClient(Client c ) {
+        int sousmenu = 0;
+        boolean arret = false;
+        while (!arret) {
+            System.out.println("--Bienvenue sur Proactif--");
+            System.out.println("Pour demander une interevntion : tapez 1");
+            System.out.println("Pour consulter l'historique de vos interventions : tapez 2");
+            System.out.println("Pour consulter votre profil : tapez 3");
+            System.out.println("Pour vous déconnecter: tapez 4");
+            sousmenu = Saisie.lireInteger("Inqiquer votre choix: ", Arrays.asList(1, 2, 3, 4));
+            switch (sousmenu) {
+                case 1:
+                    menuIntervention(c); 
+                break;
+                case 2 :
+                    afficherProfil(c); 
+                break; 
+                case 3 : 
+                    afficherHisto(c); 
+                    
+                    break; 
+                case 4 : 
+                    break;
+                default : 
+                    break; 
+            }
+        }
+    }
+
+    public static void menuIntervention(Client c) 
+    {
+        
+    }
+    
+    public static void afficherProfil (Client c){
+    }
+    
+    public static void afficherHisto(Client c)
+    {
+        
+    }
+    
+
+}
+
+/*    public void menu() {
         int sousmenu = 0;
         boolean arret = false;
         while (!arret) {
@@ -224,5 +308,5 @@ public class Test {
     }
 
 
-     */
+ */
 }
