@@ -36,9 +36,9 @@ public class PersonneDao {
     }
 /**
  * La méthode cherche si une Personne ayant le String mail comme
- * valeur dans la base de données. On effectue une requête jpql.
- * Si le resultat de la requête est vide on retourne null,
- * sinon on renvoie la Personne trouvé.
+ * adresse électronique dans la base de données. 
+ * On effectue une requête jpql. Si le resultat de la requête est 
+ * vide on retourne null, sinon on renvoie la Personne trouvé.
  * @param mail le mail qu'on utilise pour chercher une Personne
  * dans la base de données.
  * @return La Personne ou null si on n'a pas de correspondance.
@@ -67,7 +67,17 @@ public class PersonneDao {
         return foundEntity;
     }
     
-    
+/**
+ * La méthode cherche si une Personne ayant les String mail comme
+ * adresse Electronique et mdp comme mot de passe dans la base de données.
+ * On effectue une requête jpql. Si le resultat de la requête est vide
+ * on retourne null, sinon on renvoie la Personne trouvé.
+ * @param mail le mail qu'on utilise pour chercher une Personne
+ * dans la base de données.
+ * @param mdp le mot de passe qu'on utilise pour chercher une Personne
+ * dans la base de données.
+ * @return La Personne ou null si on n'a pas de correspondance.
+ */
     public static Personne findByEmailMdp(String mail, String mdp) {
         Personne foundEntity = null;
         try {
@@ -92,7 +102,17 @@ public class PersonneDao {
         }
         return foundEntity;
     }
-
+/**
+ * La méthode cherche si une Personne ayant les String mail comme
+ * adresse Electronique et num comme numéro de téléphone dans la base de
+ * données.On effectue une requête jpql. Si le resultat de la requête est
+ * vide on retourne null, sinon on renvoie la Personne trouvé.
+ * @param mail le mail qu'on utilise pour chercher une Personne
+ * dans la base de données.
+ * @param num le numéro de téléphone qu'on utilise pour chercher une Personne
+ * dans la base de données.
+ * @return La Personne ou null si on n'a pas de correspondance.
+ */
      public static Personne findByEmailNum(String mail, String num) {
         Personne foundEntity = null;
         try {
