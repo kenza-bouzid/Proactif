@@ -14,6 +14,7 @@ import fr.insalyon.dasi.proactif.metier.modele.Intervention;
 import fr.insalyon.dasi.proactif.metier.modele.Livraison;
 import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.metier.service.Service;
+import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.Saisie;
 import java.text.ParseException;
 import java.util.List;
@@ -30,24 +31,26 @@ public class Test {
     public static void main(String args[]) throws ParseException {
 
         JpaUtil.init();
-        Service.Initialisation();
+        
+        testService(); 
+       /* Service.initialisationEmploye();
 
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
         Service.inscrireClient(c);
-        Service.envoyerCodeConfirmation("test@gmail.com","0658974316" );
+        Service.envoyerCodeConfirmation("test@gmail.com", "0658974316");
         Service.updateMdp(c, "469");
         //
         Personne p = Service.connexion("test@gmail.com", "469");
         if (p instanceof Client) {
             System.out.println((Client) p);
         }
-        Incident i = new Incident("mon voisin m'a signalé un incident" );
-        Animal a = new Animal("pug", "Il faudrait sortir Bruno au park en face de chez moi"  );
-        Livraison l = new Livraison("colis", "DPD", "blablabla" );
-        Incident i2 = new Incident("blabla2" );
-        System.out.println(Service.demandeIntervention(i , c));
-        System.out.println(Service.demandeIntervention(a ,c));
-        System.out.println(Service.demandeIntervention(l ,c ));
+        Incident i = new Incident("mon voisin m'a signalé un incident");
+        Animal a = new Animal("pug", "Il faudrait sortir Bruno au park en face de chez moi");
+        Livraison l = new Livraison("colis", "DPD", "blablabla");
+        Incident i2 = new Incident("blabla2");
+        System.out.println(Service.demandeIntervention(i, c));
+        System.out.println(Service.demandeIntervention(a, c));
+        System.out.println(Service.demandeIntervention(l, c));
 
         Service.cloturerIntervention(i, "Tout bon", true);
 
@@ -62,22 +65,64 @@ public class Test {
 
         System.out.println(e);
         //List<Intervention> ll = Service.HistoriqueClientParTypeEtDate("livraison", "28/03/2019", e);
-        List<Intervention> ll = Service.HistoriqueClientParDate( "28/03/2019", e);
+        List<Intervention> ll = Service.HistoriqueClientParDate("28/03/2019", e);
         ll.forEach((m) -> {
-            System.out.println (m);
+            System.out.println(m);
         });
-        
+
         System.out.println("fini histo");
-        
+
         List<Intervention> lll = Service.RecupererInterventionsDuJour((Employe) Service.connexion("emp1@gmail.com", "159"));
         lll.forEach((m) -> {
-            System.out.println (m);
-        });
+            System.out.println(m);
+        });*/
         JpaUtil.destroy();
 
     }
 
-/*    public void menu() {
+    public static void testService() throws ParseException {
+
+       
+        
+        /*------------Initialisation-------------*/
+        System.out.println("--Bienvenue sur Proactif--");
+        DebugLogger.log("Initialisation de l'application");
+        Service.initialisationEmploye();
+        Service.initialisationClient();
+
+        /*------------Test Inscription-------------*/
+        System.out.println("----Inscrivez vous----");
+        System.out.println("----- Veuillez saisir vos données personnelles -----");
+        String civilite = Saisie.lireChaine("Civilité : ");
+        String prenom = Saisie.lireChaine("Prenom : ");
+        String nom = Saisie.lireChaine("Nom : ");
+        String dateNaiss= Saisie.lireChaine("Date de naissance : (yyyy-mm-dd)");
+        String adresse = Saisie.lireChaine("Adresse : ");
+        String numTel = Saisie.lireChaine("Numéro de téléphone :");
+        String email = Saisie.lireChaine("Adresse email :");
+        String mdp = Saisie.lireChaine("Mot de passe : ");
+        
+        Client courant = new Client (civilite, nom, prenom, dateNaiss, adresse, numTel,email, mdp); 
+        Service.inscrireClient(courant);
+        
+        /*------------Test Echec Inscription mail déja utilisé -------------*/
+        System.out.println("Test echec inscription: mail déja utilisé par un autre client ");
+        Client c1 = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
+        Client c2 = new Client("Mm", "Dupont", "Grégoire", "1998-06-02", "8 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "test@gmail.com", "123");
+        Service.inscrireClient(c1);
+        Service.inscrireClient(c2); 
+        
+        
+        /*------------Test Connexion-------------*/
+        System.out.println("----Connectez vous----");
+        
+        
+        
+        
+        
+
+    }
+    /*    public void menu() {
         int sousmenu = 0;
         boolean arret = false;
         while (!arret) {
@@ -179,5 +224,5 @@ public class Test {
     }
 
 
-*/
+     */
 }

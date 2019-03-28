@@ -29,27 +29,32 @@ public class Service {
     public Service() {
     }
 
-    public static void inscrireClient(Client c) throws ParseException {
-
+    public static boolean inscrireClient(Client c) throws ParseException {
+        boolean reussie = false;
         try {
             JpaUtil.creerEntityManager();
-            JpaUtil.ouvrirTransaction();
-            c.setCoord(GeoTest.getLatLng(c.getAdresse()));
-            ClientDao.persist(c);
-            if ((Client)PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) != null) {
-                JpaUtil.validerTransaction();
-                DebugLogger.log("Inscription réussie!");
-                Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
+            if ((Client) PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) == null) {
+                JpaUtil.ouvrirTransaction();
+                c.setCoord(GeoTest.getLatLng(c.getAdresse()));
+                ClientDao.persist(c);
+                if ((Client) PersonneDao.findByEMail(c.getAdresseElec(), c.getMdp()) != null) {
+                    JpaUtil.validerTransaction();
+                    DebugLogger.log("Inscription réussie!");
+                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", nous vous confirmons votre inscription au service PROACT'IFG. Votre numéro de client est : " + c.getId());
+                    reussie = true;
+                } else {
+                    JpaUtil.annulerTransaction();
+                    DebugLogger.log("Echec de l'inscription!");
+                    Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", votre inscription au service PROACT'IF a malencontreusement échoué...Merci de recommencer ultérieurement.");
+                }
             } else {
-                JpaUtil.annulerTransaction();
-                DebugLogger.log("Echec de l'inscription!");
-                Message.envoyerMail("contact@proact.if", c.getAdresseElec(), "Bienvenue chez PROACT'IF", "Bonjour" + c.getPrenom() + ", votre inscription au service PROACT'IF a malheureusement échoué...Merci de recommencer ultérieurement.");
+                DebugLogger.log("Echec de l'inscription, cette adresse email correspond déjà à un autre utilisateur");
             }
             JpaUtil.fermerEntityManager();
         } catch (RollbackException e) {
             DebugLogger.log("Rollback Exception d'inscription", e);
         }
-
+        return reussie;
     }
 
     public static int envoyerCodeConfirmation(String mail, String num) {
@@ -73,7 +78,7 @@ public class Service {
         Client c = null;
         try {
             JpaUtil.creerEntityManager();
-            c = (Client)PersonneDao.findByEmailNum(mail, num);
+            c = (Client) PersonneDao.findByEmailNum(mail, num);
             JpaUtil.fermerEntityManager();
         } catch (Exception e) {
             DebugLogger.log("Attention exception pour trouver le client (mail,num): ", e);
@@ -185,7 +190,7 @@ public class Service {
         }
     }
 
-    public static void Initialisation() throws ParseException {
+    public static void initialisationEmploye() throws ParseException {
 
         try {
             JpaUtil.creerEntityManager();
@@ -220,6 +225,32 @@ public class Service {
             e = new Employe("12:00:00", "23:00:00", "Mr", "Tandereau", "Nathan", "1964-05-07", "69 Avenue Roger Salengro, Villeurbanne", "06479951463", "emp10@gmail.com", "147");
             e.setCoord(GeoTest.getLatLng(e.getAdresse()));
             EmployeDao.persist(e);
+            JpaUtil.validerTransaction();
+            JpaUtil.fermerEntityManager();
+        } catch (RollbackException e) {
+            DebugLogger.log("RollBack Exception lors de l'initialisation", e);
+            JpaUtil.annulerTransaction();
+            JpaUtil.fermerEntityManager();
+        }
+    }
+
+    public static void initialisationClient() throws ParseException {
+        try {
+            JpaUtil.creerEntityManager();
+            JpaUtil.ouvrirTransaction();
+            Client c = new Client("Mr", "Jeanne", "Patrick", "1996-09-25", "15 Avenue Jean Capelle Ouest, Villeurbanne", "0689743698", "cli1@gmail.com", "298");
+            c.setCoord(GeoTest.getLatLng(c.getAdresse()));
+            ClientDao.persist(c);
+            c = new Client("Mr", "Laporte", "Bob", "1997-10-15", "20 Avenue Jean Capelle Est, Villeurbanne", "0669892316", "cli2@gmail.com", "164");
+            c.setCoord(GeoTest.getLatLng(c.getAdresse()));
+            ClientDao.persist(c);
+            c = new Client("Mr", "Loic", "Laura", "1996-04-02", "16 Avenue Roger Salengro, Villeurbanne", "0689746315", "cli3@gmail.com", "123");
+            c.setCoord(GeoTest.getLatLng(c.getAdresse()));
+            ClientDao.persist(c);
+            c = new Client("Mme", "Cavagna", "Lea", "1993-10-14", "21 Avenue Jean Capelle Ouest, Villeurbanne", "0634897512", "cli4@gmail.com", "145");
+            c.setCoord(GeoTest.getLatLng(c.getAdresse()));
+            ClientDao.persist(c);
+
             JpaUtil.validerTransaction();
             JpaUtil.fermerEntityManager();
         } catch (RollbackException e) {
@@ -296,9 +327,7 @@ public class Service {
             PersonneDao.merge(p);
             JpaUtil.validerTransaction();
             JpaUtil.fermerEntityManager();
-        }
-        catch (RollbackException e )
-        {
+        } catch (RollbackException e) {
             DebugLogger.log("RollBack Exception lors de la mise a jour du profil", e);
         }
     }
