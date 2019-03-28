@@ -190,6 +190,7 @@ public class Test {
     }
 
     public static void menuIntervention(Client c) throws ParseException {
+     
         System.out.println("---Portail demande d'intervention---");
         System.out.println("Veuillez choisir le type d'interevntion");
         System.out.println("Pour une intervention de type Animal, tapez 1");
@@ -292,9 +293,15 @@ public class Test {
     }
 
     public static void afficherTableauBord(Employe e) {
-        Service.RecupererInterventionsDuJour(e).forEach((i) -> {
-            afficherIntervention(i);
-        });
+        if(Service.RecupererInterventionsDuJour(e)!=null)
+        {
+            Service.RecupererInterventionsDuJour(e).forEach((i) -> {
+                afficherIntervention(i);
+
+            });
+        }else{
+            System.out.println("Pas d'interventions aujourd'hui");
+        }
     }
 
     public static void acceuilEmploye(Employe e) throws ParseException {
@@ -342,7 +349,7 @@ public class Test {
     }
 
     public static void testGlobal() throws ParseException {
-
+        String today = "28/03/2019";
         Saisie.lireChaine("Inscription de Dupont");
         Client c = new Client("M", "Dupont", "Grégoire", "1998-06-02", "7 Avenue Jean Capelle Ouest, Villeurbanne", "0658974316", "Dupont@gmail.com", "123");
         Service.inscrireClient(c);
@@ -486,7 +493,7 @@ public class Test {
         }
 
         Saisie.lireChaine("récuperer interventions d'aujourd'hui de Dupont");
-        intervention = Service.HistoriqueClientParDate("28/03/2019", c);
+        intervention = Service.HistoriqueClientParDate(today, c);
 
         if (intervention != null) {
             for (Intervention iii : intervention) {
@@ -508,7 +515,7 @@ public class Test {
         JpaUtil.fermerEntityManager();
 
         Saisie.lireChaine("récuperer interventions d'aujourd'hui de Dupont (Intervention i1 placé le 22/03/2019)");
-        intervention = Service.HistoriqueClientParDate("28/03/2019", c);
+        intervention = Service.HistoriqueClientParDate(today, c);
 
         if (intervention != null) {
             for (Intervention iii : intervention) {
