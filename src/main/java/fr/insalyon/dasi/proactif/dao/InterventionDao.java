@@ -18,19 +18,39 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author utilisateur
+ * Classe intéragissant avec la base de donnés pour 
+ * les objets de type Intervention.
+ * @author Kenza Bouzid
+ * @author David Hamidovic
  */
 public class InterventionDao {
 
+     /**
+ * Obtient un entity manager et persist l'Intervention.
+ * @param i l'Intervention à persister
+ */
     public static void persist(Intervention i) {
         JpaUtil.obtenirEntityManager().persist(i);
     }
 
+     /**
+ * Obtient un entity manager et merge l'Intervention.
+ * @param i l'Intervention qu'on merge
+ */
     public static Intervention merge(Intervention i) {
         return JpaUtil.obtenirEntityManager().merge(i);
     }
-
+/**
+ * La méthode vise à obtenir toutes les interventions d'aurjourd'hui. 
+ * On fait une requête jpql pour récuperer les interventions du jour
+ * concernant l'Employe e en paramètre. De ce fait on crée deux 
+ * Timestamp un pour indiquer le commencement du jour et l'autre pour 
+ * indiquer la fin de celui-ci et on utilise ces objets pour faire la 
+ * requête. Si rien n'est trouvé on retourne null et la liste sinon.
+ * @param e L'Employe dont on veut les interventions du jour
+ * @return La liste des interventions du jour ou null si rien est 
+ * trouvé
+ */
     public static List<Intervention> RecupererInterventionsDuJour(Employe e) {
         List<Intervention> results = null;
         try {
@@ -60,7 +80,16 @@ public class InterventionDao {
         }
         return results;
     }
-
+/**
+ * La méthode récupère la liste des Interventions d'un client d'un type 
+ * donné. La méthode récupère le String typeIntervention et séléctione
+ * une requête jpql suivant sa valeur. Elle effectue cette requête et 
+ * fait un return.
+ * @param typeIntervention String correspondant au type d'Intervention voulu
+ * @param c Le Client dont on veut les interventions
+ * @return La liste d'intervention d'un type donné, null si la liste est vide
+ * ou le String typeIntervention n'est pas pertinant
+ */
     public static List<Intervention> HistoriqueClientParType(String typeIntervention, Client c) {
         List<Intervention> HistoriqueClient = null;
         try {
