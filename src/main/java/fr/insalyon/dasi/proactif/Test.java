@@ -345,6 +345,12 @@ public class Test {
         }else{
             System.out.println("Requête vide");
         }
+        
+        Saisie.lireChaine("Données de Dupont");
+        System.out.println("id=" + c.getId() + ", civilite=" + c.getCivilite() + ", nom=" + c.getNom() + ", prenom=" + c.getPrenom() + ", dateNaissance=" + c.getDateNaissance() + ", adresse=" + c.getAdresse() + ", coord=" + c.getCoord() + ", numTel=" + c.getNumTel() + ", adresseElec=" + c.getAdresseElec() + ", mdp=" + c.getMdp());
+    
+        Service.updateProfil("Mme", "Dupont", "Patrick", "22-03-1992", "3 rue des pommiers, Joue-Les-Tours", "0799234213", "Dupontpont@gmail.com", c);
+        
         /*
             
         /*

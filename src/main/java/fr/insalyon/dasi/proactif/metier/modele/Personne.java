@@ -30,6 +30,8 @@ public abstract class Personne implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+   
     private String civilite;
     private String nom;
     private String prenom;
