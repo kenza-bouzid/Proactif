@@ -144,7 +144,7 @@ public abstract class Intervention implements Serializable {
         return hash;
     }
 /**
- * 
+ * Override de la méthode equals. 
  * @param object l'object sur lequel on veut tester l'égualité.
  * @return true ou false si les objets sont égaux ou non.
  */

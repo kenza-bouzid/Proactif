@@ -21,8 +21,8 @@ public class Animal extends Intervention implements Serializable {
     private String animal ; 
 /**
  * Constructeur de la classe Animal.
- * @param animal
- * @param description 
+ * @param animal Animal lié à l'intervention.
+ * @param description Description du client de l'intervention demandé.
  */
     public Animal(String animal, String description) {
         super(description);
