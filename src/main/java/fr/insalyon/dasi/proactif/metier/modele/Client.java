@@ -11,8 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 /**
- * Classe représentant les clients de notre application.
- * La classe hérite de Personne.
+ * Classe représentant les clients de notre application. La classe hérite de
+ * Personne.
+ *
  * @author Kenza Bouzid
  * @author David Hamidovic
  */
@@ -24,23 +25,26 @@ public class Client extends Personne implements Serializable {
     private List<Intervention> histoInterventions;
 
     public Client() {
-        super(); 
+        super();
     }
-/**
-* Constructeur de la classe Client.
-* @param civilite civilite du Client.
-* @param nom nom du Client.
-* @param prenom prénom du Client.
-* @param dateNaissance date de naissance du Client.
-* @param adresse adresse du Client.
-* @param numTel numéro de téléphone du Client.
-* @param adresseElec adresse mail du Client.
-* @param mdp mot de passe du Client.
-*/
+
+    /**
+     * Constructeur de la classe Client.
+     *
+     * @param civilite civilite du Client.
+     * @param nom nom du Client.
+     * @param prenom prénom du Client.
+     * @param dateNaissance date de naissance du Client.
+     * @param adresse adresse du Client.
+     * @param numTel numéro de téléphone du Client.
+     * @param adresseElec adresse mail du Client.
+     * @param mdp mot de passe du Client.
+     */
     public Client(String civilite, String nom, String prenom, String dateNaissance,
-            String adresse, String numTel, String adresseElec, String mdp){
+            String adresse, String numTel, String adresseElec, String mdp) {
         super(civilite, nom, prenom, dateNaissance, adresse, numTel, adresseElec, mdp);
     }
+
     public List<Intervention> getHistoInterventions() {
         return histoInterventions;
     }
@@ -48,8 +52,8 @@ public class Client extends Personne implements Serializable {
     public void setHistoInterventions(List<Intervention> histoInterventions) {
         this.histoInterventions = histoInterventions;
     }
+
     public boolean addHistoInterventions(Intervention i) {
         return this.histoInterventions.add(i);
     }
-
 }

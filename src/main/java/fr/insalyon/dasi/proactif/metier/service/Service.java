@@ -18,33 +18,34 @@ import fr.insalyon.dasi.proactif.metier.modele.Personne;
 import fr.insalyon.dasi.proactif.util.DebugLogger;
 import fr.insalyon.dasi.proactif.util.GeoTest;
 import fr.insalyon.dasi.proactif.util.Message;
+import static fr.insalyon.dasi.proactif.util.Sort.sortHistoIntervention;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.RollbackException;
+
 /**
- * Classe représentant les services fournis par
- * l'application.
+ * Classe représentant les services fournis par l'application.
+ *
  * @author Kenza Bouzid
  * @author David Hamidovic
  */
 public class Service {
 
-    
     public Service() {
     }
 
     /**
-     * Méthode qui permet d'inscrire le client.
-     * Récupère un client passé en paramètre et recherche si son adresse mail 
-     * est déjà dans la base de données Si l’email n’est pas utilisé la méthode
-     * créé le client dans la base de données et envoie un mail pour confirmer
-     * l’inscription.Si l’inscription échoue, la méthode envoie un mail pour
-     * mettre signaler l'échec de l’inscription.
+     * Méthode qui permet d'inscrire le client. Récupère un client passé en
+     * paramètre et recherche si son adresse mail est déjà dans la base de
+     * données Si l’email n’est pas utilisé la méthode créé le client dans la
+     * base de données et envoie un mail pour confirmer l’inscription.Si
+     * l’inscription échoue, la méthode envoie un mail pour mettre signaler
+     * l'échec de l’inscription.
+     *
      * @param c le Client à inscrire
-     * @return true si l'inscription est réussie, false
-     * sinon
-     * @throws ParseException 
+     * @return true si l'inscription est réussie, false sinon
+     * @throws ParseException
      */
     public static boolean inscrireClient(Client c) throws ParseException {
         boolean reussie = false;
@@ -74,17 +75,17 @@ public class Service {
         return reussie;
     }
 
-/**
- * Méthode qui permet d'envoyer un code pour une réinitialisation
- * de mot de passe. Vérifie dans la base de données si un client
- * ou un employé correspond au mail et au numéro de téléphone en
- * paramètre et envoie un code si c’est le cas. Renvoie le code
- * généré ou renvoie un code égal à zéro s'il n'y a pas de 
- * correspondance dans la base de données.
- * @param mail le mail associé au compte du client
- * @param num le numéro du client
- * @return le code ou 0 si cela a echoué
- */
+    /**
+     * Méthode qui permet d'envoyer un code pour une réinitialisation de mot de
+     * passe. Vérifie dans la base de données si un client ou un employé
+     * correspond au mail et au numéro de téléphone en paramètre et envoie un
+     * code si c’est le cas. Renvoie le code généré ou renvoie un code égal à
+     * zéro s'il n'y a pas de correspondance dans la base de données.
+     *
+     * @param mail le mail associé au compte du client
+     * @param num le numéro du client
+     * @return le code ou 0 si cela a echoué
+     */
     public static int envoyerCodeConfirmation(String mail, String num) {
         int code = 0;
         try {
@@ -102,21 +103,20 @@ public class Service {
         return code;
     }
 
-/**
- * Méthode qui permet de trouver une personne grâce
- * à son mail et son numéro. Cherche le client dans la 
- * base de données grâce à l’e-mail et le numéro 
- * de portable passés en paramètre. 
- * @param mail le mail associé au compte du client
- * @param num le numéro du client
- * @return La personne trouvée ou null si la requête ne
- * renvoie rien
- */
+    /**
+     * Méthode qui permet de trouver une personne grâce à son mail et son
+     * numéro. Cherche le client dans la base de données grâce à l’e-mail et le
+     * numéro de portable passés en paramètre.
+     *
+     * @param mail le mail associé au compte du client
+     * @param num le numéro du client
+     * @return La personne trouvée ou null si la requête ne renvoie rien
+     */
     public static Personne findPersonneByMailNum(String mail, String num) {
         Personne c = null;
         try {
             JpaUtil.creerEntityManager();
-            c =  PersonneDao.findByEmailNum(mail, num);
+            c = PersonneDao.findByEmailNum(mail, num);
             JpaUtil.fermerEntityManager();
         } catch (Exception e) {
             DebugLogger.log("Attention exception pour trouver le client (mail,num): ", e);
@@ -124,15 +124,14 @@ public class Service {
         return c;
     }
 
-/**
- * Méthode qui permet de changer le mot de passe d'une Personne
- * passé en paramètre. Récupère une personne et un String, 
- * puis change le mot de passe du string pour enfin 
- * le mettre à jour dans la base de données.
- * @param c la Personne qui veut une mise à jour de mot de
- * passe 
- * @param mdp le nouveau mot de passe de la personne    
- */    
+    /**
+     * Méthode qui permet de changer le mot de passe d'une Personne passé en
+     * paramètre. Récupère une personne et un String, puis change le mot de
+     * passe du string pour enfin le mettre à jour dans la base de données.
+     *
+     * @param c la Personne qui veut une mise à jour de mot de passe
+     * @param mdp le nouveau mot de passe de la personne
+     */
     public static void updateMdp(Personne c, String mdp) {
         try {
             c.setMdp(mdp);
@@ -146,16 +145,16 @@ public class Service {
         }
     }
 
-/**
- * Méthode permettant de récupérer une Personne à partir
- * de son mail et son mot de passe. Récupère les String e-mail
- * et mot de passe passés en paramètres. Si une personne
- * renvoie la personne, sinon renvoie null.
- * @param mail le mail de la Personne à connecter
- * @param mdp le mot de passe de la Personne à connecter
- * @return la Personne connecté ou null si personne ne correspond
- * dans la base de données
- */    
+    /**
+     * Méthode permettant de récupérer une Personne à partir de son mail et son
+     * mot de passe. Récupère les String e-mail et mot de passe passés en
+     * paramètres. Si une personne renvoie la personne, sinon renvoie null.
+     *
+     * @param mail le mail de la Personne à connecter
+     * @param mdp le mot de passe de la Personne à connecter
+     * @return la Personne connecté ou null si personne ne correspond dans la
+     * base de données
+     */
     public static Personne connexion(String mail, String mdp) {
         Personne p = null;
         try {
@@ -173,22 +172,21 @@ public class Service {
         return p;
     }
 
-/**
- * Méthode permettant de faire une demande d'intervention. 
- * Associe le Client à l’Intervention et ajoute l’Intervention
- * au Client.Récupère la liste des employés disponibles, 
- * c’est à dire, pas en intervention et actuellement au travail. 
- * A partir de cette liste, recherche l’Employé le plus proche de 
- * chez le Client. Si l’Employé n’est pas vide, alors l’Employé
- * est mis en intervention,et on affecte l’Employé à l’Intervention.
- * Même si aucun Employé n’est trouvé on met à jour la base de
- * données, on garde ainsi les Interventions acceptées et 
- * refusées. On envoie une notification au client pour 
- * indiquer l’échec ou la réussite de la demande.
- * @param i l'Intervention
- * @param c le Client qui demande l'intervention
- * @return true si la demande a réussie, false sinon
- */
+    /**
+     * Méthode permettant de faire une demande d'intervention. Associe le Client
+     * à l’Intervention et ajoute l’Intervention au Client.Récupère la liste des
+     * employés disponibles, c’est à dire, pas en intervention et actuellement
+     * au travail. A partir de cette liste, recherche l’Employé le plus proche
+     * de chez le Client. Si l’Employé n’est pas vide, alors l’Employé est mis
+     * en intervention,et on affecte l’Employé à l’Intervention. Même si aucun
+     * Employé n’est trouvé on met à jour la base de données, on garde ainsi les
+     * Interventions acceptées et refusées. On envoie une notification au client
+     * pour indiquer l’échec ou la réussite de la demande.
+     *
+     * @param i l'Intervention
+     * @param c le Client qui demande l'intervention
+     * @return true si la demande a réussie, false sinon
+     */
     public static boolean demandeIntervention(Intervention i, Client c) {
 
         try {
@@ -239,16 +237,17 @@ public class Service {
         return i.isEnCours();
     }
 
-/**
- * Méthode permettant de clôturer une intervention en cours.
- * Ajoute un commentaire à l’intervention, indique grâce au
- * boolean si elle est réussie ou ratée et change l’état
- * "enCours" à faux. Change l’état de l’Employé pour indiquer
- * qu’il n’est plus en intervention. Met à jour la base de données.
- * @param i l'Intervention
- * @param commentaire le commentaire de l'employé sur l'intervention
- * @param Status le statut de l'intervention, réussi ou échoué
- */
+    /**
+     * Méthode permettant de clôturer une intervention en cours. Ajoute un
+     * commentaire à l’intervention, indique grâce au boolean si elle est
+     * réussie ou ratée et change l’état "enCours" à faux. Change l’état de
+     * l’Employé pour indiquer qu’il n’est plus en intervention. Met à jour la
+     * base de données.
+     *
+     * @param i l'Intervention
+     * @param commentaire le commentaire de l'employé sur l'intervention
+     * @param Status le statut de l'intervention, réussi ou échoué
+     */
     public static void cloturerIntervention(Intervention i, String commentaire, boolean Status) {
         if (i.isEnCours()) {
             try {
@@ -272,12 +271,13 @@ public class Service {
             DebugLogger.log("Cette intervention ne peut pas être clôturée, celle ci a déjà été clôturé ou pas du tout entammé!");
         }
     }
-/**
- * Méthode permettant d'initialiser 10 employés dans la base
- * de données. Initialise et persiste un à un dans la base 
- * de données les employés.
- * @throws ParseException 
- */
+
+    /**
+     * Méthode permettant d'initialiser 10 employés dans la base de données.
+     * Initialise et persiste un à un dans la base de données les employés.
+     *
+     * @throws ParseException
+     */
     public static void initialisationEmploye() throws ParseException {
 
         try {
@@ -295,7 +295,7 @@ public class Service {
             Employe e3 = new Employe("06:00:00", "23:59:00", "Mme", "Cavagna", "Lea", "1994-10-14", "14 Rue de la Sainte Famille, Villeurbanne", "0634897512", "emp4@gmail.com", "123");
             e3.setCoord(GeoTest.getLatLng(e3.getAdresse()));
             EmployeDao.persist(e3);
-            Employe e4 = new Employe("11:00:00", "23:59:00", "Mme", "Paquet", "Louise", "1998-04-01", "6 Rue Lafontaine, Villeurbanne", "03987463158", "emp5@gmail.com", "123");
+            Employe e4 = new Employe("061:00:00", "23:59:00", "Mme", "Paquet", "Louise", "1998-04-01", "6 Rue Lafontaine, Villeurbanne", "03987463158", "emp5@gmail.com", "123");
             e4.setCoord(GeoTest.getLatLng(e4.getAdresse()));
             EmployeDao.persist(e4);
             Employe e5 = new Employe("16:30:00", "23:59:00", "Mr", "Genest", "Marc", "1998-06-03", "15 Avenue Roberto Rossellini, Villeurbanne", "03698745216", "emp6@gmail.com", "123");
@@ -310,7 +310,7 @@ public class Service {
             Employe e8 = new Employe("16:00:00", "23:59:00", "Mr", "Scotto", "David", "1970-04-27", "11 Rue Mansard, Villeurbanne", "02698756325", "emp9@gmail.com", "123");
             e8.setCoord(GeoTest.getLatLng(e8.getAdresse()));
             EmployeDao.persist(e8);
-            Employe e9 = new Employe("12:00:00", "23:00:00", "Mr", "Tandereau", "Nathan", "1964-05-07", "5 Rue Jean Baptiste Durand, Villeurbanne", "06479951463", "emp10@gmail.com", "123");
+            Employe e9 = new Employe("08:00:00", "23:00:00", "Mr", "Tandereau", "Nathan", "1964-05-07", "5 Rue Jean Baptiste Durand, Villeurbanne", "06479951463", "emp10@gmail.com", "123");
             e9.setCoord(GeoTest.getLatLng(e9.getAdresse()));
             EmployeDao.persist(e9);
             JpaUtil.validerTransaction();
@@ -322,12 +322,12 @@ public class Service {
         }
     }
 
-/**
- * Méthode permettant d'initialiser 4 client dans la base
- * de données. Initialise et persiste un à un dans la base 
- * de données les clients.
- * @throws ParseException 
- */    
+    /**
+     * Méthode permettant d'initialiser 4 client dans la base de données.
+     * Initialise et persiste un à un dans la base de données les clients.
+     *
+     * @throws ParseException
+     */
     public static void initialisationClient() throws ParseException {
         try {
             JpaUtil.creerEntityManager();
@@ -353,15 +353,16 @@ public class Service {
             JpaUtil.fermerEntityManager();
         }
     }
-/**
- * Méthode permettant d'avoir toutes les interventions d'aujourd'hui
- * d'un employé. Fait une requête jpql pour récupérer les
- * interventions du jour d’un employé donné. Renvoie null 
- * si la requête n’a rien récupéré et renvoie la liste sinon.
- * @param e l'Employé
- * @return la liste d'interventions ou null si la liste est
- * vide
- */
+
+    /**
+     * Méthode permettant d'avoir toutes les interventions d'aujourd'hui d'un
+     * employé. Fait une requête jpql pour récupérer les interventions du jour
+     * d’un employé donné. Renvoie null si la requête n’a rien récupéré et
+     * renvoie la liste sinon.
+     *
+     * @param e l'Employé
+     * @return la liste d'interventions ou null si la liste est vide
+     */
     public static List<Intervention> RecupererInterventionsDuJour(Employe e) {
         List<Intervention> interventionDuJour = null;
         try {
@@ -375,20 +376,17 @@ public class Service {
         return interventionDuJour;
     }
 
-/**
- * Méthode permettant de récuperer les interventions
- * d'un client en fonction du type d'intervention.
- * Récupère le String en paramètre pour déterminer quelle
- * requête jpql effectuer. Effectue la requête
- * correspondante au String. Renvoie null si la
- * requête est vide ou si le String ne correspond à 
- * aucun type d’intervention, renvoie la liste
- * d’intervention sinon. 
- * @param type le type d'Intervention
- * @param c le Client
- * @return la liste d'interventions ou null si la liste
- * est vide
- */
+    /**
+     * Méthode permettant de récuperer les interventions d'un client en fonction
+     * du type d'intervention. Récupère le String en paramètre pour déterminer
+     * quelle requête jpql effectuer. Effectue la requête correspondante au
+     * String. Renvoie null si la requête est vide ou si le String ne correspond
+     * à aucun type d’intervention, renvoie la liste d’intervention sinon.
+     *
+     * @param type le type d'Intervention
+     * @param c le Client
+     * @return la liste d'interventions ou null si la liste est vide
+     */
     public static List<Intervention> HistoriqueClientParType(String type, Client c) {
         List<Intervention> historiqueClient = null;
         try {
@@ -399,24 +397,21 @@ public class Service {
         } catch (Exception ex) {
             DebugLogger.log("Attentionn exception lors de la récupération de l'histo client trié par type ", ex);
         }
-
         return historiqueClient;
     }
 
-/**
- * Méthode permettant de récuperer les interventions
- * d'un client en fonction de la date passé en 
- * paramètre. Effectue une requête jpql sélectionnant
- * les interventions le jour correspondant au String
- * en paramètre. Renvoie null si la requête est vide
- * ou si le String ne correspond à aucun type
- * d’intervention, sinon renvoie la liste d’intervention.
- * @param date le jour au format dd/MM/yyyy
- * @param c le Client
- * @return la liste d'intervention ou null si la 
- * liste est vide
- * @throws ParseException 
- */    
+    /**
+     * Méthode permettant de récuperer les interventions d'un client en fonction
+     * de la date passé en paramètre. Effectue une requête jpql sélectionnant
+     * les interventions le jour correspondant au String en paramètre. Renvoie
+     * null si la requête est vide ou si le String ne correspond à aucun type
+     * d’intervention, sinon renvoie la liste d’intervention.
+     *
+     * @param date le jour au format dd/MM/yyyy
+     * @param c le Client
+     * @return la liste d'intervention ou null si la liste est vide
+     * @throws ParseException
+     */
     public static List<Intervention> HistoriqueClientParDate(String date, Client c) throws ParseException {
         List<Intervention> historiqueClient = null;
         try {
@@ -428,23 +423,21 @@ public class Service {
         }
         return historiqueClient;
     }
-/**
- * Méthode permettant de récuperer les interventions
- * d'un client en fonction de la date passé en 
- * paramètre et du type passé en paramètre.
- * Récupère les Strings en paramètre correspondants
- * à la date et au type d’intervention pour déterminer
- * quelle requête jpql effectuer Effectue la requête
- * Renvoie null si la requête est vide ou si le String
- * ne correspond à aucun type d’intervention,
- * sinon renvoie la liste d’intervention.
- * @param type le type de l'intervention
- * @param date le jour au format dd/MM/yyyy
- * @param c le Client
- * @return la liste d'intervention ou null si la 
- * liste est vide
- * @throws ParseException 
- */
+
+    /**
+     * Méthode permettant de récuperer les interventions d'un client en fonction
+     * de la date passé en paramètre et du type passé en paramètre. Récupère les
+     * Strings en paramètre correspondants à la date et au type d’intervention
+     * pour déterminer quelle requête jpql effectuer Effectue la requête Renvoie
+     * null si la requête est vide ou si le String ne correspond à aucun type
+     * d’intervention, sinon renvoie la liste d’intervention.
+     *
+     * @param type le type de l'intervention
+     * @param date le jour au format dd/MM/yyyy
+     * @param c le Client
+     * @return la liste d'intervention ou null si la liste est vide
+     * @throws ParseException
+     */
     public static List<Intervention> HistoriqueClientParTypeEtDate(String type, String date, Client c) throws ParseException {
         List<Intervention> historiqueClient = null;
         try {
@@ -456,21 +449,21 @@ public class Service {
         }
         return historiqueClient;
     }
-/**
- * Méthode permettant de mettre à jour les 
- * infos d'une Personne.Récupère les paramètres
- * en entrée et modifie la personne. Change la
- * personne correspondante dans la base de données
- * @param civilite la civilité de la Personne
- * @param nom le nom de la Personne
- * @param prenom le prénom de la Personne
- * @param dateNaissance la date de naissance 
- * de la Personne
- * @param adresse l'adresse postale de la Personne
- * @param numTel le numéro de téléphone de la Personne
- * @param adresseElec l'adresse mail de la Personne
- * @param p la Personne
- */
+
+    /**
+     * Méthode permettant de mettre à jour les infos d'une Personne.Récupère les
+     * paramètres en entrée et modifie la personne. Change la personne
+     * correspondante dans la base de données
+     *
+     * @param civilite la civilité de la Personne
+     * @param nom le nom de la Personne
+     * @param prenom le prénom de la Personne
+     * @param dateNaissance la date de naissance de la Personne
+     * @param adresse l'adresse postale de la Personne
+     * @param numTel le numéro de téléphone de la Personne
+     * @param adresseElec l'adresse mail de la Personne
+     * @param p la Personne
+     */
     public static void updateProfil(String civilite, String nom, String prenom, String dateNaissance, String adresse, String numTel, String adresseElec, Personne p) {
 
         try {
@@ -492,28 +485,26 @@ public class Service {
         }
     }
 
-/**
- * Méthode permettant de changer les horaires de travail
- * d'un Employé. Récupère les paramètres en entrée et
- * modifie l’employé. Change l’employé correspondante
- * dans la base de données
- * @param dateDebut l'heure de début au format hh:mm:ss
- * @param dateFin l'heure de fin au format hh:mm:ss
- * @param e l'employé
- */    
+    /**
+     * Méthode permettant de changer les horaires de travail d'un Employé.
+     * Récupère les paramètres en entrée et modifie l’employé. Change l’employé
+     * correspondante dans la base de données
+     *
+     * @param dateDebut l'heure de début au format hh:mm:ss
+     * @param dateFin l'heure de fin au format hh:mm:ss
+     * @param e l'employé
+     */
     public static void updateHoraire(String dateDebut, String dateFin, Employe e) {
-        try{
+        try {
             e.setDebutTravail(java.sql.Time.valueOf(dateDebut));
             e.setDebutTravail(java.sql.Time.valueOf(dateFin));
             JpaUtil.creerEntityManager();
             JpaUtil.ouvrirTransaction();
             EmployeDao.merge(e);
-            
+
             JpaUtil.validerTransaction();
             JpaUtil.fermerEntityManager();
-        }
-        catch (RollbackException ex)
-        {
+        } catch (RollbackException ex) {
             DebugLogger.log("RollBack Exception lors des horaires de travail", ex);
         }
     }
